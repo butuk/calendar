@@ -1,0 +1,72 @@
+export const months = {
+  num: {
+    january:    0,
+    february:   1,
+    march:      2,
+    april:      3,
+    may:        4,
+    june:       5,
+    july:       6,
+    august:     7,
+    september:  8,
+    october:    9,
+    november:   10,
+    december:   11
+  },
+  eng: {
+    january:    'January',
+    february:   'February',
+    march:      'March',
+    april:      'April',
+    may:        'May',
+    june:       'June',
+    july:       'July',
+    august:     'August',
+    september:  'September',
+    october:    'October',
+    november:   'November',
+    december:   'December'
+  },
+  pol: {
+    january:    'Styczeń',
+    february:   'Luty',
+    march:      'Marzec',
+    april:      'Kwiecień',
+    may:        'Maj',
+    june:       'Czerwiec',
+    july:       'Lipiec',
+    august:     'Sierpień',
+    september:  'Wrzesień',
+    october:    'Październik',
+    november:   'Listopad',
+    december:   'Grudzień'
+  },
+  bel_1: {
+    january:    'Студзень',
+    february:   'Люты',
+    march:      'Сакавік',
+    april:      'Красавік',
+    may:        'Травень',
+    june:       'Чэрвень',
+    july:       'Ліпень',
+    august:     'Жнівень',
+    september:  'Верасень',
+    october:    'Кастрычнік',
+    november:   'Лістапад',
+    december:   'Снежань'
+  },
+  bel_2: {
+    january:    'Studzień',
+    february:   'Liuty',
+    march:      'Sakavik',
+    april:      'Krasavik',
+    may:        'Travień',
+    june:       'Červień',
+    july:       'Lipień',
+    august:     'Žnivień',
+    september:  'Vierasień',
+    october:    'Kastryčnik',
+    november:   'Listapad',
+    december:   'Sniežań'
+  }
+}

@@ -1,15 +1,31 @@
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.logo {
+  color: firebrick;
+}
+
 .calendar {
   position: fixed;
   bottom: 0;
   width: 100vw;
-  //height: 69vh;
   display: grid;
   grid-template-rows: repeat(13, 1fr);
   grid-template-columns: repeat(32, 1fr);
   gap: 0;
 }
 
-.cell {
-  height: 0;
-  text-align: center;
+.imgContainer {
+  height: .8vh;
+  width: .8vh;
+  margin: 0 auto;
+}
+
+img {
+  height: 100%;
+  width: 100%;
 }

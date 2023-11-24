@@ -52,6 +52,22 @@ table {
   box-sizing: border-box;
 }
 
+body {
+  font-family: Helvetica, sans-serif;
+  color: black;
+  font-size: 6vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.logo {
+  color: firebrick;
+}
+
 .calendar {
   position: fixed;
   bottom: 0;
@@ -62,9 +78,15 @@ table {
   gap: 0;
 }
 
-.cell {
-  height: 0;
-  text-align: center;
+.imgContainer {
+  height: 0.8vh;
+  width: 0.8vh;
+  margin: 0 auto;
+}
+
+img {
+  height: 100%;
+  width: 100%;
 }
 
 /*# sourceMappingURL=styles.css.map */
