@@ -17,7 +17,7 @@ time, mark, audio, video {
   font-size: 100%;
   text-decoration: none;
   font-weight: normal;
-  vertical-align: top;
+  vertical-align: middle;
 }
 
 /* HTML5 display-role reset for older browsers */
@@ -78,7 +78,7 @@ body {
   gap: 0;
 }
 
-.imgContainer {
+.day {
   height: 0.8vh;
   width: 0.8vh;
   margin: 0 auto;

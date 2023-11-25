@@ -1,5 +1,5 @@
 import {year} from "./data/year.js";
-console.log(year);
+//console.log(year);
 
 const calendar = document.querySelector('.calendar');
 
@@ -16,11 +16,25 @@ function createCell(padding) {
     const element = document.createElement('div');
     element.classList.add('cell');
     element.style.paddingTop = `${padding}vh`;
-    const imgContainer = document.createElement('div');
-    imgContainer.classList.add('imgContainer');
+    const day = document.createElement('div');
+    day.classList.add('day');
     const image = document.createElement('img');
     image.src = '/img/circle.svg';
-    imgContainer.append(image);
-    element.append(imgContainer);
+    day.append(image);
+    element.append(day);
     calendar.append(element);
 }
+
+
+
+/*calendar.addEventListener('mouseover', (e) => {
+  let cell = e.target.closest('.cell');
+
+  let day = cell.getElementsByClassName('day')[0];
+  console.log(day);
+
+  if (day !== null && cell.contains(day)) {
+    day.classList.add('day__hover');
+  }
+})*/
+
