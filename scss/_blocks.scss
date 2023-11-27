@@ -16,15 +16,32 @@
   grid-template-rows: repeat(13, 1fr);
   grid-template-columns: repeat(32, 1fr);
   gap: 0;
+  margin-bottom: 3vh;
+}
+
+.cell {
+  position: relative;
+  overflow: visible;
+  height: 4vh;
+  width: 100%;
+  margin-bottom: 1vh;
 }
 
 .day {
   height: .8vh;
   width: .8vh;
   margin: 0 auto;
+  transition: height .2s ease-in-out, width .2s ease-in-out;
+}
+
+.day__hover {
+  height: 2vh;
+  width: 2vh;
+  transition: height .2s ease-in-out, width .2s ease-in-out;
 }
 
 img {
   height: 100%;
   width: 100%;
 }
+

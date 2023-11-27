@@ -1,7 +1,7 @@
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
+del, dfn, em, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
 b, u, i, center,
 dl, dt, dd, ol, ul, li,
@@ -17,6 +17,10 @@ time, mark, audio, video {
   font-size: 100%;
   text-decoration: none;
   font-weight: normal;
+  vertical-align: top;
+}
+
+img {
   vertical-align: middle;
 }
 
@@ -76,12 +80,28 @@ body {
   grid-template-rows: repeat(13, 1fr);
   grid-template-columns: repeat(32, 1fr);
   gap: 0;
+  margin-bottom: 3vh;
+}
+
+.cell {
+  position: relative;
+  overflow: visible;
+  height: 4vh;
+  width: 100%;
+  margin-bottom: 1vh;
 }
 
 .day {
   height: 0.8vh;
   width: 0.8vh;
   margin: 0 auto;
+  transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
+}
+
+.day__hover {
+  height: 2vh;
+  width: 2vh;
+  transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
 }
 
 img {
