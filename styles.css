@@ -92,15 +92,14 @@ body {
 }
 
 .day {
-  height: 0.8vh;
-  width: 0.8vh;
+  width: 10%;
+  aspect-ratio: 1/1;
   margin: 0 auto;
   transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
 }
 
-.day__hover {
-  height: 2vh;
-  width: 2vh;
+.day_hover {
+  width: 50%;
   transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
 }
 
