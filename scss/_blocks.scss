@@ -26,7 +26,7 @@ span {
   margin-bottom: 3vh;
 }
 
-.cell {
+.date {
   position: relative;
   overflow: visible;
   height: 4vh;
@@ -34,20 +34,30 @@ span {
   margin-bottom: 1vh;
 }
 
-.day {
-  width: 10%;
-  aspect-ratio: 1/1;
+@mixin circle($width, $color) {
   margin: 0 auto;
-  transition: height .2s ease-in-out, width .2s ease-in-out;
+  width: $width;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  border-radius: 50%;
+  background-color: $color;
+  &::before {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+  }
+}
+
+.workday {
+  @include circle(20%, var(--main-color));
+}
+
+.weekend {
+  @include circle(30%, var(--accent-color));
 }
 
 .day_hover {
-  width: 50%;
+  width: 120%;
   transition: height .2s ease-in-out, width .2s ease-in-out;
-}
-
-img {
-  height: 100%;
-  width: 100%;
 }
 

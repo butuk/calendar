@@ -1,13 +1,25 @@
-import {Year} from "./js/Year.js";
+import {Day} from "./js/Day.js";
+import {months} from "../data/data.js";
+import {weekDays} from "../data/data.js";
 
 const calendar = document.querySelector('.calendar');
-const year = new Year();
-console.log(year);
-//calendar.append(year);
+
+let dayCount = 0;
+for (let month of Object.values(months)) {
+  for (let i = 0; i < month.daysAmount; i++) {
+    const day = new Day();
+    
+    day.kind = weekDays[dayCount];
+    dayCount >= weekDays.length-1 ? dayCount = 0 : dayCount++;
+
+    day.render(calendar);
+    day.html.dataset.month = month.eng;
+    day.html.dataset.date = i+1;
+    day.html.dataset.kind = weekDays[dayCount];
+  }
+}
 
 /*const delta = 3;
-
-
 
 let k = 0;
 for (let j = 0; j < 13; j++) {

@@ -95,7 +95,7 @@ span:not(:last-child) {
   margin-bottom: 3vh;
 }
 
-.cell {
+.date {
   position: relative;
   overflow: visible;
   height: 4vh;
@@ -103,21 +103,37 @@ span:not(:last-child) {
   margin-bottom: 1vh;
 }
 
-.day {
-  width: 10%;
-  aspect-ratio: 1/1;
+.workday {
   margin: 0 auto;
-  transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
+  width: 20%;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  border-radius: 50%;
+  background-color: var(--main-color);
+}
+.workday::before {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+
+.weekend {
+  margin: 0 auto;
+  width: 30%;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+}
+.weekend::before {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
 }
 
 .day_hover {
-  width: 50%;
+  width: 120%;
   transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
-}
-
-img {
-  height: 100%;
-  width: 100%;
 }
 
 /*# sourceMappingURL=styles.css.map */

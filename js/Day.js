@@ -3,24 +3,16 @@ export class Day {
   constructor() {
   }
 
-  render(place, padding) {
-    const element = document.createElement('div');
-    const day = document.createElement('div');
-    const image = document.createElement('img');
-
-    element.classList.add('cell');
-
-    element.style.top = `${padding}%`;
-
-    day.classList.add('day');
-
-    image.src = `./img/${this.image()}`;
-    day.append(image);
-    element.append(day);
-    place.append(element);
+  render(where) {
+    this.html = createElement('div', 'date');
+    const particularDay = createElement('div', `${this.kind}`)
+    this.html.append(particularDay);
+    where.append(this.html);
   }
+}
 
-  image() {
-    return `${this.kind}.svg`;
-  }
+function createElement(element, className) {
+  const result = document.createElement(`${element}`);
+  className ? result.classList.add(`${className}`) : null;
+  return result;
 }
