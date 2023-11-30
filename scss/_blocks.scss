@@ -5,7 +5,14 @@
 }
 
 .logo {
-  color: firebrick;
+  color: var(--accent-color);
+}
+
+span {
+  display: inline-block;
+  &:not(:last-child) {
+    margin-right: .5em;
+  }
 }
 
 .calendar {

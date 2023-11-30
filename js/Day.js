@@ -1,15 +1,19 @@
 export class Day {
-  constructor(type) {
-    this.type = type;
+
+  constructor() {
   }
 
   render(place, padding) {
     const element = document.createElement('div');
-    element.classList.add('cell');
-    element.style.top = `${padding}%`;
     const day = document.createElement('div');
-    day.classList.add('day');
     const image = document.createElement('img');
+
+    element.classList.add('cell');
+
+    element.style.top = `${padding}%`;
+
+    day.classList.add('day');
+
     image.src = `./img/${this.image()}`;
     day.append(image);
     element.append(day);
@@ -17,10 +21,6 @@ export class Day {
   }
 
   image() {
-      if(this.type === 'weekend') {
-        return 'circle_red.svg';
-      } else {
-        return 'circle_grey.svg';
-      }
+    return `${this.kind}.svg`;
   }
 }
