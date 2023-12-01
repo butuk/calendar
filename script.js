@@ -5,17 +5,18 @@ import {weekDays} from "../data/data.js";
 const calendar = document.querySelector('.calendar');
 
 let dayCount = 0;
+
 for (let month of Object.values(months)) {
   for (let i = 0; i < month.daysAmount; i++) {
-    const day = new Day();
-    
+    const day = new Day(month.eng, i+1, weekDays[dayCount]);
+
     day.kind = weekDays[dayCount];
     dayCount >= weekDays.length-1 ? dayCount = 0 : dayCount++;
 
-    day.render(calendar);
-    day.html.dataset.month = month.eng;
-    day.html.dataset.date = i+1;
-    day.html.dataset.kind = weekDays[dayCount];
+    day.renderIn(calendar);
+    day.html.dataset.month = day.month;
+    day.html.dataset.date = day.date;
+    day.html.dataset.kind = day.kind;
   }
 }
 

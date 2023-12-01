@@ -1,14 +1,18 @@
 export class Day {
 
-  constructor() {
+  constructor(month, date, kind) {
+      this.month = month;
+      this.date = date;
+      this.kind = kind;
   }
 
-  render(where) {
-    this.html = createElement('div', 'date');
+  renderIn(where) {
+    this.html = createElement('div', 'day');
     const particularDay = createElement('div', `${this.kind}`)
     this.html.append(particularDay);
     where.append(this.html);
   }
+
 }
 
 function createElement(element, className) {

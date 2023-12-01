@@ -26,7 +26,7 @@ span {
   margin-bottom: 3vh;
 }
 
-.date {
+.day {
   position: relative;
   overflow: visible;
   height: 4vh;
@@ -34,10 +34,21 @@ span {
   margin-bottom: 1vh;
 }
 
-@mixin circle($width, $color) {
-  margin: 0 auto;
-  width: $width;
+@function mrgn($num) {
+  @return (100% - $num) / 2;
+}
+
+@mixin circle($size, $color) {
   aspect-ratio: 1/1;
+  @media screen and (orientation: portrait) {
+    height: $size;
+  }
+  @media screen and (orientation: landscape) {
+    width: $size;
+  }
+  margin-top: mrgn($size);
+  margin-left: auto;
+  margin-right: auto;
   overflow: hidden;
   border-radius: 50%;
   background-color: $color;
@@ -49,11 +60,11 @@ span {
 }
 
 .workday {
-  @include circle(20%, var(--main-color));
+  @include circle(10%, var(--main-color));
 }
 
 .weekend {
-  @include circle(30%, var(--accent-color));
+  @include circle(15%, var(--accent-color));
 }
 
 .day_hover {
