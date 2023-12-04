@@ -1,9 +1,9 @@
 export class Day {
 
-  constructor(month, date, kind) {
-      this.month = month;
-      this.date = date;
-      this.kind = kind;
+  constructor(kind, month, date, ) {
+      month ? this.month = month : null;
+      date ? this.date = date : null;
+      kind ? this.kind = kind : null;
   }
 
   renderIn(where) {
@@ -12,7 +12,6 @@ export class Day {
     this.html.append(particularDay);
     where.append(this.html);
   }
-
 }
 
 function createElement(element, className) {

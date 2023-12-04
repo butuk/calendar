@@ -67,6 +67,10 @@ span {
   @include circle(15%, var(--accent-color));
 }
 
+.blank {
+
+}
+
 .day_hover {
   width: 120%;
   transition: height .2s ease-in-out, width .2s ease-in-out;

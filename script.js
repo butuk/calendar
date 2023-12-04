@@ -6,9 +6,14 @@ const calendar = document.querySelector('.calendar');
 
 let dayCount = 0;
 
+for (let i=0; i < 5; i++) {
+  new Day('blank').renderIn(calendar);
+}
+
 for (let month of Object.values(months)) {
   for (let i = 0; i < month.daysAmount; i++) {
-    const day = new Day(month.eng, i+1, weekDays[dayCount]);
+
+    const day = new Day(weekDays[dayCount], month.eng, i+1);
 
     day.kind = weekDays[dayCount];
     dayCount >= weekDays.length-1 ? dayCount = 0 : dayCount++;
