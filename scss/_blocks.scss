@@ -15,6 +15,14 @@ span {
   }
 }
 
+.hr {
+  width: 100vw;
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(32, 1fr);
+  gap: 0;
+}
+
 .calendar {
   position: fixed;
   bottom: 0;
@@ -23,7 +31,12 @@ span {
   grid-template-rows: repeat(13, 1fr);
   grid-template-columns: repeat(32, 1fr);
   gap: 0;
-  margin-bottom: 3vh;
+}
+
+.name {
+  position: relative;
+  top: -.5vh;
+  text-align: center;
 }
 
 .day {
@@ -35,7 +48,7 @@ span {
 }
 
 @function mrgn($num) {
-  @return (100% - $num) / 2;
+  @return 80% - $num / 2;
 }
 
 @mixin circle($size, $color) {
@@ -46,7 +59,7 @@ span {
   @media screen and (orientation: landscape) {
     width: $size;
   }
-  margin-top: mrgn($size);
+  margin-bottom: mrgn($size);
   margin-left: auto;
   margin-right: auto;
   overflow: hidden;
@@ -68,7 +81,6 @@ span {
 }
 
 .blank {
-
 }
 
 .day_hover {

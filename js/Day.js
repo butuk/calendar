@@ -1,6 +1,6 @@
 export class Day {
 
-  constructor(kind, month, date, ) {
+  constructor(kind, month, date) {
       month ? this.month = month : null;
       date ? this.date = date : null;
       kind ? this.kind = kind : null;
