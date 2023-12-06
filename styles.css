@@ -64,7 +64,7 @@ table {
 body {
   font-family: "Martian Mono", monospace;
   color: var(--main-color);
-  font-size: 3vh;
+  font-size: 2vw;
 }
 
 .header {
@@ -104,7 +104,6 @@ span:not(:last-child) {
 
 .name {
   position: relative;
-  top: -0.5vh;
   text-align: center;
 }
 
