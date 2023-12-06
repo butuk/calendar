@@ -63,25 +63,48 @@ table {
 
 body {
   font-family: "Martian Mono", monospace;
+  font-weight: normal;
   color: var(--main-color);
-  font-size: 2vw;
+  font-size: 1.5vw;
 }
 
 .header {
+  padding: 0.5em 0.5em;
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
 
-.logo {
+.language {
+  cursor: pointer;
+}
+
+.language_active {
   color: var(--accent-color);
+}
+
+.logo {
+  display: grid;
+  width: 100vw;
+  text-align: center;
+  color: var(--accent-color);
+  grid-template-columns: repeat(32, 1fr);
+  font-weight: bolder;
+}
+
+.logo_inner {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  transform: rotate(90deg);
 }
 
 span {
   display: inline-block;
 }
 span:not(:last-child) {
-  margin-right: 0.5em;
+  margin-right: 1em;
 }
 
 .hr {
@@ -92,9 +115,12 @@ span:not(:last-child) {
   gap: 0;
 }
 
-.calendar {
+.calendar_full {
   position: fixed;
   bottom: 0;
+}
+
+.calendar {
   width: 100vw;
   display: grid;
   grid-template-rows: repeat(13, 1fr);
@@ -105,14 +131,14 @@ span:not(:last-child) {
 .name {
   position: relative;
   text-align: center;
+  margin-top: -15%;
 }
 
 .day {
   position: relative;
   overflow: visible;
-  height: 4vh;
+  height: 5vh;
   width: 100%;
-  margin-bottom: 1vh;
 }
 
 .workday {

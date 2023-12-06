@@ -2,44 +2,52 @@ import {Day} from "./js/Day.js";
 import {months} from "../data/data.js";
 import {weekDays} from "../data/data.js";
 
-// HR
-const hr = document.querySelector('.hr')
-makeIndent(hr);
-for (let name = 0; name <= 31; name++) {
-  name > 0 ? createNameCell(hr, `${name}`) : new Day('blank').renderIn(hr);
+let language = 'eng';
+const languages = document.querySelector('.languages');
+const calendar = document.querySelector('.calendar');
+
+document.addEventListener('DOMContentLoaded', function() {
+  buildCalenar();
+  buildHr();
+});
+
+function buildHr() {
+  const hr = document.querySelector('.hr')
+  makeIndent(hr);
+  for (let name = 0; name <= 31; name++) {
+    name > 0 ? createNameCell(hr, `${name}`) : new Day('blank').renderIn(hr);
+  }
+  makeTilt(hr);
 }
 
-// Calendar
-const calendar = document.querySelector('.calendar');
-makeIndent(calendar);
-let weekDayCount = 0;
-for (let month = 0; month <= 11; month++) {
-  let mnth = Object.values(months)[`${month}`];
-  let monthName = mnth.eng.charAt(0).toUpperCase();
-  for (let cell = 0; cell <= 31; cell++) {
-    if (cell === 0) {
-      createNameCell(calendar, monthName);
-    } else {
-      if (cell <= mnth.daysAmount) {
-        const day = new Day(weekDays[weekDayCount], mnth.eng, cell);
-        day.kind = weekDays[weekDayCount];
-        weekDayCount >= weekDays.length-1 ? weekDayCount = 0 : weekDayCount++;
-        day.renderIn(calendar);
+function buildCalenar(){
+  makeIndent(calendar);
+  let weekDayCount = 0;
 
-        day.html.dataset.month = day.month;
-        day.html.dataset.date = day.date;
-        day.html.dataset.kind = day.kind;
+  for (let month = 0; month <= 11; month++) {
+    let mnth = Object.values(months)[`${month}`];
+    let monthName = mnth[`${language}`].charAt(0).toUpperCase();
+    for (let cell = 0; cell <= 31; cell++) {
+      if (cell === 0) {
+        createNameCell(calendar, monthName);
       } else {
-        new Day('blank').renderIn(calendar);
+        if (cell <= mnth.daysAmount) {
+          const day = new Day(weekDays[weekDayCount], mnth[`${language}`], cell);
+          day.kind = weekDays[weekDayCount];
+          weekDayCount >= weekDays.length - 1 ? weekDayCount = 0 : weekDayCount++;
+          day.renderIn(calendar);
+
+          day.html.dataset.month = day.month;
+          day.html.dataset.date = day.date;
+          day.html.dataset.kind = day.kind;
+        } else {
+          new Day('blank').renderIn(calendar);
+        }
       }
     }
   }
-}
-
-document.addEventListener('DOMContentLoaded', function() {
   makeTilt(calendar);
-  makeTilt(hr);
-})
+}
 
 function makeTilt(element) {
   const elements = Array.from(element.children).filter(item => item.nodeType === 1);
@@ -70,3 +78,10 @@ function createNameCell(place, text) {
   element.textContent = text;
   place.append(element);
 }
+
+languages.addEventListener('click', (e) => {
+  language = e.target.dataset.language;
+  e.target.classList.add = 'language_active';
+  calendar.innerHTML = '';
+  buildCalenar();
+})
