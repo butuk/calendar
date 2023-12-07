@@ -1,15 +1,23 @@
 import {Day} from "./js/Day.js";
-import {months} from "../data/data.js";
-import {weekDays} from "../data/data.js";
+import {months} from "./data/data.js";
+import {weekDays} from "./data/data.js";
 
 let language = 'eng';
 const languages = document.querySelector('.languages');
 const calendar = document.querySelector('.calendar');
 
 document.addEventListener('DOMContentLoaded', function() {
-  buildCalenar();
   buildHr();
+  buildCalenar();
 });
+
+languages.addEventListener('click', (e) => {
+  let element = e.target.closest('.language')
+  language = element.dataset.language;
+  markElementAmongOthers(element, 'language_active');
+  calendar.innerHTML = '';
+  buildCalenar();
+})
 
 function buildHr() {
   const hr = document.querySelector('.hr')
@@ -49,6 +57,12 @@ function buildCalenar(){
   makeTilt(calendar);
 }
 
+function makeIndent(block) {
+  for (let i=0; i < 3; i++) {
+    new Day('blank').renderIn(block);
+  }
+}
+
 function makeTilt(element) {
   const elements = Array.from(element.children).filter(item => item.nodeType === 1);
   const columns = getComputedStyle(element).gridTemplateColumns.split(' ').length;
@@ -66,12 +80,6 @@ function makeTilt(element) {
   }
 }
 
-function makeIndent (block) {
-  for (let i=0; i < 3; i++) {
-    new Day('blank').renderIn(block);
-  }
-}
-
 function createNameCell(place, text) {
   const element = document.createElement('div');
   element.classList.add('name');
@@ -79,9 +87,9 @@ function createNameCell(place, text) {
   place.append(element);
 }
 
-languages.addEventListener('click', (e) => {
-  language = e.target.dataset.language;
-  e.target.classList.add = 'language_active';
-  calendar.innerHTML = '';
-  buildCalenar();
-})
+function markElementAmongOthers(element, markClass) {
+  for(let i=0; i<element.parentElement.children.length; i++) {
+    element.parentElement.children[i].classList.remove(markClass);
+  }
+  element.classList.add(markClass);
+}

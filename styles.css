@@ -1,8 +1,22 @@
 :root {
+  --back-color: white;
   --main-color: black;
+  --additional-color: gray;
   --accent-color: firebrick;
+  --invert-accent: crimson;
+  font-family: Inter, sans-serif;
+  font-feature-settings: "liga" 1, "calt" 1;
+  /* fix for Chrome */
+  font-weight: normal;
+  color: var(--main-color);
+  font-size: 1.5vw;
 }
 
+@supports (font-variation-settings: normal) {
+  :root {
+    font-family: InterVariable, sans-serif;
+  }
+}
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -61,26 +75,25 @@ table {
   box-sizing: border-box;
 }
 
-body {
-  font-family: "Martian Mono", monospace;
-  font-weight: normal;
-  color: var(--main-color);
-  font-size: 1.5vw;
-}
-
 .header {
+  background-color: var(--main-color);
+  color: var(--back-color);
   padding: 0.5em 0.5em;
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
 
-.language {
+span {
+  display: inline-block;
   cursor: pointer;
+}
+span:not(:last-child) {
+  margin-right: 1em;
 }
 
 .language_active {
-  color: var(--accent-color);
+  color: var(--invert-accent);
 }
 
 .logo {
@@ -97,14 +110,7 @@ body {
   margin: 0;
   display: flex;
   align-items: center;
-  transform: rotate(90deg);
-}
-
-span {
-  display: inline-block;
-}
-span:not(:last-child) {
-  margin-right: 1em;
+  transform: rotate(90deg) translate(-1em);
 }
 
 .hr {
@@ -131,7 +137,7 @@ span:not(:last-child) {
 .name {
   position: relative;
   text-align: center;
-  margin-top: -15%;
+  margin-top: -20%;
 }
 
 .day {
@@ -143,21 +149,21 @@ span:not(:last-child) {
 
 .workday {
   aspect-ratio: 1/1;
-  margin-bottom: 75%;
+  margin-bottom: 76%;
   margin-left: auto;
   margin-right: auto;
   overflow: hidden;
   border-radius: 50%;
-  background-color: var(--main-color);
+  background-color: var(--additional-color);
 }
 @media screen and (orientation: portrait) {
   .workday {
-    height: 10%;
+    height: 8%;
   }
 }
 @media screen and (orientation: landscape) {
   .workday {
-    width: 10%;
+    width: 8%;
   }
 }
 .workday::before {
@@ -168,7 +174,7 @@ span:not(:last-child) {
 
 .weekend {
   aspect-ratio: 1/1;
-  margin-bottom: 72.5%;
+  margin-bottom: 74%;
   margin-left: auto;
   margin-right: auto;
   overflow: hidden;
@@ -177,12 +183,12 @@ span:not(:last-child) {
 }
 @media screen and (orientation: portrait) {
   .weekend {
-    height: 15%;
+    height: 12%;
   }
 }
 @media screen and (orientation: landscape) {
   .weekend {
-    width: 15%;
+    width: 12%;
   }
 }
 .weekend::before {
