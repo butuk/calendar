@@ -1,3 +1,5 @@
+import {createElement} from "./functions.js";
+
 export class Day {
 
   constructor(kind, month, date) {
@@ -14,8 +16,3 @@ export class Day {
   }
 }
 
-function createElement(element, className) {
-  const result = document.createElement(`${element}`);
-  className ? result.classList.add(`${className}`) : null;
-  return result;
-}

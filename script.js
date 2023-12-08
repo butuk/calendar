@@ -2,13 +2,20 @@ import {Day} from "./js/Day.js";
 import {months} from "./data/data.js";
 import {weekDays} from "./data/data.js";
 
+import {makeTilt} from "./js/functions.js";
+import {createNameCell} from "./js/functions.js";
+import {markElementAmongOthers} from "./js/functions.js";
+import {makeIndent} from "./js/functions.js";
+import {Year} from "./js/Year.js";
+
+
 let language = 'eng';
 const languages = document.querySelector('.languages');
 const calendar = document.querySelector('.calendar');
 
 document.addEventListener('DOMContentLoaded', function() {
   buildHr();
-  buildCalenar();
+  //buildCalenar();
 });
 
 languages.addEventListener('click', (e) => {
@@ -21,15 +28,19 @@ languages.addEventListener('click', (e) => {
 
 function buildHr() {
   const hr = document.querySelector('.hr')
-  makeIndent(hr);
+  makeIndent(hr, 3);
   for (let name = 0; name <= 31; name++) {
     name > 0 ? createNameCell(hr, `${name}`) : new Day('blank').renderIn(hr);
   }
   makeTilt(hr);
 }
 
+new Year();
+
+/*
+
 function buildCalenar(){
-  makeIndent(calendar);
+  makeIndent(calendar, 3);
   let weekDayCount = 0;
 
   for (let month = 0; month <= 11; month++) {
@@ -56,12 +67,10 @@ function buildCalenar(){
   }
   makeTilt(calendar);
 }
+*/
 
-function makeIndent(block) {
-  for (let i=0; i < 3; i++) {
-    new Day('blank').renderIn(block);
-  }
-}
+//-------
+/*
 
 function makeTilt(element) {
   const elements = Array.from(element.children).filter(item => item.nodeType === 1);
@@ -93,3 +102,10 @@ function markElementAmongOthers(element, markClass) {
   }
   element.classList.add(markClass);
 }
+
+function makeIndent(block, amount) {
+  for (let i=0; i < amount; i++) {
+    new Day('blank').renderIn(block);
+  }
+}
+*/

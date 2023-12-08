@@ -1,112 +1,136 @@
 export const weekDays = ['workday', 'workday','workday', 'workday','workday', 'weekend', 'weekend']
 
 export const months = {
-  january: {
+  Jan: {
     id: 0,
     num: 1,
     daysAmount: 31,
-    eng: 'January',
-    pol: 'Styczeń',
-    bel_1: 'Студзень',
-    bel_2: 'Studzień',
+    name: {
+      eng: 'January',
+      pol: 'Styczeń',
+      bel_1: 'Студзень',
+      bel_2: 'Studzień',
+    }
   },
-  february: {
+  Feb: {
     id: 1,
     num: 2,
     daysAmount: 29,
-    eng: 'February',
-    pol: 'Luty',
-    bel_1: 'Люты',
-    bel_2: 'Liuty',
+    name: {
+      eng: 'February',
+      pol: 'Luty',
+      bel_1: 'Люты',
+      bel_2: 'Liuty',
+    }
   },
-  march: {
+  Mar: {
     id: 2,
     num: 3,
     daysAmount: 31,
-    eng: 'March',
-    pol: 'Marzec',
-    bel_1: 'Сакавік',
-    bel_2: 'Sakavik',
+    name: {
+      eng: 'March',
+      pol: 'Marzec',
+      bel_1: 'Сакавік',
+      bel_2: 'Sakavik',
+    }
   },
-  april: {
+  Apr: {
     id: 3,
     num: 4,
     daysAmount: 30,
-    eng: 'April',
-    pol: 'Kwiecień',
-    bel_1: 'Красавік',
-    bel_2: 'Krasavik',
+    name: {
+      eng: 'April',
+      pol: 'Kwiecień',
+      bel_1: 'Красавік',
+      bel_2: 'Krasavik',
+    }
   },
-  may: {
+  May: {
     id: 4,
     num: 5,
     daysAmount: 31,
-    eng: 'May',
-    pol: 'Maj',
-    bel_1: 'Травень',
-    bel_2: 'Travień',
+    name: {
+      eng: 'May',
+      pol: 'Maj',
+      bel_1: 'Травень',
+      bel_2: 'Travień',
+    }
   },
-  june: {
+  Jun: {
     id: 5,
     num: 6,
     daysAmount: 30,
-    eng: 'June',
-    pol: 'Czerwiec',
-    bel_1: 'Чэрвень',
-    bel_2: 'Červień',
+    name: {
+      eng: 'June',
+      pol: 'Czerwiec',
+      bel_1: 'Чэрвень',
+      bel_2: 'Červień',
+    }
   },
-  july: {
+  Jul: {
     id: 6,
     num: 7,
     daysAmount: 31,
-    eng: 'July',
-    pol: 'Lipiec',
-    bel_1: 'Ліпень',
-    bel_2: 'Lipień',
+    name: {
+      eng: 'July',
+      pol: 'Lipiec',
+      bel_1: 'Ліпень',
+      bel_2: 'Lipień',
+    }
   },
-  august: {
+  Aug: {
     id: 7,
     num: 8,
     daysAmount: 31,
-    eng: 'August',
-    pol: 'Sierpień',
-    bel_1: 'Жнівень',
-    bel_2: 'Žnivień',
+    name: {
+      eng: 'August',
+      pol: 'Sierpień',
+      bel_1: 'Жнівень',
+      bel_2: 'Žnivień',
+    }
   },
-  september: {
+  Sep: {
     id: 8,
     num: 9,
     daysAmount: 30,
-    eng: 'September',
-    pol: 'Wrzesień',
-    bel_1: 'Верасень',
-    bel_2: 'Vierasień',
+    name: {
+      eng: 'September',
+      pol: 'Wrzesień',
+      bel_1: 'Верасень',
+      bel_2: 'Vierasień',
+    }
   },
-  october: {
+  Oct: {
     id: 9,
     num: 10,
     daysAmount: 31,
-    eng: 'October',
-    pol: 'Październik',
-    bel_1: 'Кастрычнік',
-    bel_2: 'Kastryčnik',
+    name: {
+      eng: 'October',
+      pol: 'Październik',
+      bel_1: 'Кастрычнік',
+      bel_2: 'Kastryčnik',
+    }
   },
-  november: {
+  Nov: {
     id: 10,
     num: 11,
     daysAmount: 30,
-    eng: 'November',
-    pol: 'Listopad',
-    bel_1: 'Лістапад',
-    bel_2: 'Listapad',
+    name: {
+      eng: 'November',
+      pol: 'Listopad',
+      bel_1: 'Лістапад',
+      bel_2: 'Listapad',
+    }
   },
-  december: {
+  Dec: {
     id: 11,
     num: 12,
     daysAmount: 31,
-    eng: 'December',
-    pol: 'Grudzień',
-    bel_1: 'Снежань',
-    bel_2: 'Sniežań'
+    name: {
+      eng: 'December',
+      pol: 'Grudzień',
+      bel_1: 'Снежань',
+      bel_2: 'Sniežań'
+    }
   }
 }
