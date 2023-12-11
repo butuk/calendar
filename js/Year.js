@@ -8,80 +8,49 @@ export class Year {
     this.indent = 3;
     this.monthsAmount = 12;
     this.days = [];
+    this.monthsNames = Object.keys(months);
 
+    let weekDayCount = 0;
     for (let month = 0; month <= this.monthsAmount - 1; month++) {
-      let weekDayCount = 0;
       const monthObj = Object.values(months)[`${month}`];
-      const monthsNames = Object.keys(months);
       for (let date = 1; date <= monthObj.daysAmount; date++) {
-        const day = new Day(weekDays[weekDayCount], monthsNames[month], date);
+        console.log(weekDayCount);
+        const day = new Day(weekDays[weekDayCount], this.monthsNames[month], date);
         day.monthName = monthObj.name;
         this.weekLength-1 <= weekDayCount ? weekDayCount = 0 : weekDayCount++;
         this.days.push(day);
+
       }
     }
   }
 
-  render(block) {
-    this.html = document.querySelector(`${block}`);
+  renderIn(block, language) {
+    this.html = block;
     makeIndent(this.html, this.indent);
 
-    for (let month = 0; month <= 11; month++) {
-
-      let mnth = Object.values(months)[`${month}`];
-      let monthName = mnth[`${language}`].charAt(0).toUpperCase();
+    let index = 0;
+    for (let month = 0; month <= this.monthsAmount - 1; month++) {
+      const monthObj = Object.values(months)[`${month}`];
+      const monthName = monthObj.name[`${language}`].charAt(0).toUpperCase();
 
       for (let cell = 0; cell <= 31; cell++) {
         if (cell === 0) {
-          createNameCell(calendar, monthName);
+          createNameCell(this.html, monthName);
         } else {
-          if (cell <= mnth.daysAmount) {
-            const day = new Day(weekDays[weekDayCount], mnth[`${language}`], cell);
-            day.kind = weekDays[weekDayCount];
-            weekDayCount >= weekDays.length - 1 ? weekDayCount = 0 : weekDayCount++;
-            day.renderIn(calendar);
-
+          if (cell <= monthObj.daysAmount) {
+            const day = this.days[index];
+            day.renderIn(this.html);
             day.html.dataset.month = day.month;
             day.html.dataset.date = day.date;
             day.html.dataset.kind = day.kind;
+            index++;
           } else {
-            new Day('blank').renderIn(calendar);
+            new Day('blank').renderIn(this.html);
           }
         }
       }
     }
-
     makeTilt(this.html);
   }
 
 }
-
-/*
-function buildCalenar(){
-  makeIndent(calendar, 3);
-  let weekDayCount = 0;
-
-  for (let month = 0; month <= 11; month++) {
-    let mnth = Object.values(months)[`${month}`];
-    let monthName = mnth[`${language}`].charAt(0).toUpperCase();
-    for (let cell = 0; cell <= 31; cell++) {
-      if (cell === 0) {
-        createNameCell(calendar, monthName);
-      } else {
-        if (cell <= mnth.daysAmount) {
-          const day = new Day(weekDays[weekDayCount], mnth[`${language}`], cell);
-          day.kind = weekDays[weekDayCount];
-          weekDayCount >= weekDays.length - 1 ? weekDayCount = 0 : weekDayCount++;
-          day.renderIn(calendar);
-
-          day.html.dataset.month = day.month;
-          day.html.dataset.date = day.date;
-          day.html.dataset.kind = day.kind;
-        } else {
-          new Day('blank').renderIn(calendar);
-        }
-      }
-    }
-  }
-  makeTilt(calendar);
-}*/
