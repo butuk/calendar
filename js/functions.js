@@ -43,4 +43,11 @@ export function makeIndent(block, amount) {
   }
 }
 
+/*
+* export function listen(block, event, selector, func){
+  block.addEventListener(event, (e) => {
+    let target = e.target.closest(selector);
+    func(selector);
+  })
+}*/
 
