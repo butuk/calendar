@@ -1,30 +1,25 @@
-import {makeTilt, createNameCell, markElementAmongOthers, makeIndent} from "./js/functions.js";
-import {Day} from "./js/Day.js";
+import {markElementAmongOthers} from "./js/functions.js";
+import {CalendarHead} from "./js/CalendarHead.js";
 import {Year} from "./js/Year.js";
 
-let language = 'eng';
+const cellAmount = 31;
+const indent = 3;
 const languages = document.querySelector('.languages');
 const calendar = document.querySelector('.calendar');
+const hr = document.querySelector('.hr')
+const head = new CalendarHead();
 const year = new Year();
+let language = 'eng';
 
 document.addEventListener('DOMContentLoaded', function() {
-  year.renderIn(calendar, language);
-  buildHr();
+  year.renderIn(calendar, cellAmount, indent, language);
+  head.renderIn(hr, cellAmount, indent);
 });
 
 languages.addEventListener('click', (e) => {
-  let element = e.target.closest('.language')
-  language = element.dataset.language;
-  markElementAmongOthers(element, 'language_active');
-  calendar.innerHTML = '';
-  year.renderIn(calendar, language);
+  let target = e.target.closest('.language')
+  language = target.dataset.language;
+  markElementAmongOthers(target, 'language_active');
+  year.clearRender();
+  year.renderIn(calendar, cellAmount, indent, language);
 })
-
-function buildHr() {
-  const hr = document.querySelector('.hr')
-  makeIndent(hr, 3);
-  for (let name = 0; name <= 31; name++) {
-    name > 0 ? createNameCell(hr, `${name}`) : new Day('blank').renderIn(hr);
-  }
-  makeTilt(hr);
-}
