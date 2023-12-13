@@ -1,0 +1,25 @@
+{
+  "name": "calendar",
+  "version": "1.0.0",
+  "description": "Calendar pet project",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/butuk/calendar.git"
+  },
+  "keywords": [
+    "calendar"
+  ],
+  "author": "Vitali Yanusheuski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/butuk/calendar/issues"
+  },
+  "homepage": "https://github.com/butuk/calendar#readme",
+  "devDependencies": {
+    "prettier": "3.1.1"
+  }
+}

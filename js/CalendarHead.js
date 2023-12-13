@@ -1,14 +1,13 @@
-import {createNameCell, makeIndent, makeTilt} from "./functions.js";
-import {Day} from "./Day.js";
+import { createNameCell, makeIndent, makeTilt } from "./functions.js";
+import { Day } from "./Day.js";
 
 export class CalendarHead {
-  constructor() {
-
-  }
+  constructor() {}
   renderIn(block, cellAmount, indent) {
     makeIndent(block, indent);
-    for (let name = 0; name <= cellAmount; name++) {
-      name > 0 ? createNameCell(block, `${name}`) : new Day('blank').renderIn(block);
+    new Day("blank").renderIn(block);
+    for (let name = 1; name <= cellAmount; name++) {
+      createNameCell(block, `${name}`);
     }
     makeTilt(block);
   }
