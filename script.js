@@ -9,7 +9,7 @@ head.renderIn(hr, 31, 3);
 const year = new Year();
 
 // Calendar
-const calendar = document.querySelector(".calendar");
+const calendar = document.querySelector(".grid");
 year.renderIn(calendar, 31, 3, "eng");
 
 // Switching languages
@@ -21,10 +21,16 @@ languages.addEventListener("click", (e) => {
   year.renderIn(calendar, 31, 3, target.dataset.language);
 });
 
-/*
+
 calendar.addEventListener("mouseover", (e) => {
   const target = e.target.closest(".day");
   const firstChild = target ? target.children[0] : null;
   firstChild.classList.add("day_hover");
 });
-*/
+
+calendar.addEventListener("mouseout", (e) => {
+  const target = e.target.closest(".day");
+  const firstChild = target ? target.children[0] : null;
+  firstChild.classList.remove("day_hover");
+});
+
