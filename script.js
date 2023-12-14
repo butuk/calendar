@@ -23,14 +23,15 @@ languages.addEventListener("click", (e) => {
 
 
 calendar.addEventListener("mouseover", (e) => {
-  const target = e.target.closest(".day");
+  const target = e.target.closest(".date");
   const firstChild = target ? target.children[0] : null;
-  firstChild.classList.add("day_hover");
+  if (firstChild) firstChild.classList.add("day_hover");
+
 });
 
 calendar.addEventListener("mouseout", (e) => {
-  const target = e.target.closest(".day");
+  const target = e.target.closest(".date");
   const firstChild = target ? target.children[0] : null;
-  firstChild.classList.remove("day_hover");
+  if(firstChild) firstChild.classList.remove("day_hover");
 });
 

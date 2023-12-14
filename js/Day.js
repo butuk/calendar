@@ -8,9 +8,11 @@ export class Day {
   }
 
   renderIn(where) {
-    this.html = createElement("div", "day");
-    const particularDay = createElement("div", `${this.kind}`);
-    this.html.append(particularDay);
+    this.html = createElement('div', 'cell');
+    const date = createElement('div', 'date');
+    const particularDay = createElement('div', `${this.kind}`);
+    date.append(particularDay);
+    this.html.append(date);
     where.append(this.html);
   }
 }

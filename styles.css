@@ -120,13 +120,11 @@ table {
   text-align: center;
 }
 
-.day {
+.cell {
   display: flex;
-  align-items: center;
   position: relative;
-  overflow: visible;
   height: 5vh;
-  width: 100%;
+  justify-content: center;
 }
 
 .name {
@@ -134,7 +132,21 @@ table {
   position: relative;
 }
 
+.date {
+  display: flex;
+  align-self: center;
+  width: 60%;
+  aspect-ratio: 1/1;
+}
+
+.date-current {
+  border: 1px solid black;
+  border-radius: 50%;
+}
+
 .workday {
+  align-self: center;
+  justify-self: center;
   aspect-ratio: 1/1;
   margin-left: auto;
   margin-right: auto;
@@ -144,22 +156,22 @@ table {
 }
 @media screen and (orientation: portrait) {
   .workday {
-    height: 6%;
+    height: 10%;
   }
 }
 @media screen and (orientation: landscape) {
   .workday {
-    width: 6%;
+    width: 10%;
   }
 }
 .workday::before {
   content: "";
   display: block;
-  padding-bottom: 100%;
-  vertical-align: middle;
 }
 
 .weekend {
+  align-self: center;
+  justify-self: center;
   aspect-ratio: 1/1;
   margin-left: auto;
   margin-right: auto;
@@ -169,24 +181,21 @@ table {
 }
 @media screen and (orientation: portrait) {
   .weekend {
-    height: 12%;
+    height: 20%;
   }
 }
 @media screen and (orientation: landscape) {
   .weekend {
-    width: 12%;
+    width: 20%;
   }
 }
 .weekend::before {
   content: "";
   display: block;
-  padding-bottom: 100%;
-  vertical-align: middle;
 }
 
 .day_hover {
-  width: 50%;
-  aspect-ratio: 1/1;
+  width: 100%;
 }
 
 .options {
