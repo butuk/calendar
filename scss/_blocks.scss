@@ -91,8 +91,8 @@
   @extend %transition;
 }
 
-.weekend {
-  @include circle(20%, var(--accent-color));
+.holiday {
+  @include circle(24%, var(--accent-color));
   @extend %transition;
 }
 
@@ -119,6 +119,19 @@ span {
   cursor: pointer;
 }
 
-.language_active {
+%active {
   color: var(--invert-accent);
+  cursor: default;
+}
+
+.language {
+  &_active {
+    @extend %active;
+  }
+}
+
+.country {
+  &_active {
+    @extend %active;
+  }
 }

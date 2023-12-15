@@ -1,4 +1,4 @@
-export const weekDays = ['workday', 'workday','workday', 'workday','workday', 'weekend', 'weekend']
+export const weekDays = ['workday', 'workday','workday', 'workday','workday', 'holiday', 'holiday']
 
 export const months = {
   Jan: {

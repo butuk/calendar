@@ -1,14 +1,14 @@
-import { months, weekDays } from "../data/data.js";
+import { months, weekDays } from "../data/commonData.js";
 import { createNameCell, makeTilt, makeIndent } from "./functions.js";
 import { Day } from "./Day.js";
 
 export class Year {
-  constructor() {
+
+  createDefault() {
     this.weekLength = 7;
     this.monthsAmount = 12;
     this.days = [];
     this.monthsNames = Object.keys(months);
-
     let weekDayCount = 0;
     for (let month = 0; month <= this.monthsAmount - 1; month++) {
       const monthObj = Object.values(months)[`${month}`];
@@ -24,6 +24,22 @@ export class Year {
         this.days.push(day);
       }
     }
+    return this
+  }
+
+  switchTo(country) {
+    for (let item of country) {
+      const fullDate = new Date(item.date);
+      const month = fullDate.toLocaleString('default', { month: 'short' });
+      const date = fullDate.getDate();
+      for (let day of this.days) {
+        if(day.date === date && day.month === month) {
+          day.kind = item.kind;
+        }
+      }
+    }
+
+    return this
   }
 
   renderIn(block, cellAmount, indent, language) {

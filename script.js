@@ -1,37 +1,56 @@
 import { markElementAmongOthers } from "./js/functions.js";
 import { CalendarHead } from "./js/CalendarHead.js";
 import { Year } from "./js/Year.js";
+import {holidays} from "./data/holidays.js";
 
 // Calendar head
 const head = new CalendarHead();
-const hr = document.querySelector(".hr");
+const hr = document.querySelector('.hr');
 head.renderIn(hr, 31, 3);
+let language = 'eng';
+let country = holidays['poland'];
+
 const year = new Year();
 
 // Calendar
-const calendar = document.querySelector(".grid");
-year.renderIn(calendar, 31, 3, "eng");
+const calendar = document.querySelector('.grid');
+year.createDefault();
+year.switchTo(country);
+year.renderIn(calendar, 31, 3, language);
+
+// Switching countries
+const countries = document.querySelector('.countries');
+countries.addEventListener('click', (e) => {
+  const target = e.target.closest('.country');
+  markElementAmongOthers(target, 'country_active');
+  year.clearRender();
+  country = holidays[`${target.dataset.country}`];
+  year.createDefault();
+  year.switchTo(country);
+  year.renderIn(calendar, 31, 3, language);
+})
 
 // Switching languages
-const languages = document.querySelector(".languages");
-languages.addEventListener("click", (e) => {
-  const target = e.target.closest(".language");
-  markElementAmongOthers(target, "language_active");
+const languages = document.querySelector('.languages');
+languages.addEventListener('click', (e) => {
+  const target = e.target.closest('.language');
+  markElementAmongOthers(target, 'language_active');
   year.clearRender();
-  year.renderIn(calendar, 31, 3, target.dataset.language);
+  language = target.dataset.language;
+  year.renderIn(calendar, 31, 3, language);
 });
 
-
-calendar.addEventListener("mouseover", (e) => {
-  const target = e.target.closest(".date");
+// Days on hover
+calendar.addEventListener('mouseover', (e) => {
+  const target = e.target.closest('.date');
   const firstChild = target ? target.children[0] : null;
-  if (firstChild) firstChild.classList.add("day_hover");
+  if (firstChild) firstChild.classList.add('day_hover');
 
 });
 
-calendar.addEventListener("mouseout", (e) => {
-  const target = e.target.closest(".date");
+calendar.addEventListener('mouseout', (e) => {
+  const target = e.target.closest('.date');
   const firstChild = target ? target.children[0] : null;
-  if(firstChild) firstChild.classList.remove("day_hover");
+  if(firstChild) firstChild.classList.remove('day_hover');
 });
 

@@ -74,7 +74,7 @@ table {
   box-sizing: border-box;
 }
 
-.day_hover, .weekend, .workday {
+.day_hover, .holiday, .workday {
   transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
 }
 
@@ -169,7 +169,7 @@ table {
   display: block;
 }
 
-.weekend {
+.holiday {
   align-self: center;
   justify-self: center;
   aspect-ratio: 1/1;
@@ -180,16 +180,16 @@ table {
   background-color: var(--accent-color);
 }
 @media screen and (orientation: portrait) {
-  .weekend {
-    height: 20%;
+  .holiday {
+    height: 24%;
   }
 }
 @media screen and (orientation: landscape) {
-  .weekend {
-    width: 20%;
+  .holiday {
+    width: 24%;
   }
 }
-.weekend::before {
+.holiday::before {
   content: "";
   display: block;
 }
@@ -215,8 +215,9 @@ span:not(:last-child) {
   margin-right: 1em;
 }
 
-.language_active {
+.country_active, .language_active {
   color: var(--invert-accent);
+  cursor: default;
 }
 
 /*# sourceMappingURL=styles.css.map */
