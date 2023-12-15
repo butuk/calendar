@@ -1,3 +1,18 @@
+
+.placeholder {
+  left: 25vw;
+  top: 25vh;
+  position: absolute;
+  margin: 0 auto;
+  & > img {
+    width: 50vw;
+    aspect-ratio: 1 / 1;
+  }
+  @media screen and (orientation: landscape) {
+    display: none;
+  }
+}
+
 %transition {
   transition: height .2s ease-in-out, width .2s ease-in-out;
 }
@@ -36,7 +51,12 @@
 .content {
   position: absolute;
   bottom: 0;
-
+  @media screen and (orientation: portrait) {
+    display: none;
+  }
+  @media screen and (aspect-ratio: 1/1) {
+    display: none;
+  }
 }
 
 .header {

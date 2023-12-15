@@ -1,8 +1,8 @@
 :root {
   --back-color: white;
   --main-color: black;
-  --accent-color: firebrick;
-  --invert-accent: crimson;
+  --accent-color: crimson;
+  --invert-accent: red;
   font-family: Inter, sans-serif;
   font-feature-settings: "liga" 1, "calt" 1;
   /* fix for Chrome */
@@ -74,6 +74,22 @@ table {
   box-sizing: border-box;
 }
 
+.placeholder {
+  left: 25vw;
+  top: 25vh;
+  position: absolute;
+  margin: 0 auto;
+}
+.placeholder > img {
+  width: 50vw;
+  aspect-ratio: 1/1;
+}
+@media screen and (orientation: landscape) {
+  .placeholder {
+    display: none;
+  }
+}
+
 .day_hover, .holiday, .workday {
   transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
 }
@@ -81,6 +97,16 @@ table {
 .content {
   position: absolute;
   bottom: 0;
+}
+@media screen and (orientation: portrait) {
+  .content {
+    display: none;
+  }
+}
+@media screen and (aspect-ratio: 1/1) {
+  .content {
+    display: none;
+  }
 }
 
 .header {
