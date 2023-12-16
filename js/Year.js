@@ -58,7 +58,7 @@ export class Year {
           day.renderIn(block);
           day.html.firstChild.dataset.monthNumber = monthObj.num;
           day.html.firstChild.dataset.month = day.monthName[`${language}`];
-          day.html.firstChild.dataset.weekday = day.weekDay[`${language}`];
+          day.html.firstChild.dataset.shortWeekday = day.weekDay[`${language}`].short;
           day.html.firstChild.dataset.date = day.date;
           day.html.firstChild.dataset.kind = day.kind;
           index++;

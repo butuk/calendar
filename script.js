@@ -50,8 +50,8 @@ calendar.addEventListener('mouseover', (e) => {
 
     const date = firstChild.parentElement.dataset.date;
     const month = firstChild.parentElement.dataset.monthNumber;
-    const weekday = firstChild.parentElement.dataset.weekday.slice(0, 3);
-    const message = `${date}.${month}<br>${weekday}`;
+    const weekday = firstChild.parentElement.dataset.shortWeekday;
+    const message = `${weekday}<br>${date}.${month}`;
     const text = document.createElement('div');
     text.classList.add('cell-text');
     text.innerHTML = message;

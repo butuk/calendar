@@ -1,44 +1,156 @@
 export const weekDaysNames = [
   {
-    eng: 'Monday',
-    pol: 'Poniedziałek',
-    bel_1: 'Панядзелак',
-    bel_2: 'Paniadzielak',
+    eng:
+      {
+        long: 'Monday',
+        short: 'Mon',
+      },
+    pol:
+      {
+        long: 'Poniedziałek',
+        short: 'Pon.',
+      },
+    bel_1:
+      {
+        long: 'Панядзелак',
+        short: 'Пн.',
+      },
+    bel_2:
+      {
+        long: 'Paniadzielak',
+        short: 'Pn.',
+      },
   },
   {
-    eng: 'Tuesday',
-    pol: 'Wtorek',
-    bel_1: 'Аўторак',
-    bel_2: 'Aŭtorak',
+    eng:
+      {
+        long: 'Tuesday',
+        short: 'Tue',
+      },
+    pol:
+      {
+        long: 'Wtorek',
+        short: 'Wt.',
+      },
+    bel_1:
+      {
+        long: 'Аўторак',
+        short: 'Аўт.',
+      },
+    bel_2:
+      {
+        long: 'Aŭtorak',
+        short: 'Aŭt.',
+      },
   },
   {
-    eng: 'Wednesday',
-    pol: 'Środa',
-    bel_1: 'Серада',
-    bel_2: 'Sierada',
+    eng:
+      {
+        long: 'Wednesday',
+        short: 'Wed',
+      },
+    pol:
+      {
+        long: 'Środa',
+        short: 'Śr',
+      },
+    bel_1:
+      {
+        long: 'Серада',
+        short: 'Сер.',
+      },
+    bel_2:
+      {
+        long: 'Sierada',
+        short: 'Sier.',
+      },
   },
   {
-    eng: 'Thursday',
-    pol: 'Czwartek',
-    bel_1: 'Чацвер',
-    bel_2: 'Čacvier',
+    eng:
+      {
+        long: 'Thursday',
+        short: 'Thu',
+      },
+    pol:
+      {
+        long: 'Czwartek',
+        short: 'Czw.',
+      },
+    bel_1:
+      {
+        long: 'Чацвер',
+        short: 'Чцв.',
+      },
+    bel_2:
+      {
+        long: 'Čacvier',
+        short: 'Čcv.',
+      },
   },
   {
-    eng: 'Friday',
-    pol: 'Piątek',
-    bel_1: 'Пятніца',
-    bel_2: 'Piatnica',
+    eng:
+      {
+        long: 'Friday',
+        short: 'Fri',
+      },
+    pol:
+      {
+        long: 'Piątek',
+        short: 'Pt.',
+      },
+    bel_1:
+      {
+        long: 'Пятніца',
+        short: 'Пят.',
+      },
+    bel_2:
+      {
+        long: 'Piatnica',
+        short: 'Piat.',
+      },
   },
   {
-    eng: 'Saturday',
-    pol: 'Sobota',
-    bel_1: 'Субота',
-    bel_2: 'Subota',
+    eng:
+      {
+        long: 'Saturday',
+        short: 'Sat',
+      },
+    pol:
+      {
+        long: 'Sobota',
+        short: 'Sob.',
+      },
+    bel_1:
+      {
+        long: 'Субота',
+        short: 'Cyб.',
+      },
+    bel_2:
+      {
+        long: 'Subota',
+        short: 'Sub.',
+      },
   },
   {
-    eng: 'Sunday',
-    pol: 'Niedziela',
-    bel_1: 'Нядзеля',
-    bel_2: 'Niadzielia',
+    eng:
+      {
+        long: 'Sunday',
+        short: 'Sun',
+      },
+    pol:
+      {
+        long: 'Niedziela',
+        short: 'Nd.',
+      },
+    bel_1:
+      {
+        long: 'Нядзеля',
+        short: 'Нд.',
+      },
+    bel_2:
+      {
+        long: 'Niadzielia',
+        short: 'Nd.',
+      },
   }
 ]
