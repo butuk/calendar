@@ -44,7 +44,10 @@ languages.addEventListener('click', (e) => {
 calendar.addEventListener('mouseover', (e) => {
   const target = e.target.closest('.date');
   const firstChild = target ? target.children[0] : null;
-  if (firstChild) firstChild.classList.add('day_hover');
+  if (firstChild) {
+    firstChild.classList.add('day_hover');
+  }
+
 
 });
 

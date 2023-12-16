@@ -84,8 +84,19 @@ table {
   width: 50vw;
   aspect-ratio: 1/1;
 }
+
 @media screen and (orientation: landscape) {
-  .placeholder {
+  .placeholder_landscape {
+    display: none;
+  }
+}
+@media screen and (max-width: 1023px) {
+  .placeholder_landscape {
+    display: none;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .placeholder_desktop {
     display: none;
   }
 }
@@ -104,6 +115,11 @@ table {
   }
 }
 @media screen and (aspect-ratio: 1/1) {
+  .content {
+    display: none;
+  }
+}
+@media screen and (max-width: 1023px) {
   .content {
     display: none;
   }
@@ -138,6 +154,7 @@ table {
 }
 
 .grid {
+  overflow: hidden;
   width: 100vw;
   display: grid;
   grid-template-rows: repeat(13, 1fr);
@@ -161,8 +178,13 @@ table {
 .date {
   display: flex;
   align-self: center;
-  width: 60%;
+  width: 80%;
   aspect-ratio: 1/1;
+}
+.date::after {
+  content: "";
+  position: absolute;
+  inset: -10%;
 }
 
 .date-current {
@@ -182,12 +204,12 @@ table {
 }
 @media screen and (orientation: portrait) {
   .workday {
-    height: 10%;
+    height: 6%;
   }
 }
 @media screen and (orientation: landscape) {
   .workday {
-    width: 10%;
+    width: 6%;
   }
 }
 .workday::before {
@@ -207,12 +229,12 @@ table {
 }
 @media screen and (orientation: portrait) {
   .holiday {
-    height: 24%;
+    height: 18%;
   }
 }
 @media screen and (orientation: landscape) {
   .holiday {
-    width: 24%;
+    width: 18%;
   }
 }
 .holiday::before {

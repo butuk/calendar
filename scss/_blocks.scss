@@ -1,5 +1,4 @@
-
-.placeholder {
+%placeholder {
   left: 25vw;
   top: 25vh;
   position: absolute;
@@ -8,8 +7,22 @@
     width: 50vw;
     aspect-ratio: 1 / 1;
   }
-  @media screen and (orientation: landscape) {
-    display: none;
+}
+
+.placeholder {
+  @extend %placeholder;
+  &_landscape {
+    @media screen and (orientation: landscape) {
+      display: none;
+    }
+    @media screen and (max-width: 1023px) {
+      display: none;
+    }
+  }
+  &_desktop {
+    @media screen and (min-width: 1024px){
+      display: none;
+    }
   }
 }
 
@@ -57,6 +70,9 @@
   @media screen and (aspect-ratio: 1/1) {
     display: none;
   }
+  @media screen and (max-width: 1023px) {
+    display: none;
+  }
 }
 
 .header {
@@ -78,6 +94,7 @@
 }
 
 .grid {
+  overflow: hidden;
   @include main-grid(13);
 }
 
@@ -96,8 +113,13 @@
 .date {
   display: flex;
   align-self: center;
-  width: 60%;
+  width: 80%;
   aspect-ratio: 1 / 1;
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -10%;
+  }
 }
 
 // Style for the current date
@@ -107,12 +129,12 @@
 }
 
 .workday {
-  @include circle(10%, var(--main-color));
+  @include circle(6%, var(--main-color));
   @extend %transition;
 }
 
 .holiday {
-  @include circle(24%, var(--accent-color));
+  @include circle(18%, var(--accent-color));
   @extend %transition;
 }
 
