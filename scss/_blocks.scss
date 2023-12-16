@@ -31,6 +31,9 @@
 }
 
 @mixin circle($size, $color) {
+  display: flex;
+  align-content: center;
+  justify-content: center;
   align-self: center;
   justify-self: center;
   aspect-ratio: 1/1;
@@ -48,7 +51,6 @@
   &::before {
     content: "";
     display: block;
-    //padding-bottom: 100%;
   }
 }
 
@@ -139,9 +141,17 @@
 }
 
 .day_hover {
+
   width: 100%;
   //aspect-ratio: 1 / 1;
   @extend %transition;
+}
+
+.cell-text {
+  align-self: center;
+  color: var(--back-color);
+  font-size: .5em;
+  text-align: center;
 }
 
 .options {

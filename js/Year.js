@@ -1,4 +1,5 @@
 import { months, weekDays } from "../data/commonData.js";
+import {weekDaysNames} from '../data/weekdaysNames.js';
 import { createNameCell, makeTilt, makeIndent } from "./functions.js";
 import { Day } from "./Day.js";
 
@@ -19,6 +20,7 @@ export class Year {
           date,
         );
         day.monthName = monthObj.name;
+        day.weekDay = weekDaysNames[weekDayCount];
         weekDayCount =
           this.weekLength - 1 <= weekDayCount ? 0 : weekDayCount + 1;
         this.days.push(day);
@@ -54,9 +56,11 @@ export class Year {
         if (cell <= monthObj.daysAmount) {
           const day = this.days[index];
           day.renderIn(block);
-          day.html.dataset.month = day.month;
-          day.html.dataset.date = day.date;
-          day.html.dataset.kind = day.kind;
+          day.html.firstChild.dataset.monthNumber = monthObj.num;
+          day.html.firstChild.dataset.month = day.monthName[`${language}`];
+          day.html.firstChild.dataset.weekday = day.weekDay[`${language}`];
+          day.html.firstChild.dataset.date = day.date;
+          day.html.firstChild.dataset.kind = day.kind;
           index++;
         } else {
           new Day("blank").renderIn(block);

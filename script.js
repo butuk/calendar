@@ -41,17 +41,28 @@ languages.addEventListener('click', (e) => {
 });
 
 // Days on hover
+
 calendar.addEventListener('mouseover', (e) => {
   const target = e.target.closest('.date');
   const firstChild = target ? target.children[0] : null;
   if (firstChild) {
     firstChild.classList.add('day_hover');
+
+    const date = firstChild.parentElement.dataset.date;
+    const month = firstChild.parentElement.dataset.monthNumber;
+    const weekday = firstChild.parentElement.dataset.weekday.slice(0, 3);
+    const message = `${date}.${month}<br>${weekday}`;
+    const text = document.createElement('div');
+    text.classList.add('cell-text');
+    text.innerHTML = message;
+    firstChild.append(text);
   }
-
-
 });
 
 calendar.addEventListener('mouseout', (e) => {
+  const text = document.querySelector('.cell-text');
+  const parent = text.parentElement;
+  parent.removeChild(text);
   const target = e.target.closest('.date');
   const firstChild = target ? target.children[0] : null;
   if(firstChild) firstChild.classList.remove('day_hover');

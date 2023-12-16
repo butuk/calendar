@@ -193,6 +193,9 @@ table {
 }
 
 .workday {
+  display: flex;
+  align-content: center;
+  justify-content: center;
   align-self: center;
   justify-self: center;
   aspect-ratio: 1/1;
@@ -218,6 +221,9 @@ table {
 }
 
 .holiday {
+  display: flex;
+  align-content: center;
+  justify-content: center;
   align-self: center;
   justify-self: center;
   aspect-ratio: 1/1;
@@ -244,6 +250,13 @@ table {
 
 .day_hover {
   width: 100%;
+}
+
+.cell-text {
+  align-self: center;
+  color: var(--back-color);
+  font-size: 0.5em;
+  text-align: center;
 }
 
 .options {
