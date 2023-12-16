@@ -4,6 +4,11 @@ import { createNameCell, makeTilt, makeIndent } from "./functions.js";
 import { Day } from "./Day.js";
 
 export class Year {
+  constructor() {
+    let current = new Date();
+    this.currentMonth = current.toLocaleString('default', { month: 'short' });
+    this.currentDate = current.getDate();
+  }
 
   createDefault() {
     this.weekLength = 7;
@@ -55,12 +60,17 @@ export class Year {
       for (let cell = 1; cell <= cellAmount; cell++) {
         if (cell <= monthObj.daysAmount) {
           const day = this.days[index];
+
           day.renderIn(block);
-          day.html.firstChild.dataset.monthNumber = monthObj.num;
-          day.html.firstChild.dataset.month = day.monthName[`${language}`];
-          day.html.firstChild.dataset.shortWeekday = day.weekDay[`${language}`].short;
-          day.html.firstChild.dataset.date = day.date;
-          day.html.firstChild.dataset.kind = day.kind;
+          const element = day.html.firstChild;
+          if (day.month === this.currentMonth && day.date === this.currentDate) {
+            element.classList.add('date-current')
+          }
+          element.dataset.monthNumber = monthObj.num;
+          element.dataset.month = day.monthName[`${language}`];
+          element.dataset.shortWeekday = day.weekDay[`${language}`].short;
+          element.dataset.date = day.date;
+          element.dataset.kind = day.kind;
           index++;
         } else {
           new Day("blank").renderIn(block);

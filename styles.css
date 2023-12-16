@@ -101,6 +101,26 @@ table {
   }
 }
 
+.cell-text, .credits {
+  font-size: 0.5em;
+}
+
+pre {
+  display: inline;
+}
+
+.credit {
+  opacity: 0.3;
+  color: var(--main-color);
+}
+
+.credits {
+  padding: 0.5em;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
 .day_hover, .holiday, .workday {
   transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
 }
@@ -255,7 +275,6 @@ table {
 .cell-text {
   align-self: center;
   color: var(--back-color);
-  font-size: 0.5em;
   text-align: center;
   line-height: 1em;
 }

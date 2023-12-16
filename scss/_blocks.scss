@@ -1,3 +1,4 @@
+
 %placeholder {
   left: 25vw;
   top: 25vh;
@@ -26,32 +27,29 @@
   }
 }
 
-%transition {
-  transition: height .2s ease-in-out, width .2s ease-in-out;
+%small-font {
+  font-size: .5em;
 }
 
-@mixin circle($size, $color) {
+pre {
+  display: inline;
+}
+
+.credit {
+  opacity: .3;
+  color: var(--main-color);
+}
+
+.credits {
+  padding: .5em;
+  width: 100%;
   display: flex;
-  align-content: center;
-  justify-content: center;
-  align-self: center;
-  justify-self: center;
-  aspect-ratio: 1/1;
-  @media screen and (orientation: portrait) {
-    height: $size;
-  }
-  @media screen and (orientation: landscape) {
-    width: $size;
-  }
-  margin-left: auto;
-  margin-right: auto;
-  overflow: hidden;
-  border-radius: 50%;
-  background-color: $color;
-  &::before {
-    content: "";
-    display: block;
-  }
+  justify-content: flex-end;
+  @extend %small-font;
+}
+
+%transition {
+  transition: height .2s ease-in-out, width .2s ease-in-out;
 }
 
 @mixin main-grid($rows) {
@@ -130,6 +128,30 @@
   border-radius: 50%;
 }
 
+@mixin circle($size, $color) {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+  aspect-ratio: 1/1;
+  @media screen and (orientation: portrait) {
+    height: $size;
+  }
+  @media screen and (orientation: landscape) {
+    width: $size;
+  }
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+  border-radius: 50%;
+  background-color: $color;
+  &::before {
+    content: "";
+    display: block;
+  }
+}
+
 .workday {
   @include circle(6%, var(--main-color));
   @extend %transition;
@@ -148,9 +170,9 @@
 }
 
 .cell-text {
+  @extend %small-font;
   align-self: center;
   color: var(--back-color);
-  font-size: .5em;
   text-align: center;
   line-height: 1em;
 }
