@@ -103,17 +103,15 @@ const right = document.querySelector('.right');
 left.addEventListener('click', goLeft)
 right.addEventListener('click', goRight);*/
 
-slides.addEventListener("animationend", () => {
+document.addEventListener("animationend", () => {
   slides.classList.remove("toLeft");
   slides.classList.remove("toRight");
-
-  slides.addEventListener('mousedown', handleTouchStart);
-  slides.addEventListener('touchstart', handleTouchStart);
-
-  document.addEventListener('mouseup', handleTouchEnd);
-  document.addEventListener('touchend', handleTouchEnd);
+  addListeners();
 });
 
+document.addEventListener('animationstart', () => {
+  removeListeners();
+})
 //Swipe
 /*
 let x1 = null;
@@ -177,11 +175,20 @@ function handleMouseOut() {
 // ChatGPT Slider
 let startX;
 
-slides.addEventListener('mousedown', handleTouchStart);
-slides.addEventListener('touchstart', handleTouchStart);
+addListeners();
+function addListeners() {
+  document.addEventListener('mousedown', handleTouchStart);
+  document.addEventListener('touchstart', handleTouchStart);
+  document.addEventListener('mouseup', handleTouchEnd);
+  document.addEventListener('touchend', handleTouchEnd);
+}
 
-document.addEventListener('mouseup', handleTouchEnd);
-document.addEventListener('touchend', handleTouchEnd);
+function removeListeners() {
+  document.removeEventListener('mousedown', handleTouchStart);
+  document.removeEventListener('touchstart', handleTouchStart);
+  document.removeEventListener('mousemove', handleTouchMove);
+  document.removeEventListener('touchmove', handleTouchMove);
+}
 
 function handleTouchStart(event) {
   if (event.touches) {
@@ -205,17 +212,11 @@ function handleTouchMove(event) {
 
   let deltaX = currentX - startX;
 
-  // You can use deltaX to determine the direction or distance of the swipe
   if(deltaX > 0) {
     slides.classList.add("toLeft");
   } else {
     slides.classList.add("toRight");
   }
-  console.log(deltaX);
-
-  // Add your swipe handling logic here
-
-  // Reset startX for the next move
   startX = currentX;
 }
 
