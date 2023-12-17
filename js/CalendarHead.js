@@ -9,6 +9,6 @@ export class CalendarHead {
     for (let name = 1; name <= cellAmount; name++) {
       createNameCell(block, `${name}`);
     }
-    makeTilt(block);
+    makeTilt(block, 32);
   }
 }

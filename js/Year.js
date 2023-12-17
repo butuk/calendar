@@ -77,11 +77,7 @@ export class Year {
         }
       }
     }
-    makeTilt(block);
+    makeTilt(block, 32);
     this.html = block;
-  }
-
-  clearRender() {
-    this.html.innerHTML = "";
   }
 }

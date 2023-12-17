@@ -28,9 +28,10 @@ export function makeIndent(block, amount) {
   }
 }
 
-export function makeTilt(element) {
+export function makeTilt(element, cols) {
   const elements = Array.from(element.children);
-  const columns = getComputedStyle(element).gridTemplateColumns.split(" ").length;
+  const columns = cols; //getComputedStyle(element).gridTemplateColumns.split(" ").length;
+
 
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Remainder
 

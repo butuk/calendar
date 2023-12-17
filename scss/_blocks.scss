@@ -1,3 +1,10 @@
+.arrows {
+  font-size: 5em;
+  display: flex;
+  justify-content: center;
+  color: var(--accent-color);
+  cursor: pointer;
+}
 
 %placeholder {
   left: 25vw;
@@ -62,6 +69,7 @@ pre {
 }
 
 .content {
+  user-select: none;
   position: absolute;
   bottom: 0;
   @media screen and (orientation: portrait) {
@@ -73,6 +81,44 @@ pre {
   @media screen and (max-width: 1023px) {
     display: none;
   }
+}
+
+.slider {
+  position: relative;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.slides {
+  display: flex;
+}
+
+@keyframes toRight {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100vw);
+  }
+}
+
+@keyframes toLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100vw);
+  }
+}
+
+.toRight {
+  animation: toRight 1.5s ease-in-out;
+}
+
+.toLeft {
+  animation: toLeft 1.5s ease-in-out;
 }
 
 .header {
@@ -122,7 +168,6 @@ pre {
   }
 }
 
-// Style for the current date
 .date-current {
   border: 1px solid black;
   border-radius: 50%;
