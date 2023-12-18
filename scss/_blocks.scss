@@ -84,41 +84,20 @@ pre {
 }
 
 .slider {
+  padding-top: 10em;
   position: relative;
   width: 100vw;
+  height: 100vh;
   overflow: hidden;
   display: flex;
-  justify-content: center;
+  //justify-content: center;
 }
 
 .slides {
   display: flex;
-}
-
-@keyframes toRight {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-100vw);
-  }
-}
-
-@keyframes toLeft {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(100vw);
-  }
-}
-
-.toRight {
-  animation: toRight 1.5s ease-in-out;
-}
-
-.toLeft {
-  animation: toLeft 1.5s ease-in-out;
+  position: absolute;
+  left: -100vw;
+  bottom: 0;
 }
 
 .header {
