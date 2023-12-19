@@ -109,7 +109,6 @@ languages.addEventListener("click", (e) => {
 let isDragging = false;
 let offsetX;
 
-
 document.addEventListener("mousedown", handleTouchStart);
 document.addEventListener("touchstart", handleTouchStart);
 
@@ -122,23 +121,31 @@ function handleTouchStart(event) {
 
   document.addEventListener("mousemove", handleTouchMove);
   document.addEventListener("touchmove", handleTouchMove);
-  document.body.style.cursor = 'grabbing';
+  document.body.style.cursor = "grabbing";
 }
 
 function handleTouchMove(event) {
-
   const window = document.documentElement.clientWidth;
 
   if (isDragging) {
     let left = event.clientX - offsetX;
-      if(slides.getBoundingClientRect().left < (-2 * window) || slides.getBoundingClientRect().left > 0) {
-        // Make slides rearrange
-      }
+
+    let leftBorder = -2 * window;
+    if (
+      slides.getBoundingClientRect().left < leftBorder ||
+      slides.getBoundingClientRect().left > 0
+    ) {
+      // Make slides rearrange
+      console.log(slides.getBoundingClientRect().left);
+      slides.style.left = window + 'px';
+      offsetX = event.clientX + Math.abs(slides.getBoundingClientRect().left);
+      console.log(slides.style.left);
+    }
     slides.style.left = left + "px";
   }
 }
 
 function handleTouchEnd() {
   isDragging = false;
-  document.body.style.cursor = 'grab';
+  document.body.style.cursor = "grab";
 }
