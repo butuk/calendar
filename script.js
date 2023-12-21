@@ -7,15 +7,10 @@ import { interfaceTexts } from "./data/interfaceTexts.js";
 let language = "eng";
 let country = holidays["poland"];
 
-// Credits
-function makeCredits(language) {
-  const about = document.querySelector(".about");
-  about.textContent = interfaceTexts.credits[`${language}`];
-  const author = document.querySelector(".author");
-  const myName = interfaceTexts.author[`${language}`];
-  author.textContent = `©${myName}`;
-}
-makeCredits(language);
+// Title
+const currentDate = new Date();
+document.title = `${currentDate.getDate()}.${currentDate.getMonth() + 1}.${currentDate.getFullYear()}`
+
 
 // Calendar
 const head = new CalendarHead();
@@ -102,7 +97,6 @@ languages.addEventListener("click", (e) => {
     calendar.innerHTML = "";
     year.renderIn(calendar, 31, 3, language);
   }
-  makeCredits(language);
 });
 
 // On scrolling
