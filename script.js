@@ -105,6 +105,35 @@ languages.addEventListener("click", (e) => {
   makeCredits(language);
 });
 
+// On scrolling
+function handleWheelEvent(event) {
+  const window = document.documentElement.clientWidth;
+  const deltaY = event.deltaY;
+  let left = slides.getBoundingClientRect().left;
+
+  let leftBorder = -2 * window;
+  if (
+    slides.getBoundingClientRect().left < leftBorder ||
+    slides.getBoundingClientRect().left > 0
+  ) {
+    slides.style.left = -window + "px";
+    left = slides.getBoundingClientRect().left;
+  }
+
+  if (deltaY > 0) {
+    slides.style.left = left + deltaY + 'px';
+
+
+  } else if (deltaY < 0) {
+    slides.style.left = left + deltaY + 'px';
+
+  }
+
+  event.preventDefault();
+}
+
+document.addEventListener("wheel", handleWheelEvent, { passive: false });
+
 // Slider
 let isDragging = false;
 let offsetX;
@@ -129,17 +158,13 @@ function handleTouchMove(event) {
 
   if (isDragging) {
     let left = event.clientX - offsetX;
-
     let leftBorder = -2 * window;
     if (
       slides.getBoundingClientRect().left < leftBorder ||
       slides.getBoundingClientRect().left > 0
     ) {
-      // Make slides rearrange
-      console.log(slides.getBoundingClientRect().left);
-      slides.style.left = window + 'px';
+      slides.style.left = window + "px";
       offsetX = event.clientX + Math.abs(slides.getBoundingClientRect().left);
-      console.log(slides.style.left);
     }
     slides.style.left = left + "px";
   }
@@ -149,3 +174,4 @@ function handleTouchEnd() {
   isDragging = false;
   document.body.style.cursor = "grab";
 }
+
