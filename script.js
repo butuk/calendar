@@ -2,15 +2,26 @@ import { markElementAmongOthers, createElement } from "./js/functions.js";
 import { CalendarHead } from "./js/CalendarHead.js";
 import { Year } from "./js/Year.js";
 import { holidays } from "./data/holidays.js";
-import { interfaceTexts } from "./data/interfaceTexts.js";
 
-let language = "eng";
-let country = holidays["poland"];
+// Language and country
+let language;
+let country;
+let savedLanguage = localStorage.getItem('language');
+let savedCountry = localStorage.getItem('country');
+if(savedLanguage) {
+  language = savedLanguage;
+} else {
+  language = "eng";
+}
+if (savedCountry) {
+  country = savedCountry;
+} else {
+  country = holidays["poland"];
+}
 
 // Title
 const currentDate = new Date();
 document.title = `${currentDate.getDate()}.${currentDate.getMonth() + 1}.${currentDate.getFullYear()}`
-
 
 // Calendar
 const head = new CalendarHead();
@@ -79,6 +90,7 @@ countries.addEventListener("click", (e) => {
   markElementAmongOthers(target, "country_active");
   year.createDefault();
   country = holidays[`${target.dataset.country}`];
+  localStorage.setItem('country', country);
   year.switchTo(country);
   for (let calendar of calendars) {
     calendar.innerHTML = "";
@@ -93,6 +105,7 @@ languages.addEventListener("click", (e) => {
   markElementAmongOthers(target, "language_active");
 
   language = target.dataset.language;
+  localStorage.setItem('language', language);
   for (let calendar of calendars) {
     calendar.innerHTML = "";
     year.renderIn(calendar, 31, 3, language);
