@@ -6,22 +6,42 @@ import { holidays } from "./data/holidays.js";
 // Language and country
 let language;
 let country;
-let savedLanguage = localStorage.getItem('language');
-let savedCountry = localStorage.getItem('country');
-if(savedLanguage) {
+let savedLanguage = localStorage.getItem("language");
+let savedCountry = localStorage.getItem("country");
+
+if (savedLanguage) {
   language = savedLanguage;
+  const languages = document.querySelectorAll(".language");
+  for (let item of languages) {
+    if (item.dataset.language === savedLanguage) {
+      item.classList.add("language_active");
+    } else {
+      item.classList.remove("language_active");
+    }
+  }
 } else {
   language = "eng";
 }
+
 if (savedCountry) {
-  country = savedCountry;
+  country = holidays[savedCountry];
+  const countries = document.querySelectorAll(".country");
+  for (let item of countries) {
+    if (item.dataset.country === savedCountry) {
+      item.classList.add("country_active");
+    } else {
+      item.classList.remove("country_active");
+    }
+  }
 } else {
   country = holidays["poland"];
 }
 
 // Title
 const currentDate = new Date();
-document.title = `${currentDate.getDate()}.${currentDate.getMonth() + 1}.${currentDate.getFullYear()}`
+document.title = `${currentDate.getDate()}.${
+  currentDate.getMonth() + 1
+}.${currentDate.getFullYear()}`;
 
 // Calendar
 const head = new CalendarHead();
@@ -89,8 +109,10 @@ countries.addEventListener("click", (e) => {
   const target = e.target.closest(".country");
   markElementAmongOthers(target, "country_active");
   year.createDefault();
-  country = holidays[`${target.dataset.country}`];
-  localStorage.setItem('country', country);
+  if (target) {
+    country = holidays[target.dataset.country];
+    localStorage.setItem("country", target.dataset.country);
+  }
   year.switchTo(country);
   for (let calendar of calendars) {
     calendar.innerHTML = "";
@@ -103,9 +125,10 @@ const languages = document.querySelector(".languages");
 languages.addEventListener("click", (e) => {
   const target = e.target.closest(".language");
   markElementAmongOthers(target, "language_active");
-
-  language = target.dataset.language;
-  localStorage.setItem('language', language);
+  if (target) {
+    language = target.dataset.language;
+    localStorage.setItem("language", language);
+  }
   for (let calendar of calendars) {
     calendar.innerHTML = "";
     year.renderIn(calendar, 31, 3, language);
@@ -128,12 +151,9 @@ function handleWheelEvent(event) {
   }
 
   if (deltaY > 0) {
-    slides.style.left = left + deltaY + 'px';
-
-
+    slides.style.left = left + deltaY + "px";
   } else if (deltaY < 0) {
-    slides.style.left = left + deltaY + 'px';
-
+    slides.style.left = left + deltaY + "px";
   }
 
   event.preventDefault();
@@ -181,4 +201,3 @@ function handleTouchEnd() {
   isDragging = false;
   document.body.style.cursor = "grab";
 }
-

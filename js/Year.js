@@ -63,9 +63,12 @@ export class Year {
 
           day.renderIn(block);
           const element = day.html.firstChild;
+
+          // Mark current day
           if (day.month === this.currentMonth && day.date === this.currentDate) {
             element.classList.add('date-current')
           }
+
           element.dataset.monthNumber = monthObj.num;
           element.dataset.month = day.monthName[`${language}`];
           element.dataset.shortWeekday = day.weekDay[`${language}`].short;

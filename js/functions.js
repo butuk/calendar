@@ -3,16 +3,18 @@ import { Day } from "./Day.js";
 export function createElement(element, className) {
   const result = document.createElement(`${element}`);
   if (className) {
-    result.classList.add(`${className}`)
+    result.classList.add(`${className}`);
   }
   return result;
 }
 
 export function markElementAmongOthers(element, markClass) {
-  for (let i = 0; i < element.parentElement.children.length; i++) {
-    element.parentElement.children[i].classList.remove(markClass);
+  if (element && element.parentElement) {
+    for (let i = 0; i < element.parentElement.children.length; i++) {
+      element.parentElement.children[i].classList.remove(markClass);
+    }
+    element.classList.add(markClass);
   }
-  element.classList.add(markClass);
 }
 
 export function createNameCell(place, text) {
@@ -31,7 +33,6 @@ export function makeIndent(block, amount) {
 export function makeTilt(element, cols) {
   const elements = Array.from(element.children);
   const columns = cols; //getComputedStyle(element).gridTemplateColumns.split(" ").length;
-
 
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Remainder
 
