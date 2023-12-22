@@ -51,6 +51,9 @@ pre {
   &:not(:last-child) {
     padding-right: 1.2em;
   }
+  &:hover {
+    color: var(--accent-color);
+  }
 }
 
 .credits {
@@ -222,11 +225,15 @@ span {
     margin-right: 1em;
   }
   cursor: pointer;
+  &:hover {
+    color: var(--invert-accent);
+  }
 }
 
 %active {
   color: var(--invert-accent);
   cursor: default;
+
 }
 
 .language {

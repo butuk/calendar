@@ -128,6 +128,9 @@ pre {
 .credit:not(:last-child) {
   padding-right: 1.2em;
 }
+.credit:hover {
+  color: var(--accent-color);
+}
 
 .credits {
   padding: 0.5em;
@@ -327,6 +330,9 @@ span {
 }
 span:not(:last-child) {
   margin-right: 1em;
+}
+span:hover {
+  color: var(--invert-accent);
 }
 
 .country_active, .language_active {
