@@ -139,6 +139,7 @@ languages.addEventListener("click", (e) => {
 function handleWheelEvent(event) {
   const window = document.documentElement.clientWidth;
   const deltaY = event.deltaY;
+  const deltaX = event.deltaX;
   let left = slides.getBoundingClientRect().left;
 
   let leftBorder = -2 * window;
@@ -156,12 +157,20 @@ function handleWheelEvent(event) {
     slides.style.left = left + deltaY + "px";
   }
 
+  if (deltaX < 0) {
+    slides.style.left = left - deltaX + "px";
+  } else if (deltaX > 0) {
+    slides.style.left = left - deltaX + "px";
+  }
+
   event.preventDefault();
 }
 
 document.addEventListener("wheel", handleWheelEvent, { passive: false });
 
 // Slider
+/*
+
 let isDragging = false;
 let offsetX;
 
@@ -196,6 +205,7 @@ function handleTouchMove(event) {
     slides.style.left = left + "px";
   }
 }
+*/
 
 function handleTouchEnd() {
   isDragging = false;
