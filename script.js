@@ -169,7 +169,6 @@ function handleWheelEvent(event) {
 document.addEventListener("wheel", handleWheelEvent, { passive: false });
 
 // Slider
-/*
 
 let isDragging = false;
 let offsetX;
@@ -205,7 +204,6 @@ function handleTouchMove(event) {
     slides.style.left = left + "px";
   }
 }
-*/
 
 function handleTouchEnd() {
   isDragging = false;
