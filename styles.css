@@ -84,10 +84,20 @@ table {
 }
 
 .placeholder {
+  font-size: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   left: 25vw;
   top: 25vh;
   position: absolute;
   margin: 0 auto;
+}
+.placeholder > a {
+  color: var(--main-color);
+}
+.placeholder > a:hover {
+  color: var(--accent-color);
 }
 .placeholder > img {
   width: 50vw;
@@ -114,10 +124,6 @@ table {
   font-size: 0.5em;
 }
 
-pre {
-  display: inline;
-}
-
 .credit {
   display: inline-block;
   text-align: center;
@@ -130,6 +136,16 @@ pre {
 }
 .credit:hover {
   color: var(--accent-color);
+}
+@media screen and (max-width: 1023px) {
+  .credit {
+    font-size: 10vh;
+  }
+}
+@media screen and (orientation: portrait) {
+  .credit {
+    font-size: 10vh;
+  }
 }
 
 .credits {
@@ -332,6 +348,12 @@ span:not(:last-child) {
   margin-right: 1em;
 }
 span:hover {
+  color: var(--invert-accent);
+}
+span > a {
+  color: var(--back-color);
+}
+span > a:hover {
   color: var(--invert-accent);
 }
 

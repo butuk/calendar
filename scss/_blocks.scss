@@ -7,6 +7,16 @@
 }
 
 %placeholder {
+  font-size: 10vh;
+  & > a {
+    color: var(--main-color);
+    &:hover {
+      color: var(--accent-color);
+    }
+  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   left: 25vw;
   top: 25vh;
   position: absolute;
@@ -38,10 +48,6 @@
   font-size: .5em;
 }
 
-pre {
-  display: inline;
-}
-
 .credit {
   display: inline-block;
   text-align: center;
@@ -53,6 +59,12 @@ pre {
   }
   &:hover {
     color: var(--accent-color);
+  }
+  @media screen and (max-width: 1023px) {
+    font-size: 10vh;
+  }
+  @media screen and (orientation: portrait) {
+    font-size: 10vh;
   }
 }
 
@@ -220,6 +232,8 @@ pre {
 }
 
 span {
+
+
   display: inline-block;
   &:not(:last-child) {
     margin-right: 1em;
@@ -227,6 +241,12 @@ span {
   cursor: pointer;
   &:hover {
     color: var(--invert-accent);
+  }
+  & > a {
+    color: var(--back-color);
+    &:hover {
+      color: var(--invert-accent);
+    }
   }
 }
 
