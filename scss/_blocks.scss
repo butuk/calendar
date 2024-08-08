@@ -207,10 +207,12 @@
   @extend %transition;
 }
 
-.day_hover {
+.past {
+  opacity: .5;
+}
 
+.day_hover {
   width: 100%;
-  //aspect-ratio: 1 / 1;
   @extend %transition;
 }
 
@@ -232,8 +234,6 @@
 }
 
 span {
-
-
   display: inline-block;
   &:not(:last-child) {
     margin-right: 1em;

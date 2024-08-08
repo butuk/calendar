@@ -5,9 +5,9 @@ import { Day } from "./Day.js";
 
 export class Year {
   constructor() {
-    let current = new Date();
-    this.currentMonth = current.toLocaleString('default', { month: 'short' });
-    this.currentDate = current.getDate();
+    this.current = new Date();
+    this.currentMonth = this.current.toLocaleString('default', { month: 'short' });
+    this.currentDate = this.current.getDate();
   }
 
   createDefault() {
@@ -64,6 +64,10 @@ export class Year {
           day.renderIn(block);
           const element = day.html.firstChild;
 
+          if(monthObj.num <= this.current.getMonth() || (day.month === this.currentMonth && day.date < this.current.getDate())){
+            element.parentElement.classList.add('past');
+          }
+
           // Mark current day
           if (day.month === this.currentMonth && day.date === this.currentDate) {
             element.classList.add('date-current')
@@ -74,6 +78,8 @@ export class Year {
           element.dataset.shortWeekday = day.weekDay[`${language}`].short;
           element.dataset.date = day.date;
           element.dataset.kind = day.kind;
+
+
           index++;
         } else {
           new Day("blank").renderIn(block);
