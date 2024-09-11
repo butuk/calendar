@@ -6,7 +6,10 @@ import { Day } from "./Day.js";
 export class Year {
   constructor() {
     this.current = new Date();
-    this.currentMonth = this.current.toLocaleString('default', { month: 'short' }).slice(0, -1);
+    this.currentMonth = this.current.toLocaleString('default', { month: 'short' });
+  if(this.currentMonth.length > 3) {
+    this.currentMonth = this.currentMonth.slice(0, -1);
+  };
     this.currentDate = this.current.getDate();
   }
 
