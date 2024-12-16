@@ -36,7 +36,7 @@ export const holidays = {
       bel_1: "Дзень Перамогі",
       bel_2: "Dzień Pieramohi",
     },
-    "5-14": {
+    radunitsa: {
       eng: "Radunitsa",
       pol: "Radunica",
       bel_1: "Радаўніца",
@@ -74,13 +74,13 @@ export const holidays = {
       bel_1: "Свята трох каралёў",
       bel_2: "Sviata troch karalioŭ",
     },
-    "3-31": {
+    easter: {
       eng: "Easter",
       pol: "Wielkanoc",
       bel_1: "Вялікдзень",
       bel_2: "Vialikdzień",
     },
-    "4-1": {
+    monday: {
       eng: "Easter Monday",
       pol: "Poniedziałek Wielkanocny",
       bel_1: "Велікодны панядзелак",
@@ -98,13 +98,13 @@ export const holidays = {
       bel_1: "Дзень Канстытуцыі 3 мая",
       bel_2: "Dzień Kanstytucyi 3 maja",
     },
-    "5-19": {
+    green: {
       eng: "Green Christmas",
       pol: "Zielone Świątki",
       bel_1: "Зялёныя Каляды",
       bel_2: "Zialionyja Kaliady",
     },
-    "5-30": {
+    body: {
       eng: "The Body Of God",
       pol: "Boże Ciało",
       bel_1: "Цела Божае",

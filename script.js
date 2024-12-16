@@ -25,7 +25,8 @@ if (savedLanguage) {
 }
 
 if (savedCountry) {
-  country = _holidays[savedCountry];
+  country = savedCountry;
+  //country = _holidays[savedCountry];
   const countries = document.querySelectorAll(".country");
   for (let item of countries) {
     if (item.dataset.country === savedCountry) {
@@ -35,7 +36,8 @@ if (savedCountry) {
     }
   }
 } else {
-  country = _holidays["poland"]; //by default
+  country = "poland";
+  //country = _holidays["poland"]; //by default
 }
 
 // Browser tab title
@@ -45,11 +47,8 @@ document.title = `${currentDate.getDate()}.${
 }.${currentDate.getFullYear()}`;
 
 // Calendar
-
-let chosenYear = 2025;
-let currentCountry = "belarus";
 const newYear = new Year();
-newYear.localize(currentCountry);
+newYear.localize(country);
 newYear.translate(language);
 console.log(newYear);
 

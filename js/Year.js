@@ -2,6 +2,7 @@ import { Day } from "./Day.js";
 import { weekdays } from "../data/weekdays.js";
 import { months } from "../data/months.js";
 import { holidays } from "../data/holidays.js";
+import { floatingHolidaysDates } from "../data/floatingHolidaysDates.js";
 
 export class Year {
   constructor(yearNumber) {
@@ -15,6 +16,7 @@ export class Year {
       const monthNumber = Number(date.getMonth()) + 1;
       const day = new Day(this.year, monthNumber, dayNumber, weekday);
       day.monthDate = `${monthNumber}-${dayNumber}`;
+      day.working = day.weekday !== 0 && day.weekday !== 6;
       this.days.push(day);
     }
   }
@@ -34,12 +36,21 @@ export class Year {
   }
 
   localize(country) {
+    //Handling holidays
     this.country = country;
-    for (let day of this.days) {
-      day.working = day.weekday !== 0 && day.weekday !== 6;
-    }
     const holidaysItems = holidays[country];
-    const daysHashMap = new Map(this.days.map((obj) => [obj.monthDate, obj])); // Finding a day object by its monthDate field
+    const holidaysFloats = floatingHolidaysDates[country];
+
+    //Holidays with floating dates
+    for (let key in holidaysFloats) {
+      if (holidaysItems.hasOwnProperty(key)) {
+        const newKey = holidaysFloats[key][this.year];
+        holidaysItems[newKey] = holidaysItems[key];
+        delete holidaysItems[key];
+      }
+    }
+    // Finding a day objects by its monthDate field and set them as holidays
+    const daysHashMap = new Map(this.days.map((obj) => [obj.monthDate, obj]));
     for (let date in holidaysItems) {
       const day = daysHashMap.get(date);
       day.working = false;
