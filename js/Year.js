@@ -1,95 +1,50 @@
-import { months, weekDays } from "../data/commonData.js";
-import {weekDaysNames} from '../data/weekdaysNames.js';
-import { createNameCell, makeTilt, makeIndent } from "./functions.js";
 import { Day } from "./Day.js";
+import { weekdays } from "../data/weekdays.js";
+import { months } from "../data/months.js";
+import { holidays } from "../data/holidays.js";
 
 export class Year {
-  constructor() {
-    this.current = new Date();
-    this.currentMonth = this.current.toLocaleString('default', { month: 'short' });
-  if(this.currentMonth.length > 3) {
-    this.currentMonth = this.currentMonth.slice(0, -1);
-  };
-    this.currentDate = this.current.getDate();
-  }
-
-  createDefault() {
-    this.weekLength = 7;
-    this.monthsAmount = 12;
+  constructor(yearNumber) {
+    this.year = yearNumber ? yearNumber : new Date().getFullYear();
     this.days = [];
-    this.monthsNames = Object.keys(months);
-    let weekDayCount = 0;
-    for (let month = 0; month <= this.monthsAmount - 1; month++) {
-      const monthObj = Object.values(months)[`${month}`];
-      for (let date = 1; date <= monthObj.daysAmount; date++) {
-        const day = new Day(
-          weekDays[weekDayCount],
-          this.monthsNames[month],
-          date,
-        );
-        day.monthName = monthObj.name;
-        day.weekDay = weekDaysNames[weekDayCount];
-        weekDayCount =
-          this.weekLength - 1 <= weekDayCount ? 0 : weekDayCount + 1;
-        this.days.push(day);
-      }
+    const start = new Date(this.year, 0, 1); // January 1st
+    const end = new Date(this.year + 1, 0, 1); // January 1st of the next yearNumber
+    for (let date = start; date < end; date.setDate(date.getDate() + 1)) {
+      const dayNumber = date.getDate();
+      const weekday = date.getDay();
+      const monthNumber = Number(date.getMonth()) + 1;
+      const day = new Day(this.year, monthNumber, dayNumber, weekday);
+      day.monthDate = `${monthNumber}-${dayNumber}`;
+      this.days.push(day);
     }
-    return this
   }
 
-  switchTo(country) {
-    for (let item of country) {
-      const fullDate = new Date(item.date);
-      const month = fullDate.toLocaleString('default', { month: 'short' });
-      const date = fullDate.getDate();
-      for (let day of this.days) {
-        if(day.date === date && day.month === month) {
-          day.kind = item.kind;
-        }
+  translate(language) {
+    this.language = language;
+    for (let day of this.days) {
+      const month = day.month;
+      day.monthName = months[month - 1][language];
+      const weekday = day.weekday;
+      day.weekdayNameShort = weekdays[weekday][language]["short"];
+      day.weekdayNameLong = weekdays[weekday][language]["long"];
+      if (day.holiday) {
+        day.holidayName = day.holiday[language];
       }
     }
-
-    return this
   }
 
-  renderIn(block, cellAmount, indent, language) {
-    makeIndent(block, indent);
-
-    let index = 0;
-    for (let month = 0; month <= this.monthsAmount - 1; month++) {
-      const monthObj = Object.values(months)[`${month}`];
-      const monthName = monthObj.name[`${language}`].charAt(0).toUpperCase();
-      createNameCell(block, monthName);
-      for (let cell = 1; cell <= cellAmount; cell++) {
-        if (cell <= monthObj.daysAmount) {
-          const day = this.days[index];
-
-          day.renderIn(block);
-          const element = day.html.firstChild;
-
-          if(monthObj.num <= this.current.getMonth() || (day.month === this.currentMonth && day.date < this.current.getDate())){
-            element.parentElement.classList.add('past');
-          }
-
-          // Mark current day
-          if (day.month === this.currentMonth && day.date === this.currentDate) {
-            element.classList.add('date-current')
-          }
-
-          element.dataset.monthNumber = monthObj.num;
-          element.dataset.month = day.monthName[`${language}`];
-          element.dataset.shortWeekday = day.weekDay[`${language}`].short;
-          element.dataset.date = day.date;
-          element.dataset.kind = day.kind;
-
-
-          index++;
-        } else {
-          new Day("blank").renderIn(block);
-        }
-      }
+  localize(country) {
+    this.country = country;
+    for (let day of this.days) {
+      day.working = day.weekday !== 0 && day.weekday !== 6;
     }
-    makeTilt(block, 32);
-    this.html = block;
+    const holidaysItems = holidays[country];
+    const daysHashMap = new Map(this.days.map((obj) => [obj.monthDate, obj])); // Finding a day object by its monthDate field
+    for (let date in holidaysItems) {
+      const day = daysHashMap.get(date);
+      day.working = false;
+      day.holiday = holidaysItems[date];
+      day.holidayName = day.holiday[this.language];
+    }
   }
 }

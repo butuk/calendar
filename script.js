@@ -1,7 +1,8 @@
 import { markElementAmongOthers, createElement } from "./js/functions.js";
 import { CalendarHead } from "./js/CalendarHead.js";
+import { _Year } from "./js/_Year.js";
 import { Year } from "./js/Year.js";
-import { holidays } from "./data/holidays.js";
+import { _holidays } from "./data/_holidays.js";
 
 // Language and country
 let language;
@@ -20,11 +21,11 @@ if (savedLanguage) {
     }
   }
 } else {
-  language = "eng";
+  language = "eng"; //by default
 }
 
 if (savedCountry) {
-  country = holidays[savedCountry];
+  country = _holidays[savedCountry];
   const countries = document.querySelectorAll(".country");
   for (let item of countries) {
     if (item.dataset.country === savedCountry) {
@@ -34,26 +35,31 @@ if (savedCountry) {
     }
   }
 } else {
-  country = holidays["poland"];
+  country = _holidays["poland"]; //by default
 }
 
-// Title
+// Browser tab title
 const currentDate = new Date();
 document.title = `${currentDate.getDate()}.${
   currentDate.getMonth() + 1
 }.${currentDate.getFullYear()}`;
 
 // Calendar
+
+let chosenYear = 2025;
+let currentCountry = "belarus";
+const newYear = new Year();
+newYear.localize(currentCountry);
+newYear.translate(language);
+console.log(newYear);
+
 const head = new CalendarHead();
-const year = new Year();
+const year = new _Year();
 
 // Layout creation
 const slides = document.querySelector(".slides");
 for (let i = 0; i < 3; i++) {
   const header = createElement("section", "header");
-  const logo = createElement("div", "logo");
-  logo.classList.add("day");
-  logo.textContent = "2024";
   const slide = createElement("section", "slide");
   const hr = createElement("section", "hr");
   const calendar = createElement("section", "grid");
@@ -61,10 +67,10 @@ for (let i = 0; i < 3; i++) {
   head.renderIn(hr, 31, 3);
 
   year.createDefault();
+
   year.switchTo(country);
   year.renderIn(calendar, 31, 3, language);
 
-  header.append(logo);
   slide.append(header);
   slide.append(hr);
   slide.append(calendar);
@@ -110,7 +116,7 @@ countries.addEventListener("click", (e) => {
   markElementAmongOthers(target, "country_active");
   year.createDefault();
   if (target) {
-    country = holidays[target.dataset.country];
+    country = _holidays[target.dataset.country];
     localStorage.setItem("country", target.dataset.country);
   }
   year.switchTo(country);

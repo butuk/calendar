@@ -1,4 +1,4 @@
-import { Day } from "./Day.js";
+import { _Day } from "./_Day.js";
 
 export function createElement(element, className) {
   const result = document.createElement(`${element}`);
@@ -26,7 +26,7 @@ export function createNameCell(place, text) {
 
 export function makeIndent(block, amount) {
   for (let i = 0; i < amount; i++) {
-    new Day("blank").renderIn(block);
+    new _Day("blank").renderIn(block);
   }
 }
 
