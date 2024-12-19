@@ -3,6 +3,7 @@ import { weekdays } from "../data/weekdays.js";
 import { months } from "../data/months.js";
 import { holidays } from "../data/holidays.js";
 import { floatingHolidaysDates } from "../data/floatingHolidaysDates.js";
+import { daysExchanges } from "../data/daysExchanges.js";
 
 export class Year {
   constructor(yearNumber) {
@@ -13,16 +14,25 @@ export class Year {
     for (let date = start; date < end; date.setDate(date.getDate() + 1)) {
       const dayNumber = date.getDate();
       const weekday = date.getDay();
-      const monthNumber = Number(date.getMonth()) + 1;
-      const day = new Day(this.year, monthNumber, dayNumber, weekday);
-      day.monthDate = `${monthNumber}-${dayNumber}`;
-      day.working = day.weekday !== 0 && day.weekday !== 6;
+      const month = Number(date.getMonth()) + 1;
+      const day = new Day(this.year, month, dayNumber, weekday);
       this.days.push(day);
     }
+    this.createHashMap(this.year);
+  }
+
+  createHashMap(year) {
+    const yearNum = this.year;
+    this.yearDatesMap = new Map(
+      this.days.map(function (obj) {
+        const hashKey = `${yearNum}-${obj.month}-${obj.date}`;
+        return [hashKey, obj];
+      }),
+    );
   }
 
   translate(language) {
-    this.language = language;
+    /*this.language = language;
     for (let day of this.days) {
       const month = day.month;
       day.monthName = months[month - 1][language];
@@ -32,30 +42,46 @@ export class Year {
       if (day.holiday) {
         day.holidayName = day.holiday[language];
       }
-    }
+    }*/
+    console.log(this);
+    return this;
   }
 
   localize(country) {
-    //Handling holidays
-    this.country = country;
+    //Distinquish working and non-working days
+    for (let day of this.days) {
+      day.working = weekdays[country][day.weekday].working;
+    }
     const holidaysItems = holidays[country];
-    const holidaysFloats = floatingHolidaysDates[country];
-
-    //Holidays with floating dates
-    for (let key in holidaysFloats) {
-      if (holidaysItems.hasOwnProperty(key)) {
-        const newKey = holidaysFloats[key][this.year];
-        holidaysItems[newKey] = holidaysItems[key];
-        delete holidaysItems[key];
+    //Merge steady holidays with floating this year holidays
+    if (floatingHolidaysDates[country]) {
+      const holidaysFloats = floatingHolidaysDates[country];
+      for (let key in holidaysFloats) {
+        if (holidaysItems.hasOwnProperty(key)) {
+          const newKey = holidaysFloats[key][this.year];
+          holidaysItems[newKey] = holidaysItems[key];
+          delete holidaysItems[key];
+        }
       }
     }
-    // Finding a day objects by its monthDate field and set them as holidays
-    const daysHashMap = new Map(this.days.map((obj) => [obj.monthDate, obj]));
+    //Make holidays non-working days
     for (let date in holidaysItems) {
-      const day = daysHashMap.get(date);
+      const day = this.yearDatesMap.get(`${this.year}-${date}`);
       day.working = false;
-      day.holiday = holidaysItems[date];
-      day.holidayName = day.holiday[this.language];
     }
+    //Handle other working and non-working days
+    if (daysExchanges[country]) {
+      const workDaysMask = daysExchanges[country].working;
+      const changes = daysExchanges[country].dates[this.year];
+      for (let item of changes) {
+        const fromDay = this.yearDatesMap.get(`${this.year}-${item.from}`);
+        const toDay = this.yearDatesMap.get(`${this.year}-${item.to}`);
+        fromDay.working = workDaysMask.from;
+        toDay.working = workDaysMask.to;
+        console.log(item, fromDay, toDay);
+      }
+    }
+    console.log(this);
+    return this;
   }
 }

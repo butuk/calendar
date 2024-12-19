@@ -47,10 +47,9 @@ document.title = `${currentDate.getDate()}.${
 }.${currentDate.getFullYear()}`;
 
 // Calendar
-const newYear = new Year();
+const newYear = new Year(2025);
 newYear.localize(country);
 newYear.translate(language);
-console.log(newYear);
 
 const head = new CalendarHead();
 const year = new _Year();
@@ -119,6 +118,8 @@ countries.addEventListener("click", (e) => {
     localStorage.setItem("country", target.dataset.country);
   }
   year.switchTo(country);
+  newYear.localize(target.dataset.country);
+
   for (let calendar of calendars) {
     calendar.innerHTML = "";
     year.renderIn(calendar, 31, 3, language);
@@ -133,6 +134,7 @@ languages.addEventListener("click", (e) => {
   if (target) {
     language = target.dataset.language;
     localStorage.setItem("language", language);
+    newYear.translate(language);
   }
   for (let calendar of calendars) {
     calendar.innerHTML = "";
