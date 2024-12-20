@@ -1,21 +1,17 @@
 export const daysExchanges = {
   belarus: {
     translate: {
-      eng: {
-        from: "Working day postponement",
-        to: "Postponed working day",
+      from: {
+        eng: "Working day postponement",
+        pol: "Przesunięcie dnia pracy",
+        bel_1: "Перанос працоўнага дня",
+        bel_2: "Pieranos pracoŭnaha dnia",
       },
-      pol: {
-        from: "Przesunięcie dnia pracy",
-        to: "Przesunięty dzień pracy",
-      },
-      bel_1: {
-        from: "Перанос працоўнага дня",
-        to: "Перанесены працоўны дзень",
-      },
-      bel_2: {
-        from: "Pieranos pracoŭnaha dnia",
-        to: "Pieraniesieny pracoŭny dzień",
+      to: {
+        eng: "Postponed working day",
+        pol: "Przesunięty dzień pracy",
+        bel_1: "Перанесены працоўны дзень",
+        bel_2: "Pieraniesieny pracoŭny dzień",
       },
     },
     working: {

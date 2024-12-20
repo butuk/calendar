@@ -22,7 +22,7 @@ export class Year {
   }
 
   createHashMap(year) {
-    const yearNum = this.year;
+    const yearNum = year;
     this.yearDatesMap = new Map(
       this.days.map(function (obj) {
         const hashKey = `${yearNum}-${obj.month}-${obj.date}`;
@@ -32,25 +32,27 @@ export class Year {
   }
 
   translate(language) {
-    /*this.language = language;
     for (let day of this.days) {
       const month = day.month;
       day.monthName = months[month - 1][language];
       const weekday = day.weekday;
-      day.weekdayNameShort = weekdays[weekday][language]["short"];
-      day.weekdayNameLong = weekdays[weekday][language]["long"];
-      if (day.holiday) {
-        day.holidayName = day.holiday[language];
+      day.weekdayNameShort = weekdays[weekday]["translate"][language]["short"];
+      day.weekdayNameLong = weekdays[weekday]["translate"][language]["long"];
+    }
+    if (this.specialDays) {
+      for (let specialDay in this.specialDays) {
+        const day = this.yearDatesMap.get(`${this.year}-${specialDay}`);
+        day.holiday = this.specialDays[specialDay][language];
       }
-    }*/
-    console.log(this);
+    }
+    //console.log(this);
     return this;
   }
 
   localize(country) {
-    //Distinquish working and non-working days
+    //Distinguish working and non-working days
     for (let day of this.days) {
-      day.working = weekdays[country][day.weekday].working;
+      day.working = weekdays[day.weekday].working;
     }
     const holidaysItems = holidays[country];
     //Merge steady holidays with floating this year holidays
@@ -69,19 +71,29 @@ export class Year {
       const day = this.yearDatesMap.get(`${this.year}-${date}`);
       day.working = false;
     }
-    //Handle other working and non-working days
+    //Handle other special days types changes
     if (daysExchanges[country]) {
+      const exchangeFrom = {};
+      const exchangeTo = {};
       const workDaysMask = daysExchanges[country].working;
+      const daysNames = daysExchanges[country].translate;
       const changes = daysExchanges[country].dates[this.year];
+      for (let change of changes) {
+        exchangeFrom[change["from"]] = daysNames["from"];
+        exchangeTo[change["to"]] = daysNames["to"];
+      }
       for (let item of changes) {
         const fromDay = this.yearDatesMap.get(`${this.year}-${item.from}`);
         const toDay = this.yearDatesMap.get(`${this.year}-${item.to}`);
         fromDay.working = workDaysMask.from;
         toDay.working = workDaysMask.to;
-        console.log(item, fromDay, toDay);
       }
+      //Gether all the special days in one object
+      this.specialDays = { ...holidaysItems, ...exchangeFrom, ...exchangeTo };
+    } else {
+      this.specialDays = holidaysItems;
     }
-    console.log(this);
+    //console.log(this);
     return this;
   }
 }

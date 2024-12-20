@@ -47,7 +47,8 @@ document.title = `${currentDate.getDate()}.${
 }.${currentDate.getFullYear()}`;
 
 // Calendar
-const newYear = new Year(2025);
+const newYear = new Year();
+
 newYear.localize(country);
 newYear.translate(language);
 
