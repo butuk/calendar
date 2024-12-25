@@ -3,6 +3,13 @@ import { CalendarHead } from "./js/CalendarHead.js";
 import { _Year } from "./js/_Year.js";
 import { Year } from "./js/Year.js";
 import { _holidays } from "./data/_holidays.js";
+import { YearVisualization } from "./js/YearVisualization.js";
+
+// Browser tab title
+const currentDate = new Date();
+document.title = `${currentDate.getDate()}.${
+  currentDate.getMonth() + 1
+}.${currentDate.getFullYear()}`;
 
 // Language and country
 let language;
@@ -40,23 +47,16 @@ if (savedCountry) {
   //country = _holidays["poland"]; //by default
 }
 
-// Browser tab title
-const currentDate = new Date();
-document.title = `${currentDate.getDate()}.${
-  currentDate.getMonth() + 1
-}.${currentDate.getFullYear()}`;
-
 // Calendar
 const newYear = new Year();
-
-newYear.localize(country);
-newYear.translate(language);
+const visualization = new YearVisualization(newYear, country, language);
+visualization.renderIn("content");
 
 const head = new CalendarHead();
 const year = new _Year();
 
 // Layout creation
-const slides = document.querySelector(".slides");
+const slides = document.querySelector("._slides");
 for (let i = 0; i < 3; i++) {
   const header = createElement("section", "header");
   const slide = createElement("section", "slide");
@@ -70,10 +70,10 @@ for (let i = 0; i < 3; i++) {
   year.switchTo(country);
   year.renderIn(calendar, 31, 3, language);
 
-  slide.append(header);
+  /*slide.append(header);
   slide.append(hr);
   slide.append(calendar);
-  slides.append(slide);
+  slides.append(slide);*/
 
   // Days on hover
   calendar.addEventListener("mouseover", (e) => {
@@ -119,7 +119,7 @@ countries.addEventListener("click", (e) => {
     localStorage.setItem("country", target.dataset.country);
   }
   year.switchTo(country);
-  newYear.localize(target.dataset.country);
+  visualization.localize(target.dataset.country);
 
   for (let calendar of calendars) {
     calendar.innerHTML = "";
@@ -135,13 +135,14 @@ languages.addEventListener("click", (e) => {
   if (target) {
     language = target.dataset.language;
     localStorage.setItem("language", language);
-    newYear.translate(language);
+    visualization.translate(language);
   }
   for (let calendar of calendars) {
     calendar.innerHTML = "";
     year.renderIn(calendar, 31, 3, language);
   }
 });
+/*
 
 // On scrolling
 function handleWheelEvent(event) {
@@ -217,3 +218,4 @@ function handleTouchEnd() {
   isDragging = false;
   document.body.style.cursor = "grab";
 }
+*/
