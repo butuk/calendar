@@ -1,8 +1,5 @@
-import { markElementAmongOthers, createElement } from "./js/functions.js";
-import { CalendarHead } from "./js/CalendarHead.js";
-import { _Year } from "./js/_Year.js";
+import { markElementAmongOthers } from "./js/functions.js";
 import { Year } from "./js/Year.js";
-import { _holidays } from "./data/_holidays.js";
 import { YearVisualization } from "./js/YearVisualization.js";
 
 // Browser tab title
@@ -43,88 +40,24 @@ if (savedCountry) {
     }
   }
 } else {
-  country = "poland";
-  //country = _holidays["poland"]; //by default
+  country = "poland"; //by default
 }
 
 // Calendar
 const newYear = new Year();
 const visualization = new YearVisualization(newYear, country, language);
-visualization.renderIn("content");
-
-const head = new CalendarHead();
-const year = new _Year();
-
-// Layout creation
-const slides = document.querySelector("._slides");
-for (let i = 0; i < 3; i++) {
-  const header = createElement("section", "header");
-  const slide = createElement("section", "slide");
-  const hr = createElement("section", "hr");
-  const calendar = createElement("section", "grid");
-
-  head.renderIn(hr, 31, 3);
-
-  year.createDefault();
-
-  year.switchTo(country);
-  year.renderIn(calendar, 31, 3, language);
-
-  /*slide.append(header);
-  slide.append(hr);
-  slide.append(calendar);
-  slides.append(slide);*/
-
-  // Days on hover
-  calendar.addEventListener("mouseover", (e) => {
-    const target = e.target.closest(".date");
-    const firstChild = target ? target.children[0] : null;
-
-    if (firstChild && !firstChild.classList.contains("blank")) {
-      firstChild.classList.add("day_hover");
-
-      const date = firstChild.parentElement.dataset.date;
-      const month = firstChild.parentElement.dataset.monthNumber;
-      const weekday = firstChild.parentElement.dataset.shortWeekday;
-      const message = `${weekday}<br>${date}.${month}`;
-      const text = document.createElement("div");
-      text.classList.add("cell-text");
-      text.innerHTML = message;
-      firstChild.append(text);
-    }
-  });
-
-  calendar.addEventListener("mouseout", (e) => {
-    const text = document.querySelector(".cell-text");
-    const parent = text && text.parentElement ? text.parentElement : null;
-    if (parent) {
-      parent.removeChild(text);
-    }
-    const target = e.target.closest(".date");
-    const firstChild = target ? target.children[0] : null;
-    if (firstChild) firstChild.classList.remove("day_hover");
-  });
-}
-
-const calendars = document.querySelectorAll(".grid");
+visualization.render("content");
 
 // Switching countries
 const countries = document.querySelector(".countries");
 countries.addEventListener("click", (e) => {
   const target = e.target.closest(".country");
   markElementAmongOthers(target, "country_active");
-  year.createDefault();
   if (target) {
-    country = _holidays[target.dataset.country];
     localStorage.setItem("country", target.dataset.country);
   }
-  year.switchTo(country);
   visualization.localize(target.dataset.country);
-
-  for (let calendar of calendars) {
-    calendar.innerHTML = "";
-    year.renderIn(calendar, 31, 3, language);
-  }
+  visualization.render();
 });
 
 // Switching languages
@@ -135,47 +68,16 @@ languages.addEventListener("click", (e) => {
   if (target) {
     language = target.dataset.language;
     localStorage.setItem("language", language);
-    visualization.translate(language);
   }
-  for (let calendar of calendars) {
-    calendar.innerHTML = "";
-    year.renderIn(calendar, 31, 3, language);
-  }
+  visualization.translate(language);
+  visualization.render();
 });
-/*
 
 // On scrolling
-function handleWheelEvent(event) {
-  const window = document.documentElement.clientWidth;
-  const deltaY = event.deltaY;
-  const deltaX = event.deltaX;
-  let left = slides.getBoundingClientRect().left;
-
-  let leftBorder = -2 * window;
-  if (
-    slides.getBoundingClientRect().left < leftBorder ||
-    slides.getBoundingClientRect().left > 0
-  ) {
-    slides.style.left = -window + "px";
-    left = slides.getBoundingClientRect().left;
-  }
-
-  if (deltaY > 0) {
-    slides.style.left = left + deltaY + "px";
-  } else if (deltaY < 0) {
-    slides.style.left = left + deltaY + "px";
-  }
-
-  if (deltaX < 0) {
-    slides.style.left = left - deltaX + "px";
-  } else if (deltaX > 0) {
-    slides.style.left = left - deltaX + "px";
-  }
-
-  event.preventDefault();
-}
-
-document.addEventListener("wheel", handleWheelEvent, { passive: false });
+document.addEventListener("wheel", visualization.handleWheelEvent, {
+  passive: false,
+});
+/*
 
 // Slider
 

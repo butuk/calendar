@@ -1,4 +1,5 @@
 import { Day } from "./Day.js";
+import { intToRoman } from "./functions.js";
 
 export class Year {
   constructor(yearNumber) {
@@ -11,6 +12,8 @@ export class Year {
       const weekday = date.getDay();
       const month = Number(date.getMonth()) + 1;
       const day = new Day(this.yearNum, month, dayNumber, weekday);
+      day.monthName = intToRoman(day.month);
+      day.working = weekday !== 0 && weekday !== 6;
       this.days.push(day);
     }
     this.createHashMap(this.yearNum);

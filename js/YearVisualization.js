@@ -3,15 +3,19 @@ import { weekdays } from "../data/weekdays.js";
 import { holidays } from "../data/holidays.js";
 import { floatingHolidaysDates } from "../data/floatingHolidaysDates.js";
 import { daysExchanges } from "../data/daysExchanges.js";
-import { createElement } from "./functions.js";
+import { createElement, intToRoman } from "./functions.js";
 
 export class YearVisualization {
   constructor(year, country, language) {
     this.year = year;
     this.country = country;
     this.language = language;
-
-    this.localize(this.country);
+    if (this.country) {
+      this.localize(this.country);
+    }
+    if (this.language) {
+      this.translate(this.language);
+    }
   }
 
   translate(language) {
@@ -33,11 +37,11 @@ export class YearVisualization {
         day.holiday = this.specialDays[specialDay][this.language];
       }
     }
-    //console.log(this);
     return this;
   }
 
   localize(country) {
+    this.country = country;
     //Distinguish working and non-working days
     for (let day of this.year.days) {
       day.working = weekdays[day.weekday].working;
@@ -57,7 +61,6 @@ export class YearVisualization {
     //Make holidays non-working days
     for (let date in holidaysItems) {
       const day = this.year.yearDatesMap.get(`${this.year.yearNum}-${date}`);
-
       day.working = false;
     }
     //Handle other special days types changes
@@ -86,17 +89,25 @@ export class YearVisualization {
     } else {
       this.specialDays = holidaysItems;
     }
-    //console.log(this);
-    this.country = country;
-    this.translate(this.language);
     return this;
   }
 
-  renderIn(block) {
+  render(block) {
+    // Its essential to pass the block only for the first time
+    if (block) {
+      this.block = block;
+      this.content = document.querySelector(`.${this.block}`);
+      this.section = createElement("section", "slider");
+      this.slides = createElement("div", "slides");
+    }
     const delta = 3;
-    const content = document.querySelector(`.${block}`);
-    const section = createElement("section", "slider");
-    const slides = createElement("div", "slides");
+
+    const oldVisualization = document.querySelectorAll(".slide");
+    for (let slide of oldVisualization) {
+      if (slide) {
+        slide.remove();
+      }
+    }
     for (let i = 0; i < 3; i++) {
       const slide = createElement("div", "slide");
       //Creating table header
@@ -112,24 +123,66 @@ export class YearVisualization {
       for (let rowNum = 0; rowNum < 12; rowNum++) {
         const monthName = createElement("div", "name");
         monthName.style.gridColumn = "1";
-        monthName.style.gridRow = `${rowNum + 2}`;
-        monthName.textContent = months[rowNum][this.language]
-          .charAt(0)
-          .toUpperCase();
-        console.log();
+        monthName.style.gridRow = `${rowNum + 3}`;
+        if (this.language) {
+          monthName.textContent = months[rowNum][this.language]
+            .charAt(0)
+            .toUpperCase();
+        } else {
+          monthName.textContent = intToRoman(rowNum + 1);
+        }
         slide.append(monthName);
       }
       //Creating table body
       for (let day of this.year.days) {
         const cell = createElement("div", "cell");
-        cell.style.gridRow = day.month + 1;
+        cell.style.gridRow = day.month + 2;
         cell.style.gridColumn = day.date + 1;
         cell.style.top = `${delta * day.date}%`;
+        let dayMark;
+        if (day.working) {
+          dayMark = createElement("div", "day");
+        } else {
+          dayMark = createElement("div", "special-day");
+        }
+
+        cell.append(dayMark);
         slide.append(cell);
       }
-      slides.append(slide);
+      this.slides.append(slide);
     }
-    section.append(slides);
-    content.append(section);
+    this.section.append(this.slides);
+    this.content.append(this.section);
+  }
+
+  handleWheelEvent(event) {
+    const slides = document.querySelector(".slides");
+    const window = document.documentElement.clientWidth;
+    const deltaY = event.deltaY;
+    const deltaX = event.deltaX;
+    let left = slides.getBoundingClientRect().left;
+
+    let leftBorder = -2 * window;
+    if (
+      slides.getBoundingClientRect().left < leftBorder ||
+      slides.getBoundingClientRect().left > 0
+    ) {
+      slides.style.left = -window + "px";
+      left = slides.getBoundingClientRect().left;
+    }
+
+    if (deltaY > 0) {
+      slides.style.left = left + deltaY + "px";
+    } else if (deltaY < 0) {
+      slides.style.left = left + deltaY + "px";
+    }
+
+    if (deltaX < 0) {
+      slides.style.left = left - deltaX + "px";
+    } else if (deltaX > 0) {
+      slides.style.left = left - deltaX + "px";
+    }
+
+    event.preventDefault();
   }
 }
