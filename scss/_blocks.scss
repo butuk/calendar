@@ -109,11 +109,6 @@
   @extend %transition;
 }
 
-.workday {
-  @include circle(6%, var(--main-color));
-  @extend %transition;
-}
-
 .name {
   display: flex;
   height: 100%;
@@ -121,35 +116,6 @@
     justify-content: center;
   position: relative;
 }
-//Old slides
-/*
-._slider {
-  //padding-top: 10em;
-  position: relative;
-  width: 100vw;
-  height: 90vh;
-  overflow: hidden;
-  display: flex;
-}
-
-._slides {
-  display: flex;
-  position: absolute;
-  left: -100vw;
-  bottom: 0;
-}
-
-.header {
-  @include main-grid(1);
-}
-
-._cell {
-  display: flex;
-  position: relative;
-  height: 5vh;
-  justify-content: center;
-}
-*/
 
 .logo {
   grid-row: 1;
@@ -174,24 +140,9 @@
 }
 
 .date-current {
-  border: 1px solid black;
+  outline: .075em solid black;
+  outline-offset: .75em;
   border-radius: 50%;
-}
-
-
-
-.workday {
-  @include circle(6%, var(--main-color));
-  @extend %transition;
-}
-
-.holiday {
-  @include circle(18%, var(--accent-color));
-  @extend %transition;
-}
-
-.past {
-  opacity: .5;
 }
 
 .day_hover {

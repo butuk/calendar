@@ -105,7 +105,7 @@ table {
   flex-direction: row;
   justify-content: flex-end;
 }*/
-.day_hover, .holiday, .workday, .special-day, .day {
+.day_hover, .special-day, .day {
   transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
 }
 
@@ -204,34 +204,6 @@ table {
   display: block;
 }
 
-.workday {
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  align-self: center;
-  justify-self: center;
-  aspect-ratio: 1/1;
-  margin-left: auto;
-  margin-right: auto;
-  overflow: hidden;
-  border-radius: 50%;
-  background-color: var(--main-color);
-}
-@media screen and (orientation: portrait) {
-  .workday {
-    height: 6%;
-  }
-}
-@media screen and (orientation: landscape) {
-  .workday {
-    width: 6%;
-  }
-}
-.workday::before {
-  content: "";
-  display: block;
-}
-
 .name {
   display: flex;
   height: 100%;
@@ -240,34 +212,6 @@ table {
   position: relative;
 }
 
-/*
-._slider {
-  //padding-top: 10em;
-  position: relative;
-  width: 100vw;
-  height: 90vh;
-  overflow: hidden;
-  display: flex;
-}
-
-._slides {
-  display: flex;
-  position: absolute;
-  left: -100vw;
-  bottom: 0;
-}
-
-.header {
-  @include main-grid(1);
-}
-
-._cell {
-  display: flex;
-  position: relative;
-  height: 5vh;
-  justify-content: center;
-}
-*/
 .logo {
   grid-row: 1;
   grid-column: 4;
@@ -291,68 +235,9 @@ table {
 }
 
 .date-current {
-  border: 1px solid black;
+  outline: 0.075em solid black;
+  outline-offset: 0.75em;
   border-radius: 50%;
-}
-
-.workday {
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  align-self: center;
-  justify-self: center;
-  aspect-ratio: 1/1;
-  margin-left: auto;
-  margin-right: auto;
-  overflow: hidden;
-  border-radius: 50%;
-  background-color: var(--main-color);
-}
-@media screen and (orientation: portrait) {
-  .workday {
-    height: 6%;
-  }
-}
-@media screen and (orientation: landscape) {
-  .workday {
-    width: 6%;
-  }
-}
-.workday::before {
-  content: "";
-  display: block;
-}
-
-.holiday {
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  align-self: center;
-  justify-self: center;
-  aspect-ratio: 1/1;
-  margin-left: auto;
-  margin-right: auto;
-  overflow: hidden;
-  border-radius: 50%;
-  background-color: var(--accent-color);
-}
-@media screen and (orientation: portrait) {
-  .holiday {
-    height: 18%;
-  }
-}
-@media screen and (orientation: landscape) {
-  .holiday {
-    width: 18%;
-  }
-}
-.holiday::before {
-  content: "";
-  display: block;
-}
-
-.past {
-  opacity: 0.5;
 }
 
 .day_hover {

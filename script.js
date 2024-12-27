@@ -1,5 +1,6 @@
 import { markElementAmongOthers } from "./js/functions.js";
 import { Year } from "./js/Year.js";
+import { YearVersion } from "./js/YearVersion.js";
 import { YearVisualization } from "./js/YearVisualization.js";
 
 // Browser tab title
@@ -44,9 +45,9 @@ if (savedCountry) {
 }
 
 // Calendar
-const newYear = new Year();
-const visualization = new YearVisualization(newYear, country, language);
-visualization.render("content");
+const year = new Year();
+const version = new YearVersion(year, country, language);
+const visualization = new YearVisualization(version, "content");
 
 // Switching countries
 const countries = document.querySelector(".countries");
@@ -56,8 +57,8 @@ countries.addEventListener("click", (e) => {
   if (target) {
     localStorage.setItem("country", target.dataset.country);
   }
-  visualization.localize(target.dataset.country);
-  visualization.render();
+  version.localize(target.dataset.country);
+  visualization.render(version);
 });
 
 // Switching languages
@@ -69,55 +70,15 @@ languages.addEventListener("click", (e) => {
     language = target.dataset.language;
     localStorage.setItem("language", language);
   }
-  visualization.translate(language);
-  visualization.render();
+  version.translate(target.dataset.language);
+  visualization.render(version);
 });
 
 // On scrolling
 document.addEventListener("wheel", visualization.handleWheelEvent, {
   passive: false,
 });
-/*
 
 // Slider
-
-let isDragging = false;
-let offsetX;
-
-document.addEventListener("mousedown", handleTouchStart);
-document.addEventListener("touchstart", handleTouchStart);
-
-document.addEventListener("mouseup", handleTouchEnd);
-document.addEventListener("touchend", handleTouchEnd);
-
-function handleTouchStart(event) {
-  isDragging = true;
-  offsetX = event.clientX + Math.abs(slides.getBoundingClientRect().left);
-
-  document.addEventListener("mousemove", handleTouchMove);
-  document.addEventListener("touchmove", handleTouchMove);
-  document.body.style.cursor = "grabbing";
-}
-
-function handleTouchMove(event) {
-  const window = document.documentElement.clientWidth;
-
-  if (isDragging) {
-    let left = event.clientX - offsetX;
-    let leftBorder = -2 * window;
-    if (
-      slides.getBoundingClientRect().left < leftBorder ||
-      slides.getBoundingClientRect().left > 0
-    ) {
-      slides.style.left = window + "px";
-      offsetX = event.clientX + Math.abs(slides.getBoundingClientRect().left);
-    }
-    slides.style.left = left + "px";
-  }
-}
-
-function handleTouchEnd() {
-  isDragging = false;
-  document.body.style.cursor = "grab";
-}
-*/
+document.addEventListener("mousedown", visualization.handleGrab);
+document.addEventListener("touchstart", visualization.handleGrab);

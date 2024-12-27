@@ -1,107 +1,25 @@
 import { months } from "../data/months.js";
-import { weekdays } from "../data/weekdays.js";
-import { holidays } from "../data/holidays.js";
-import { floatingHolidaysDates } from "../data/floatingHolidaysDates.js";
-import { daysExchanges } from "../data/daysExchanges.js";
 import { createElement, intToRoman } from "./functions.js";
 
 export class YearVisualization {
-  constructor(year, country, language) {
-    this.year = year;
-    this.country = country;
-    this.language = language;
-    if (this.country) {
-      this.localize(this.country);
-    }
-    if (this.language) {
-      this.translate(this.language);
-    }
+  constructor(object, block) {
+    this.handleGrab = this.handleGrab.bind(this);
+    this.handleTouchMove = this.handleTouchMove.bind(this);
+    this.handleTouchEnd = this.handleTouchEnd.bind(this);
+    this.render(object, block);
   }
 
-  translate(language) {
-    this.language = language;
-    for (let day of this.year.days) {
-      const month = day.month;
-      day.monthName = months[month - 1][this.language];
-      const weekday = day.weekday;
-      day.weekdayNameShort =
-        weekdays[weekday]["translate"][this.language]["short"];
-      day.weekdayNameLong =
-        weekdays[weekday]["translate"][this.language]["long"];
-    }
-    if (this.specialDays) {
-      for (let specialDay in this.specialDays) {
-        const day = this.year.yearDatesMap.get(
-          `${this.year.yearNum}-${specialDay}`,
-        );
-        day.holiday = this.specialDays[specialDay][this.language];
-      }
-    }
-    return this;
-  }
-
-  localize(country) {
-    this.country = country;
-    //Distinguish working and non-working days
-    for (let day of this.year.days) {
-      day.working = weekdays[day.weekday].working;
-    }
-    const holidaysItems = holidays[country];
-    //Merge steady holidays with floating this year holidays
-    if (floatingHolidaysDates[country]) {
-      const holidaysFloats = floatingHolidaysDates[country];
-      for (let key in holidaysFloats) {
-        if (holidaysItems.hasOwnProperty(key)) {
-          const newKey = holidaysFloats[key][this.year.yearNum];
-          holidaysItems[newKey] = holidaysItems[key];
-          delete holidaysItems[key];
-        }
-      }
-    }
-    //Make holidays non-working days
-    for (let date in holidaysItems) {
-      const day = this.year.yearDatesMap.get(`${this.year.yearNum}-${date}`);
-      day.working = false;
-    }
-    //Handle other special days types changes
-    if (daysExchanges[country]) {
-      const exchangeFrom = {};
-      const exchangeTo = {};
-      const workDaysMask = daysExchanges[country].working;
-      const daysNames = daysExchanges[country].translate;
-      const changes = daysExchanges[country].dates[this.year.yearNum];
-      for (let change of changes) {
-        exchangeFrom[change["from"]] = daysNames["from"];
-        exchangeTo[change["to"]] = daysNames["to"];
-      }
-      for (let item of changes) {
-        const fromDay = this.year.yearDatesMap.get(
-          `${this.year.yearNum}-${item.from}`,
-        );
-        const toDay = this.year.yearDatesMap.get(
-          `${this.year.yearNum}-${item.to}`,
-        );
-        fromDay.working = workDaysMask.from;
-        toDay.working = workDaysMask.to;
-      }
-      //Gather all the special days in one object
-      this.specialDays = { ...holidaysItems, ...exchangeFrom, ...exchangeTo };
-    } else {
-      this.specialDays = holidaysItems;
-    }
-    return this;
-  }
-
-  render(block) {
-    // Its essential to pass the block only for the first time
+  render(object, block) {
+    // It's essential to pass the block only for the first time
+    this.object = object;
+    this.isDragging = false;
+    const delta = 3;
     if (block) {
       this.block = block;
       this.content = document.querySelector(`.${this.block}`);
       this.section = createElement("section", "slider");
       this.slides = createElement("div", "slides");
     }
-    const delta = 3;
-
     const oldVisualization = document.querySelectorAll(".slide");
     for (let slide of oldVisualization) {
       if (slide) {
@@ -124,8 +42,8 @@ export class YearVisualization {
         const monthName = createElement("div", "name");
         monthName.style.gridColumn = "1";
         monthName.style.gridRow = `${rowNum + 3}`;
-        if (this.language) {
-          monthName.textContent = months[rowNum][this.language]
+        if (this.object.language) {
+          monthName.textContent = months[rowNum][this.object.language]
             .charAt(0)
             .toUpperCase();
         } else {
@@ -134,7 +52,11 @@ export class YearVisualization {
         slide.append(monthName);
       }
       //Creating table body
-      for (let day of this.year.days) {
+      const today = new Date();
+      const currentMonth = today.getMonth() + 1;
+      const currentDate = today.getDate();
+      const currentYear = today.getFullYear();
+      for (let day of this.object.year.days) {
         const cell = createElement("div", "cell");
         cell.style.gridRow = day.month + 2;
         cell.style.gridColumn = day.date + 1;
@@ -145,6 +67,13 @@ export class YearVisualization {
         } else {
           dayMark = createElement("div", "special-day");
         }
+        if (
+          day.month === currentMonth &&
+          day.date === currentDate &&
+          day.year === currentYear
+        ) {
+          dayMark.classList.add("date-current");
+        }
 
         cell.append(dayMark);
         slide.append(cell);
@@ -153,6 +82,28 @@ export class YearVisualization {
     }
     this.section.append(this.slides);
     this.content.append(this.section);
+    //Center the visualization
+    const chosenYear = this.object.year.yearNum;
+    const currentDay = document.querySelector(".date-current");
+    const screenWidth = document.documentElement.clientWidth;
+    const slidesX = this.slides.getBoundingClientRect().left;
+    const dayWidth = document
+      .querySelector(".day")
+      .parentElement.getBoundingClientRect().width;
+    const centerX = screenWidth / 2;
+    if (block) {
+      if (currentDay) {
+        const dayX = -currentDay.parentElement.getBoundingClientRect().left;
+        const delta = centerX - dayX;
+        this.slides.style.left = -delta - dayWidth / 2 + "px";
+      } else {
+        this.slides.style.left =
+          chosenYear % 4 === 0
+            ? slidesX + dayWidth * 3 + "px"
+            : slidesX + dayWidth * 4 + "px";
+      }
+    }
+    return this;
   }
 
   handleWheelEvent(event) {
@@ -184,5 +135,43 @@ export class YearVisualization {
     }
 
     event.preventDefault();
+  }
+
+  handleGrab(event) {
+    const slides = document.querySelector(".slides");
+    this.isDragging = true;
+    this.offsetX =
+      event.clientX + Math.abs(slides.getBoundingClientRect().left);
+
+    document.addEventListener("mousemove", this.handleTouchMove);
+    document.addEventListener("touchmove", this.handleTouchMove);
+    document.addEventListener("mouseup", this.handleTouchEnd);
+    document.addEventListener("touchend", this.handleTouchEnd);
+
+    document.body.style.cursor = "grabbing";
+  }
+
+  handleTouchMove(event) {
+    const window = document.documentElement.clientWidth;
+    const slides = document.querySelector(".slides");
+
+    if (this.isDragging) {
+      let left = event.clientX - this.offsetX;
+      let leftBorder = -2 * window;
+      if (
+        slides.getBoundingClientRect().left < leftBorder ||
+        slides.getBoundingClientRect().left > 0
+      ) {
+        slides.style.left = window + "px";
+        this.offsetX =
+          event.clientX + Math.abs(slides.getBoundingClientRect().left);
+      }
+      slides.style.left = left + "px";
+    }
+  }
+
+  handleTouchEnd() {
+    this.isDragging = false;
+    document.body.style.cursor = "grab";
   }
 }
