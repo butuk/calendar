@@ -46,7 +46,6 @@ export class YearVersion {
       day.working = weekdays[day.weekday].working;
     }
     const holidaysItems = holidays[country];
-
     //Merge steady holidays with floating this year holidays
     if (floatingHolidaysDates[country]) {
       const holidaysFloats = floatingHolidaysDates[country];
