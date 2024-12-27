@@ -164,7 +164,13 @@ export class YearVisualization {
       const date = firstChild.parentElement.dataset.date;
       const month = firstChild.parentElement.dataset.month;
       const weekday = firstChild.parentElement.dataset.weekday;
-      const message = `${weekday}<br>${date}.${month}`;
+
+      let message;
+      if (typeof weekday !== "undefined") {
+        message = `${weekday}<br>${date}.${month}`;
+      } else {
+        message = `${date}.${month}`;
+      }
       const text = document.createElement("div");
       text.classList.add("cell-text");
       text.innerHTML = message;
@@ -200,8 +206,9 @@ export class YearVisualization {
 
     cell.dataset.month = day.month;
     cell.dataset.date = day.date;
-    cell.dataset.weekday = day.weekdayNameShort;
-
+    if (day.weekdayNameShort) {
+      cell.dataset.weekday = day.weekdayNameShort;
+    }
     if (
       day.month === this.currentMonth &&
       day.date === this.currentDate &&
