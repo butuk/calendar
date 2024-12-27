@@ -3,47 +3,30 @@ import { createElement, intToRoman } from "./functions.js";
 
 export class YearVisualization {
   constructor(object, block) {
+    const today = new Date();
+    this.currentMonth = today.getMonth() + 1;
+    this.currentDate = today.getDate();
+    this.currentYear = today.getFullYear();
+    this.delta = 3;
+    this.isDragging = false;
     this.handleGrab = this.handleGrab.bind(this);
     this.handleTouchMove = this.handleTouchMove.bind(this);
     this.handleTouchEnd = this.handleTouchEnd.bind(this);
     this.render(object, block); // Pass the block only while creating the object
-
+    // Behaviour on scrolling
+    document.addEventListener("wheel", this.handleWheelEvent, {
+      passive: false,
+    });
+    // Grabbing the slides
+    document.addEventListener("mousedown", this.handleGrab);
+    document.addEventListener("touchstart", this.handleGrab);
     // Days on hover
-    this.slides.addEventListener("mouseover", (e) => {
-      const target = e.target.closest(".cell");
-      const firstChild = target ? target.children[0] : null;
-      if (firstChild) {
-        firstChild.classList.add("day_hover");
-
-        const date = firstChild.parentElement.dataset.date;
-        const month = firstChild.parentElement.dataset.month;
-        const weekday = firstChild.parentElement.dataset.weekday;
-        const message = `${weekday}<br>${date}.${month}`;
-        const text = document.createElement("div");
-        text.classList.add("cell-text");
-        text.innerHTML = message;
-        firstChild.append(text);
-      }
-    });
-
-    this.slides.addEventListener("mouseout", (e) => {
-      const text = document.querySelector(".cell-text");
-      const parent = text && text.parentElement ? text.parentElement : null;
-      if (parent) {
-        parent.removeChild(text);
-      }
-      const target = e.target.closest(".cell");
-      const firstChild = target ? target.children[0] : null;
-      if (firstChild) {
-        firstChild.classList.remove("day_hover");
-      }
-    });
+    this.slides.addEventListener("mouseover", this.handleDayHover);
+    this.slides.addEventListener("mouseout", this.handleDayMouseOut);
   }
 
   render(object, block) {
     this.object = object;
-    this.isDragging = false;
-    const delta = 3;
     if (block) {
       this.block = block;
       this.content = document.querySelector(`.${this.block}`);
@@ -60,59 +43,15 @@ export class YearVisualization {
       const slide = createElement("div", "slide");
       //Creating table header
       for (let columnNum = 2; columnNum <= 32; columnNum++) {
-        const hr = createElement("div", "name");
-        hr.style.gridRow = "1";
-        hr.style.gridColumn = `${columnNum}`;
-        hr.textContent = `${columnNum - 1}`;
-        hr.style.top = `${delta * columnNum}%`;
-        slide.append(hr);
+        this.renderColumnHR(columnNum, slide);
       }
       //Creating months names
       for (let rowNum = 0; rowNum < 12; rowNum++) {
-        const monthName = createElement("div", "name");
-        monthName.style.gridColumn = "1";
-        monthName.style.gridRow = `${rowNum + 3}`;
-        if (this.object.language) {
-          monthName.textContent = months[rowNum][this.object.language]
-            .charAt(0)
-            .toUpperCase();
-        } else {
-          monthName.textContent = intToRoman(rowNum + 1);
-        }
-        slide.append(monthName);
+        this.renderRowHR(rowNum, slide);
       }
       //Creating table body
-      const today = new Date();
-      const currentMonth = today.getMonth() + 1;
-      const currentDate = today.getDate();
-      const currentYear = today.getFullYear();
       for (let day of this.object.year.days) {
-        const cell = createElement("div", "cell");
-        cell.style.gridRow = day.month + 2;
-        cell.style.gridColumn = day.date + 1;
-        cell.style.top = `${delta * day.date}%`;
-
-        let dayMark;
-        if (day.working) {
-          dayMark = createElement("div", "day");
-        } else {
-          dayMark = createElement("div", "special-day");
-        }
-
-        cell.dataset.month = day.month;
-        cell.dataset.date = day.date;
-        cell.dataset.weekday = day.weekdayNameShort;
-
-        if (
-          day.month === currentMonth &&
-          day.date === currentDate &&
-          day.year === currentYear
-        ) {
-          dayMark.classList.add("date-current");
-        }
-
-        cell.append(dayMark);
-        slide.append(cell);
+        this.renderTheDay(day, slide);
       }
       this.slides.append(slide);
     }
@@ -120,13 +59,6 @@ export class YearVisualization {
     this.content.append(this.section);
     //Center the visualization
     this.centerVisualization(this.object.year.yearNum, block);
-    // On scrolling
-    document.addEventListener("wheel", this.handleWheelEvent, {
-      passive: false,
-    });
-    // Grabbing the slides
-    document.addEventListener("mousedown", this.handleGrab);
-    document.addEventListener("touchstart", this.handleGrab);
 
     return this;
   }
@@ -202,7 +134,7 @@ export class YearVisualization {
 
   centerVisualization(year, block) {
     const chosenYear = year;
-    const currentDay = document.querySelector(".date-current");
+    const currentDay = document.querySelector(".current-date");
     const screenWidth = document.documentElement.clientWidth;
     const slidesX = this.slides.getBoundingClientRect().left;
     const dayWidth = document
@@ -221,5 +153,87 @@ export class YearVisualization {
             : slidesX + dayWidth * 4 + "px";
       }
     }
+  }
+
+  handleDayHover(event) {
+    const target = event.target.closest(".cell");
+    const firstChild = target ? target.children[0] : null;
+    if (firstChild) {
+      firstChild.classList.add("day_hover");
+
+      const date = firstChild.parentElement.dataset.date;
+      const month = firstChild.parentElement.dataset.month;
+      const weekday = firstChild.parentElement.dataset.weekday;
+      const message = `${weekday}<br>${date}.${month}`;
+      const text = document.createElement("div");
+      text.classList.add("cell-text");
+      text.innerHTML = message;
+      firstChild.append(text);
+    }
+  }
+
+  handleDayMouseOut(event) {
+    const text = document.querySelector(".cell-text");
+    const parent = text && text.parentElement ? text.parentElement : null;
+    if (parent) {
+      parent.removeChild(text);
+    }
+    const target = event.target.closest(".cell");
+    const firstChild = target ? target.children[0] : null;
+    if (firstChild) {
+      firstChild.classList.remove("day_hover");
+    }
+  }
+
+  renderTheDay(day, where) {
+    const cell = createElement("div", "cell");
+    cell.style.gridRow = day.month + 2;
+    cell.style.gridColumn = day.date + 1;
+    cell.style.top = `${this.delta * day.date}%`;
+
+    let dayMark;
+    if (day.working) {
+      dayMark = createElement("div", "day");
+    } else {
+      dayMark = createElement("div", "special-day");
+    }
+
+    cell.dataset.month = day.month;
+    cell.dataset.date = day.date;
+    cell.dataset.weekday = day.weekdayNameShort;
+
+    if (
+      day.month === this.currentMonth &&
+      day.date === this.currentDate &&
+      day.year === this.currentYear
+    ) {
+      dayMark.classList.add("current-date");
+    }
+
+    cell.append(dayMark);
+    where.append(cell);
+  }
+
+  renderColumnHR(columnNum, where) {
+    const hr = createElement("div", "hr");
+    hr.style.gridRow = "1";
+    hr.style.gridColumn = `${columnNum}`;
+    hr.textContent = `${columnNum - 1}`;
+    hr.style.top = `${this.delta * columnNum}%`;
+    where.append(hr);
+  }
+
+  renderRowHR(rowNum, where) {
+    const monthName = createElement("div", "hr");
+    monthName.style.gridColumn = "1";
+    monthName.style.gridRow = `${rowNum + 3}`;
+    if (this.object.language) {
+      monthName.textContent = months[rowNum][this.object.language]
+        .charAt(0)
+        .toUpperCase();
+    } else {
+      monthName.textContent = intToRoman(rowNum + 1);
+    }
+    where.append(monthName);
   }
 }

@@ -1,36 +1,6 @@
-
-
 %small-font {
   font-size: .5em;
 }
-//Credits
-/*.credit {
-  display: inline-block;
-  text-align: center;
-  width: 1em;
-  color: var(--main-color);
-  cursor: pointer;
-  &:not(:last-child) {
-    padding-right: 1.2em;
-  }
-  &:hover {
-    color: var(--accent-color);
-  }
-  @media screen and (max-width: 1023px) {
-    font-size: 10vh;
-  }
-  @media screen and (orientation: portrait) {
-    font-size: 10vh;
-  }
-}
-
-.credits {
-  padding: .5em;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-}*/
 
 %transition {
   transition:
@@ -60,6 +30,11 @@
     content: "";
     display: block;
   }
+}
+
+.header {
+  padding: .25em .5em;
+  color: var(--accent-color);
 }
 
 .content {
@@ -94,6 +69,14 @@
   text-align: center;
 }
 
+.hr {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
 .cell {
   display: flex;
   position: relative;
@@ -111,7 +94,7 @@
   @extend %transition;
 }
 
-.date-current {
+.current-date {
   outline: .08em solid black;
   outline-offset: .6em;
   border-radius: 50%;
@@ -123,40 +106,6 @@
   @extend %transition;
 }
 
-.name {
-  display: flex;
-  height: 100%;
-  align-items: center;
-    justify-content: center;
-  position: relative;
-}
-
-.logo {
-  grid-row: 1;
-  grid-column: 4;
-  font-size: 1.1em;
-  color: var(--accent-color);
-  display: flex;
-  align-items: center;
-  transform: rotate(90deg) translate(-1em);
-}
-
-.date {
-  display: flex;
-  align-self: center;
-  width: 80%;
-  aspect-ratio: 1 / 1;
-  &::after {
-    content: '';
-    position: absolute;
-    inset: -10%;
-  }
-}
-
-
-
-
-
 .cell-text {
   @extend %small-font;
   align-self: center;
@@ -167,6 +116,7 @@
 }
 
 .options {
+  height: 5vh;
   position: absolute;
   bottom: 0;
   background-color: var(--main-color);

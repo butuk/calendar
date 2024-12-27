@@ -44,8 +44,8 @@ if (savedCountry) {
   country = "poland"; //by default
 }
 
-// Calendar
-const year = new Year(2025);
+// Calendar visualization
+const year = new Year();
 const version = new YearVersion(year, country, language);
 const visualization = new YearVisualization(version, "content");
 
