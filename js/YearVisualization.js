@@ -61,12 +61,18 @@ export class YearVisualization {
         cell.style.gridRow = day.month + 2;
         cell.style.gridColumn = day.date + 1;
         cell.style.top = `${delta * day.date}%`;
+
         let dayMark;
         if (day.working) {
           dayMark = createElement("div", "day");
         } else {
           dayMark = createElement("div", "special-day");
         }
+
+        cell.dataset.month = day.month;
+        cell.dataset.date = day.date;
+        cell.dataset.weekday = day.weekdayNameShort;
+
         if (
           day.month === currentMonth &&
           day.date === currentDate &&

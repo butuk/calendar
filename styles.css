@@ -145,7 +145,8 @@ table {
   display: flex;
   position: relative;
   justify-content: center;
-  height: 100%;
+  height: auto;
+  overflow: visible;
 }
 
 .day {
@@ -204,6 +205,17 @@ table {
   display: block;
 }
 
+.date-current {
+  outline: 0.08em solid black;
+  outline-offset: 0.6em;
+  border-radius: 50%;
+}
+
+.day_hover {
+  width: 92%;
+  height: auto;
+}
+
 .name {
   display: flex;
   height: 100%;
@@ -232,16 +244,6 @@ table {
   content: "";
   position: absolute;
   inset: -10%;
-}
-
-.date-current {
-  outline: 0.075em solid black;
-  outline-offset: 0.75em;
-  border-radius: 50%;
-}
-
-.day_hover {
-  width: 100%;
 }
 
 .cell-text {

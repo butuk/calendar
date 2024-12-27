@@ -33,7 +33,9 @@
 }*/
 
 %transition {
-  transition: height .2s ease-in-out, width .2s ease-in-out;
+  transition:
+          height .2s ease-in-out,
+          width .2s ease-in-out;
 }
 
 @mixin circle($size, $color) {
@@ -96,8 +98,8 @@
   display: flex;
   position: relative;
   justify-content: center;
-  height: 100%;
-  //background: green;
+  height: auto;
+  overflow: visible;
 }
 
 .day {
@@ -106,6 +108,18 @@
 }
 .special-day {
   @include circle(18%, var(--accent-color));
+  @extend %transition;
+}
+
+.date-current {
+  outline: .08em solid black;
+  outline-offset: .6em;
+  border-radius: 50%;
+}
+
+.day_hover {
+  width: 92%;
+  height: auto;
   @extend %transition;
 }
 
@@ -139,16 +153,9 @@
   }
 }
 
-.date-current {
-  outline: .075em solid black;
-  outline-offset: .75em;
-  border-radius: 50%;
-}
 
-.day_hover {
-  width: 100%;
-  @extend %transition;
-}
+
+
 
 .cell-text {
   @extend %small-font;
@@ -189,7 +196,6 @@ span {
 %active {
   color: var(--invert-accent);
   cursor: default;
-
 }
 
 .language {

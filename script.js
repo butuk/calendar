@@ -82,3 +82,34 @@ document.addEventListener("wheel", visualization.handleWheelEvent, {
 // Slider
 document.addEventListener("mousedown", visualization.handleGrab);
 document.addEventListener("touchstart", visualization.handleGrab);
+
+//-----Should be moved inside the object
+
+// Days on hover
+if (visualization && visualization.slides) {
+  visualization.slides.addEventListener("mouseover", (e) => {
+    const target = e.target.closest(".cell");
+    const firstChild = target ? target.children[0] : null;
+    if (firstChild) {
+      firstChild.classList.add("day_hover");
+
+      const date = firstChild.parentElement.dataset.date;
+      const month = firstChild.parentElement.dataset.month;
+      const weekday = firstChild.parentElement.dataset.weekday;
+      const message = `${weekday}<br>${date}.${month}`;
+      const text = document.createElement("div");
+      text.classList.add("cell-text");
+      text.innerHTML = message;
+      firstChild.append(text);
+    }
+  });
+
+  visualization.slides.addEventListener("mouseout", (e) => {
+    const target = e.target.closest(".cell");
+    const firstChild = target ? target.children[0] : null;
+    if (firstChild) {
+      firstChild.firstChild.remove();
+      firstChild.classList.remove("day_hover");
+    }
+  });
+}
