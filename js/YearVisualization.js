@@ -6,11 +6,41 @@ export class YearVisualization {
     this.handleGrab = this.handleGrab.bind(this);
     this.handleTouchMove = this.handleTouchMove.bind(this);
     this.handleTouchEnd = this.handleTouchEnd.bind(this);
-    this.render(object, block);
+    this.render(object, block); // Pass the block only while creating the object
+
+    // Days on hover
+    this.slides.addEventListener("mouseover", (e) => {
+      const target = e.target.closest(".cell");
+      const firstChild = target ? target.children[0] : null;
+      if (firstChild) {
+        firstChild.classList.add("day_hover");
+
+        const date = firstChild.parentElement.dataset.date;
+        const month = firstChild.parentElement.dataset.month;
+        const weekday = firstChild.parentElement.dataset.weekday;
+        const message = `${weekday}<br>${date}.${month}`;
+        const text = document.createElement("div");
+        text.classList.add("cell-text");
+        text.innerHTML = message;
+        firstChild.append(text);
+      }
+    });
+
+    this.slides.addEventListener("mouseout", (e) => {
+      const text = document.querySelector(".cell-text");
+      const parent = text && text.parentElement ? text.parentElement : null;
+      if (parent) {
+        parent.removeChild(text);
+      }
+      const target = e.target.closest(".cell");
+      const firstChild = target ? target.children[0] : null;
+      if (firstChild) {
+        firstChild.classList.remove("day_hover");
+      }
+    });
   }
 
   render(object, block) {
-    // It's essential to pass the block only for the first time
     this.object = object;
     this.isDragging = false;
     const delta = 3;
@@ -89,26 +119,15 @@ export class YearVisualization {
     this.section.append(this.slides);
     this.content.append(this.section);
     //Center the visualization
-    const chosenYear = this.object.year.yearNum;
-    const currentDay = document.querySelector(".date-current");
-    const screenWidth = document.documentElement.clientWidth;
-    const slidesX = this.slides.getBoundingClientRect().left;
-    const dayWidth = document
-      .querySelector(".day")
-      .parentElement.getBoundingClientRect().width;
-    const centerX = screenWidth / 2;
-    if (block) {
-      if (currentDay) {
-        const dayX = -currentDay.parentElement.getBoundingClientRect().left;
-        const delta = centerX - dayX;
-        this.slides.style.left = -delta - dayWidth / 2 + "px";
-      } else {
-        this.slides.style.left =
-          chosenYear % 4 === 0
-            ? slidesX + dayWidth * 3 + "px"
-            : slidesX + dayWidth * 4 + "px";
-      }
-    }
+    this.centerVisualization(this.object.year.yearNum, block);
+    // On scrolling
+    document.addEventListener("wheel", this.handleWheelEvent, {
+      passive: false,
+    });
+    // Grabbing the slides
+    document.addEventListener("mousedown", this.handleGrab);
+    document.addEventListener("touchstart", this.handleGrab);
+
     return this;
   }
 
@@ -179,5 +198,28 @@ export class YearVisualization {
   handleTouchEnd() {
     this.isDragging = false;
     document.body.style.cursor = "grab";
+  }
+
+  centerVisualization(year, block) {
+    const chosenYear = year;
+    const currentDay = document.querySelector(".date-current");
+    const screenWidth = document.documentElement.clientWidth;
+    const slidesX = this.slides.getBoundingClientRect().left;
+    const dayWidth = document
+      .querySelector(".day")
+      .parentElement.getBoundingClientRect().width;
+    const centerX = screenWidth / 2;
+    if (block) {
+      if (currentDay) {
+        const dayX = -currentDay.parentElement.getBoundingClientRect().left;
+        const delta = centerX - dayX;
+        this.slides.style.left = -delta - dayWidth / 2 + "px";
+      } else {
+        this.slides.style.left =
+          chosenYear % 4 === 0
+            ? slidesX + dayWidth * 3 + "px"
+            : slidesX + dayWidth * 4 + "px";
+      }
+    }
   }
 }
