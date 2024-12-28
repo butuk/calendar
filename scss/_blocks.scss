@@ -58,6 +58,7 @@
   display: flex;
   position: absolute;
   left: -100%;
+
 }
 
 .slide {
@@ -99,8 +100,8 @@
 }
 
 .current-date {
-  outline: .08em solid black;
-  outline-offset: .6em;
+  outline: .075em solid var(--additionl-color);
+  outline-offset: .5em;
   border-radius: 50%;
 }
 

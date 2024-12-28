@@ -49,6 +49,10 @@ const year = new Year();
 const version = new YearVersion(year, country, language);
 const visualization = new YearVisualization(version, "content");
 
+//Headline
+const headline = document.querySelector(".header");
+headline.innerHTML = `${year.yearNum}`;
+
 // Switching countries
 const countries = document.querySelector(".countries");
 countries.addEventListener("click", (e) => {
