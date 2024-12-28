@@ -1,14 +1,14 @@
 :root {
   --back-color: white;
   --main-color: black;
-  --additionl-color: #cccccc;
+  --additionl-color: #bbbbbb;
   --accent-color: crimson;
   --invert-accent: red;
   font-family: Inter, sans-serif;
   font-feature-settings: "liga" 1, "calt" 1; /* fix for Chrome */
   font-weight: normal;
   color: var(--main-color);
-  font-size: clamp(0.3rem, 1.5vw, 2rem);
+  font-size: clamp(0.8rem, 1.6vw, 2rem);
 }
 
 @supports (font-variation-settings: normal) {
@@ -84,8 +84,9 @@ table {
 }
 
 .header {
-  padding: 0.25em 0.5em;
+  padding: 1em 0.5em;
   color: var(--accent-color);
+  font-size: clamp(1.2rem, 1.5vw, 3rem);
 }
 
 .content {
@@ -121,24 +122,27 @@ table {
   text-align: center;
 }
 
-.hr {
-  display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
 .cell {
   display: flex;
   position: relative;
   justify-content: center;
   height: auto;
+  overflow: visible;
 }
 @media screen and (max-width: 500px) {
   .cell {
     pointer-events: none;
   }
+}
+
+.hr {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: visible;
 }
 
 .day {
@@ -184,12 +188,12 @@ table {
 }
 @media screen and (orientation: portrait) {
   .special-day {
-    height: 12%;
+    height: 10%;
   }
 }
 @media screen and (orientation: landscape) {
   .special-day {
-    width: 12%;
+    width: 10%;
   }
 }
 .special-day::before {

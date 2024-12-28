@@ -45,7 +45,11 @@ export class YearVisualization {
     for (let i = 0; i < 3; i++) {
       const slide = createElement("div", "slide");
       //Creating table header
-      for (let columnNum = 2; columnNum <= 32; columnNum++) {
+      let step = 1;
+      if (window.innerWidth < 600) {
+        step = 2;
+      }
+      for (let columnNum = 2; columnNum <= 32; columnNum += step) {
         this.renderColumnHR(columnNum, slide);
       }
       //Creating months names
@@ -115,7 +119,6 @@ export class YearVisualization {
 
     this.offsetX =
       event.clientX + Math.abs(slides.getBoundingClientRect().left);
-    console.log(event);
 
     document.addEventListener("mousemove", this.handleMouseTouchMove);
     document.addEventListener("mouseup", this.handleTouchEnd);
