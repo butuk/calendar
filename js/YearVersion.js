@@ -1,8 +1,8 @@
-import { months } from "../data/months.js";
-import { weekdays } from "../data/weekdays.js";
-import { holidays } from "../data/holidays.js";
-import { floatingHolidaysDates } from "../data/floatingHolidaysDates.js";
-import { daysExchanges } from "../data/daysExchanges.js";
+import { months } from "../dictionaries/months.js";
+import { weekdays } from "../dictionaries/weekdays.js";
+import { holidays } from "../dictionaries/holidays.js";
+import { floatingHolidaysDates } from "../dictionaries/floatingHolidaysDates.js";
+import { daysExchanges } from "../dictionaries/daysExchanges.js";
 
 export class YearVersion {
   constructor(year, country, language) {
