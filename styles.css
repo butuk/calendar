@@ -7,7 +7,7 @@
   font-feature-settings: "liga" 1, "calt" 1; /* fix for Chrome */
   font-weight: normal;
   color: var(--main-color);
-  font-size: 1.5vw;
+  font-size: clamp(0.3rem, 1.5vw, 2rem);
 }
 
 @supports (font-variation-settings: normal) {
@@ -75,7 +75,7 @@ table {
 }
 
 .cell-text {
-  font-size: 0.5em;
+  font-size: 0.5rem;
 }
 
 .day_hover, .special-day, .day {
@@ -91,6 +91,7 @@ table {
   user-select: none;
   position: absolute;
   bottom: 5vh;
+  width: 100%;
 }
 
 .slider {
@@ -132,7 +133,6 @@ table {
   position: relative;
   justify-content: center;
   height: auto;
-  overflow: visible;
 }
 
 .day {
@@ -178,12 +178,12 @@ table {
 }
 @media screen and (orientation: portrait) {
   .special-day {
-    height: 18%;
+    height: 12%;
   }
 }
 @media screen and (orientation: landscape) {
   .special-day {
-    width: 18%;
+    width: 12%;
   }
 }
 .special-day::before {

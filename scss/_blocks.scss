@@ -1,5 +1,5 @@
 %small-font {
-  font-size: .5em;
+  font-size: .5rem;
 }
 
 %transition {
@@ -41,6 +41,7 @@
   user-select: none;
   position: absolute;
   bottom: 5vh;
+  width: 100%;
 }
 
 .slider {
@@ -82,7 +83,7 @@
   position: relative;
   justify-content: center;
   height: auto;
-  overflow: visible;
+  //overflow: hidden;
 }
 
 .day {
@@ -90,7 +91,7 @@
   @extend %transition;
 }
 .special-day {
-  @include circle(18%, var(--accent-color));
+  @include circle(12%, var(--accent-color));
   @extend %transition;
 }
 
