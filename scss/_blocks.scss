@@ -33,8 +33,9 @@
 }
 
 .header {
-  padding: .25em .5em;
+  padding: 1em .5em;
   color: var(--accent-color);
+  font-size: clamp(1.2rem, 1.5vw, 3rem);
 }
 
 .content {
@@ -71,14 +72,6 @@
   text-align: center;
 }
 
-.hr {
-  display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
 .cell {
   display: flex;
   position: relative;
@@ -87,7 +80,17 @@
   @media screen and (max-width: 500px) {
     pointer-events: none;
   }
-  //overflow: hidden;
+  overflow: visible;
+}
+
+.hr {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: visible;
 }
 
 .day {
@@ -95,7 +98,7 @@
   @extend %transition;
 }
 .special-day {
-  @include circle(12%, var(--accent-color));
+  @include circle(10%, var(--accent-color));
   @extend %transition;
 }
 
