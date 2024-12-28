@@ -1,5 +1,3 @@
-import { Day } from "./Day.js";
-
 export function createElement(element, className) {
   const result = document.createElement(`${element}`);
   if (className) {
@@ -24,25 +22,29 @@ export function createNameCell(place, text) {
   place.append(element);
 }
 
-export function makeIndent(block, amount) {
-  for (let i = 0; i < amount; i++) {
-    new Day("blank").renderIn(block);
-  }
-}
+export function intToRoman(num) {
+  const romanNumerals = [
+    { value: 1000, symbol: "M" },
+    { value: 900, symbol: "CM" },
+    { value: 500, symbol: "D" },
+    { value: 400, symbol: "CD" },
+    { value: 100, symbol: "C" },
+    { value: 90, symbol: "XC" },
+    { value: 50, symbol: "L" },
+    { value: 40, symbol: "XL" },
+    { value: 10, symbol: "X" },
+    { value: 9, symbol: "IX" },
+    { value: 5, symbol: "V" },
+    { value: 4, symbol: "IV" },
+    { value: 1, symbol: "I" },
+  ];
 
-export function makeTilt(element, cols) {
-  const elements = Array.from(element.children);
-  const columns = cols; //getComputedStyle(element).gridTemplateColumns.split(" ").length;
-
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Remainder
-
-  let padding = 0;
-  const delta = 3;
-  for (let i = 0; i < elements.length; i++) {
-    if (i % columns === 0) {
-      padding = 0;
+  let result = "";
+  for (const { value, symbol } of romanNumerals) {
+    while (num >= value) {
+      result += symbol;
+      num -= value;
     }
-    elements[i].style.top = `${padding}%`;
-    padding += delta;
   }
+  return result;
 }
