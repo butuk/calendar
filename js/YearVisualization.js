@@ -9,17 +9,20 @@ export class YearVisualization {
     this.currentYear = today.getFullYear();
     this.delta = 3;
     this.isDragging = false;
-    this.handleGrab = this.handleGrab.bind(this);
+    this.handleMouseGrab = this.handleMouseGrab.bind(this);
+    this.handleMouseTouchMove = this.handleMouseTouchMove.bind(this);
     this.handleTouchMove = this.handleTouchMove.bind(this);
     this.handleTouchEnd = this.handleTouchEnd.bind(this);
+    this.handleTouchGrab = this.handleTouchGrab.bind(this);
     this.render(object, block); // Pass the block only while creating the object
     // Behaviour on scrolling
     document.addEventListener("wheel", this.handleWheelEvent, {
       passive: false,
     });
     // Grabbing the slides
-    document.addEventListener("mousedown", this.handleGrab);
-    document.addEventListener("touchstart", this.handleGrab);
+    document.addEventListener("mousedown", this.handleMouseGrab);
+    document.addEventListener("touchstart", this.handleTouchGrab);
+
     // Days on hover
     this.slides.addEventListener("mouseover", this.handleDayHover);
     this.slides.addEventListener("mouseout", this.handleDayMouseOut);
@@ -94,21 +97,54 @@ export class YearVisualization {
     event.preventDefault();
   }
 
-  handleGrab(event) {
+  handleTouchGrab(event) {
     const slides = document.querySelector(".slides");
     this.isDragging = true;
+
+    const clientX = event.touches[0].clientX;
+
+    this.offsetX = clientX + Math.abs(slides.getBoundingClientRect().left);
+
+    document.addEventListener("touchmove", this.handleTouchMove);
+    document.addEventListener("touchend", this.handleTouchEnd);
+  }
+
+  handleMouseGrab(event) {
+    const slides = document.querySelector(".slides");
+    this.isDragging = true;
+
     this.offsetX =
       event.clientX + Math.abs(slides.getBoundingClientRect().left);
+    console.log(event);
 
-    //document.addEventListener("mousemove", this.handleTouchMove);
-    //document.addEventListener("touchmove", this.handleTouchMove);
-    // document.addEventListener("mouseup", this.handleTouchEnd);
-    //document.addEventListener("touchend", this.handleTouchEnd);
+    document.addEventListener("mousemove", this.handleMouseTouchMove);
+    document.addEventListener("mouseup", this.handleTouchEnd);
 
     document.body.style.cursor = "grabbing";
   }
 
   handleTouchMove(event) {
+    const window = document.documentElement.clientWidth;
+    const slides = document.querySelector(".slides");
+
+    if (this.isDragging) {
+      let clientX = event.touches[0].clientX;
+      let left = clientX - this.offsetX;
+      let leftBorder = -2 * window;
+      if (
+        slides.getBoundingClientRect().left < leftBorder ||
+        slides.getBoundingClientRect().left > 0
+      ) {
+        slides.style.left = window + "px";
+        this.offsetX =
+          event.touches[0].clientX +
+          Math.abs(slides.getBoundingClientRect().left);
+      }
+      slides.style.left = left + "px";
+    }
+  }
+
+  handleMouseTouchMove(event) {
     const window = document.documentElement.clientWidth;
     const slides = document.querySelector(".slides");
 
