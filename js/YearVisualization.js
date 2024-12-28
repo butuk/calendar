@@ -1,4 +1,4 @@
-import { months } from "../data/months.js";
+import { months } from "../dictionaries/months.js";
 import { createElement, intToRoman } from "./functions.js";
 
 export class YearVisualization {
@@ -100,10 +100,10 @@ export class YearVisualization {
     this.offsetX =
       event.clientX + Math.abs(slides.getBoundingClientRect().left);
 
-    document.addEventListener("mousemove", this.handleTouchMove);
-    document.addEventListener("touchmove", this.handleTouchMove);
-    document.addEventListener("mouseup", this.handleTouchEnd);
-    document.addEventListener("touchend", this.handleTouchEnd);
+    //document.addEventListener("mousemove", this.handleTouchMove);
+    //document.addEventListener("touchmove", this.handleTouchMove);
+    // document.addEventListener("mouseup", this.handleTouchEnd);
+    //document.addEventListener("touchend", this.handleTouchEnd);
 
     document.body.style.cursor = "grabbing";
   }
@@ -113,7 +113,8 @@ export class YearVisualization {
     const slides = document.querySelector(".slides");
 
     if (this.isDragging) {
-      let left = event.clientX - this.offsetX;
+      let clientX = event.clientX || event.touches[0].clientX;
+      let left = clientX - this.offsetX;
       let leftBorder = -2 * window;
       if (
         slides.getBoundingClientRect().left < leftBorder ||
