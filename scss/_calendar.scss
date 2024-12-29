@@ -1,11 +1,7 @@
-%small-font {
-  font-size: .5rem;
-}
-
 %transition {
   transition:
-          height .2s ease-in-out,
-          width .2s ease-in-out;
+    height .2s ease-in-out,
+    width .2s ease-in-out;
 }
 
 @mixin circle($size, $color) {
@@ -17,9 +13,11 @@
   aspect-ratio: 1/1;
   @media screen and (orientation: portrait) {
     height: $size;
+    width: auto;
   }
   @media screen and (orientation: landscape) {
     width: $size;
+    height: auto;
   }
   margin-left: auto;
   margin-right: auto;
@@ -32,23 +30,17 @@
   }
 }
 
-.header {
-  padding: 1em .5em;
-  color: var(--accent-color);
-  font-size: clamp(1.2rem, 1.5vw, 3rem);
-}
-
 .content {
   user-select: none;
   position: absolute;
-  bottom: 5vh;
+  bottom: 0;
   width: 100%;
 }
 
 .slider {
   position: relative;
   width: 100vw;
-  height: 75vh;
+  height: 70vh;
   overflow: hidden;
   display: flex;
 }
@@ -98,20 +90,21 @@
   @extend %transition;
 }
 .special-day {
-  @include circle(10%, var(--accent-color));
+  @include circle(12%, var(--accent-color));
   @extend %transition;
 }
 
 .current-date {
-  outline: .075em solid var(--additionl-color);
+  outline: .075em solid var(--main-color);
   outline-offset: .5em;
   border-radius: 50%;
 }
 
 .day_hover {
-  width: 92%;
+  width: 86%;
   height: auto;
   @extend %transition;
+  cursor: none;
 }
 
 .cell-text {
@@ -121,50 +114,4 @@
   text-align: center;
   line-height: 1em;
   pointer-events: none;
-}
-
-.options {
-  height: 5vh;
-  position: absolute;
-  bottom: 0;
-  background-color: var(--main-color);
-  color: var(--back-color);
-  padding: .5em .5em;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-span {
-  display: inline-block;
-  &:not(:last-child) {
-    margin-right: 1em;
-  }
-  cursor: pointer;
-  &:hover {
-    color: var(--invert-accent);
-  }
-  & > a {
-    color: var(--back-color);
-    &:hover {
-      color: var(--invert-accent);
-    }
-  }
-}
-
-%active {
-  color: var(--invert-accent);
-  cursor: default;
-}
-
-.language {
-  &_active {
-    @extend %active;
-  }
-}
-
-.country {
-  &_active {
-    @extend %active;
-  }
 }

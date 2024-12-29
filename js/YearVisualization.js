@@ -1,5 +1,5 @@
 import { months } from "../dictionaries/months.js";
-import { createElement, intToRoman } from "./functions.js";
+import { createElement, intToRoman } from "./helpFunctions.js";
 
 export class YearVisualization {
   constructor(object, block) {
