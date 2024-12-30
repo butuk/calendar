@@ -1,3 +1,6 @@
+$mobile-size: 640px;
+$tablet-size: 800px;
+
 %transition {
   transition:
     height .2s ease-in-out,
@@ -28,6 +31,7 @@
     content: "";
     display: block;
   }
+  cursor: none;
 }
 
 .content {
@@ -40,9 +44,15 @@
 .slider {
   position: relative;
   width: 100vw;
-  height: 70vh;
+  height: 80vh;
   overflow: hidden;
   display: flex;
+  @media screen and (max-width: $tablet-size) {
+    height: 75vh;
+  }
+  @media screen and (max-width: $mobile-size) {
+    height: 70vh;
+  }
 }
 
 .slides {
@@ -69,7 +79,7 @@
   position: relative;
   justify-content: center;
   height: auto;
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: $mobile-size) {
     pointer-events: none;
   }
   overflow: visible;
@@ -96,6 +106,9 @@
 
 .current-date {
   outline: .075em solid var(--main-color);
+  @media screen and (max-width: $mobile-size) {
+    outline-width: 1px;
+  }
   outline-offset: .5em;
   border-radius: 50%;
 }
@@ -104,7 +117,6 @@
   width: 86%;
   height: auto;
   @extend %transition;
-  cursor: none;
 }
 
 .cell-text {
@@ -112,6 +124,7 @@
   align-self: center;
   color: var(--back-color);
   text-align: center;
-  line-height: 1em;
+  line-height: 1.2;
   pointer-events: none;
+
 }

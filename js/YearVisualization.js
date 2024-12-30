@@ -3,6 +3,7 @@ import { createElement, intToRoman } from "./helpFunctions.js";
 
 export class YearVisualization {
   constructor(object, block) {
+    this.mobileSize = 640;
     const today = new Date();
     this.currentMonth = today.getMonth() + 1;
     this.currentDate = today.getDate();
@@ -46,7 +47,7 @@ export class YearVisualization {
       const slide = createElement("div", "slide");
       //Creating table header
       let step = 1;
-      if (window.innerWidth < 600) {
+      if (window.innerWidth < this.mobileSize) {
         step = 2;
       }
       for (let columnNum = 2; columnNum <= 32; columnNum += step) {

@@ -1,20 +1,20 @@
 :root {
   --back-color: white;
   --main-color: black;
-  --additionl-color: #ccc;
+  --additionl-color: #aaa;
   --accent-color: crimson;
   --invert-accent: red;
   font-family: Inter, sans-serif;
   font-feature-settings: "liga" 1, "calt" 1; /* fix for Chrome */
   font-weight: normal;
-  color: var(--main-color);
   font-size: clamp(0.8rem, 1.5vw + 0.25rem, 2rem);
+  color: var(--main-color);
   cursor: grab;
 }
 :root .cell-text, :root .parameter {
-  font-size: 0.5rem;
+  font-size: 0.4rem;
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 640px) {
   :root .cell-text, :root .parameter {
     font-size: 0.8rem;
   }
@@ -134,9 +134,8 @@ header {
   position: fixed;
   width: 100vw;
   height: 100vh;
-  background: url("./icons/pattern.svg") repeat;
+  background: rgba(0, 0, 0, 0.5) url("./icons/pattern.svg") repeat;
   background-size: auto;
-  backdrop-filter: blur(15px);
   z-index: 10000;
   animation: appear 0.2s ease-in-out;
 }
@@ -164,7 +163,7 @@ header {
 .popup:hover {
   cursor: default;
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 640px) {
   .popup {
     padding: 3rem 1rem;
   }
@@ -223,9 +222,19 @@ header {
 .slider {
   position: relative;
   width: 100vw;
-  height: 70vh;
+  height: 80vh;
   overflow: hidden;
   display: flex;
+}
+@media screen and (max-width: 800px) {
+  .slider {
+    height: 75vh;
+  }
+}
+@media screen and (max-width: 640px) {
+  .slider {
+    height: 70vh;
+  }
 }
 
 .slides {
@@ -253,7 +262,7 @@ header {
   height: auto;
   overflow: visible;
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 640px) {
   .cell {
     pointer-events: none;
   }
@@ -281,6 +290,7 @@ header {
   overflow: hidden;
   border-radius: 50%;
   background-color: var(--main-color);
+  cursor: none;
 }
 @media screen and (orientation: portrait) {
   .day {
@@ -311,6 +321,7 @@ header {
   overflow: hidden;
   border-radius: 50%;
   background-color: var(--accent-color);
+  cursor: none;
 }
 @media screen and (orientation: portrait) {
   .special-day {
@@ -334,18 +345,22 @@ header {
   outline-offset: 0.5em;
   border-radius: 50%;
 }
+@media screen and (max-width: 640px) {
+  .current-date {
+    outline-width: 1px;
+  }
+}
 
 .day_hover {
   width: 86%;
   height: auto;
-  cursor: none;
 }
 
 .cell-text {
   align-self: center;
   color: var(--back-color);
   text-align: center;
-  line-height: 1em;
+  line-height: 1.2;
   pointer-events: none;
 }
 

@@ -22,4 +22,6 @@ export const interfaceElements = {
       url: "https://x.com/clndr_today",
     },
   ],
+
+  years: { 2024: 2024, 2025: 2025 },
 };
