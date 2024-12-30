@@ -1,41 +1,18 @@
-import { interfaceElements } from "../dictionaries/interface.js";
 import { createElement } from "./helpFunctions.js";
+import { interfaceElements } from "../dictionaries/interface.js";
+import { YearVersion } from "./YearVersion.js";
+import { Year } from "./Year.js";
 
-export class Headline {
-  constructor(version, visualization, block) {
-    this.showOverlay = this.showOverlay.bind(this);
+export class InterfacePopup {
+  constructor(version, visualization) {
+    this.show = this.show.bind(this);
     this.hideOverlay = this.hideOverlay.bind(this);
     this.stopPropagation = this.stopPropagation.bind(this);
     this.switchParameter = this.switchParameter.bind(this);
-    const place = document.querySelector(`.${block}`);
-    // Headline
-    const headline = createElement("h1", "headline");
-    headline.innerHTML = `${version.year.yearNum}`;
-    place.append(headline);
-    // Top right corner
-    const tr = createElement("div", "top-right");
-    if (version.country) {
-      this.countryBlock = createElement("div", "parameter");
-      this.countryBlock.innerHTML =
-        interfaceElements.countries[version.country];
-      tr.append(this.countryBlock);
-    }
-    if (version.language) {
-      this.languageBlock = createElement("div", "parameter");
-      this.languageBlock.innerHTML =
-        interfaceElements.languages[version.language];
-      tr.append(this.languageBlock);
-    }
-    const button = createElement("div", "button");
-    button.innerHTML = "▢";
-    tr.append(button);
-    button.addEventListener("click", (event) => {
-      this.showOverlay(version, visualization);
-    });
-    place.append(tr);
+    this.show(version, visualization);
   }
 
-  showOverlay(version, visualization) {
+  show(version, visualization) {
     this.overlay = createElement("div", "overlay");
     const popup = createElement("div", "popup");
     // Options
@@ -70,18 +47,6 @@ export class Headline {
     document.body.prepend(this.overlay);
     this.overlay.addEventListener("click", this.hideOverlay);
     popup.addEventListener("click", this.stopPropagation);
-  }
-
-  stopPropagation = (event) => {
-    event.stopPropagation();
-  };
-
-  hideOverlay() {
-    this.overlay.classList.add("overlay_fade");
-
-    this.overlay.addEventListener("transitionend", () => {
-      this.overlay.remove();
-    });
   }
 
   createOptionsLine(
@@ -124,16 +89,33 @@ export class Headline {
     }
     block.classList.add("option_active");
 
+    let indicator;
     switch (key) {
       case "country":
         version.localize(parameter);
-        this.countryBlock.innerHTML = interfaceElements.countries[parameter];
+        localStorage.setItem("country", parameter);
+        indicator = document.querySelector(".country");
+        indicator.innerHTML = interfaceElements.countries[parameter];
         break;
       case "language":
         version.translate(parameter);
-        this.languageBlock.innerHTML = interfaceElements.languages[parameter];
+        localStorage.setItem("language", parameter);
+        indicator = document.querySelector(".language");
+        indicator.innerHTML = interfaceElements.languages[parameter];
         break;
     }
     visualization.render(version);
+  }
+
+  stopPropagation = (event) => {
+    event.stopPropagation();
+  };
+
+  hideOverlay() {
+    this.overlay.classList.add("overlay_fade");
+
+    this.overlay.addEventListener("transitionend", () => {
+      this.overlay.remove();
+    });
   }
 }

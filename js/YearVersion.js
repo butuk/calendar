@@ -6,7 +6,7 @@ import { daysExchanges } from "../dictionaries/daysExchanges.js";
 
 export class YearVersion {
   constructor(year, country, language) {
-    this.year = year;
+    this.setYear(year);
     this.country = country;
     this.language = language;
     if (this.country) {
@@ -15,6 +15,11 @@ export class YearVersion {
     if (this.language) {
       this.translate(this.language);
     }
+  }
+
+  setYear(year) {
+    this.year = year;
+    this.yearNum = year.yearNum;
   }
 
   translate(language) {
