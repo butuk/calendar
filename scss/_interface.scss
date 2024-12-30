@@ -1,0 +1,127 @@
+$mobile-size: 640px;
+$tablet-size: 800px;
+
+%opacity {
+  transition:
+    opacity .2s ease-in-out,
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.headline {
+  padding-left: .5rem;
+  color: var(--accent-color);
+  font-size: clamp(1.2rem, 1.5vw, 3rem);
+}
+
+.top-right {
+  display: flex;
+  align-items: center;
+}
+
+.parameter {
+  @extend %small-font;
+  color: var(--additionl-color);
+  display: block;
+  height: 100%;
+  &:not(:last-child) {
+    margin-right: 1em;
+  }
+}
+
+.button {
+  display: flex;
+  align-content: center;
+  padding: .75rem;
+  font-size: clamp(1.2rem, 1.5vw, 3rem);
+  &:hover {
+    color: var(--accent-color);
+    cursor: pointer;
+  }
+}
+
+.overlay {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, .5) url('./icons/pattern.svg') repeat;
+  background-size: auto;
+ // backdrop-filter: blur(15px);
+  z-index: 10000;
+  &:hover {
+    cursor: pointer;
+  }
+  animation: appear .2s ease-in-out;
+  &_fade {
+    @extend %opacity;
+    opacity: 0;
+  }
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1rem 2rem;
+  color: var(--main-color);
+  background-color: var(--back-color);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  &:hover {
+    cursor: default;
+  }
+  @media screen and (max-width: $mobile-size) {
+    padding: 3rem 1rem;
+  }
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100;
+  }
+}
+
+.options-line {
+  padding: 1.5rem;
+  display: flex;
+}
+
+.option {
+  text-decoration: none;
+  color: var(--main-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 .1rem;
+  width: 3.5rem;
+  min-height: 40px;
+  min-width: 60px;
+  padding: .5rem 1rem;
+  border-radius: 3rem;
+
+  &:hover{
+    color: var(--accent-color);
+    cursor: pointer;
+  }
+  &_active {
+    color: var(--accent-color);
+    border: .1rem solid var(--accent-color);
+    background: var(--back-color);
+
+    &:hover{
+      cursor: default;
+    }
+  }
+}

@@ -1,15 +1,25 @@
 :root {
   --back-color: white;
   --main-color: black;
+  --additionl-color: #aaa;
   --accent-color: crimson;
   --invert-accent: red;
+  $tablet-size: 800px;
+  $mobile-size: 640px;
 
   font-family: Inter, sans-serif;
   font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
-
   font-weight: normal;
+  font-size: clamp(.8rem, 1.5vw + .25rem, 2rem);
   color: var(--main-color);
-  font-size: 1.5vw;
+
+  %small-font {
+    font-size: .4rem;
+    @media screen and (max-width: $mobile-size) {
+      font-size: .8rem;
+    }
+  }
+  cursor: grab;
 }
 
 @supports (font-variation-settings: normal) {
@@ -68,4 +78,8 @@ table {
 
 * {
   box-sizing: border-box;
+  -webkit-user-select: none; /* Chrome, Safari, Edge */
+  -moz-user-select: none;    /* Firefox */
+  -ms-user-select: none;     /* Internet Explorer/Edge */
+  user-select: none;
 }
