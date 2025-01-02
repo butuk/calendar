@@ -346,6 +346,7 @@ header {
   outline: 0.075em solid var(--main-color);
   outline-offset: 0.5em;
   border-radius: 50%;
+  -webkit-border-radius: 50%;
 }
 @media screen and (max-width: 640px) {
   .current-date {

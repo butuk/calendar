@@ -27,7 +27,6 @@ country = savedCountry ? savedCountry : "poland";
 const newYear = new Year(2025);
 
 const version = new YearVersion(newYear, country, language);
-console.log(version);
 
 const visualization = new YearVisualization(version, "content");
 
