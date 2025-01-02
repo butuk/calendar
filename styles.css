@@ -1,3 +1,4 @@
+@charset "UTF-8";
 :root {
   --back-color: white;
   --main-color: black;
@@ -120,10 +121,11 @@ header {
 }
 
 .button {
+  content: "⃞";
   display: flex;
   align-content: center;
   padding: 0.75rem;
-  font-size: clamp(1.2rem, 1.5vw, 3rem);
+  font-size: clamp(1.2rem, 1.5vw, 2.5rem);
 }
 .button:hover {
   color: var(--accent-color);
@@ -344,6 +346,7 @@ header {
   outline: 0.075em solid var(--main-color);
   outline-offset: 0.5em;
   border-radius: 50%;
+  -webkit-border-radius: 50%;
 }
 @media screen and (max-width: 640px) {
   .current-date {

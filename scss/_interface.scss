@@ -35,10 +35,11 @@ header {
 }
 
 .button {
+  content: '⃞';
   display: flex;
   align-content: center;
   padding: .75rem;
-  font-size: clamp(1.2rem, 1.5vw, 3rem);
+  font-size: clamp(1.2rem, 1.5vw, 2.5rem);
   &:hover {
     color: var(--accent-color);
     cursor: pointer;
@@ -51,7 +52,6 @@ header {
   height: 100vh;
   background: rgba(0, 0, 0, .5) url('./icons/pattern.svg') repeat;
   background-size: auto;
- // backdrop-filter: blur(15px);
   z-index: 10000;
   &:hover {
     cursor: pointer;
