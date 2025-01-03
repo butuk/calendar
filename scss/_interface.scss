@@ -16,7 +16,9 @@ header {
 .headline {
   padding-left: .5rem;
   color: var(--accent-color);
-  font-size: clamp(1.2rem, 1.5vw, 3rem);
+  @media screen and (max-width: $mobile-size) {
+    font-size: 2.5rem;
+  }
 }
 
 .top-right {
@@ -27,21 +29,28 @@ header {
 .parameter {
   @extend %small-font;
   color: var(--additionl-color);
-  display: block;
-  height: 100%;
-  &:not(:last-child) {
-    margin-right: 1em;
-  }
+  margin-left: .5em;
+
 }
 
 .button {
-  content: '⃞';
   display: flex;
-  align-content: center;
-  padding: .75rem;
+  justify-content: center;
+  width: 2rem;
+  height: 1.5rem;
+  margin: .75rem;
+  @media screen and (max-width: $mobile-size) {
+    width: 2.5rem;
+    height: 3rem;
+    margin: 1.5rem 1rem;
+  }
+  background: var(--back-color);
+  border: .075em solid var(--main-color);
+  border-radius: 3px;
+
   font-size: clamp(1.2rem, 1.5vw, 2.5rem);
   &:hover {
-    color: var(--accent-color);
+    border-color: var(--accent-color);
     cursor: pointer;
   }
 }
@@ -50,7 +59,7 @@ header {
   position: fixed;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, .5) url('./icons/pattern.svg') repeat;
+  background: rgba(255, 255, 255, .8) url('./icons/pattern.svg') repeat;
   background-size: auto;
   z-index: 10000;
   &:hover {
@@ -71,6 +80,7 @@ header {
   padding: 1rem 2rem;
   color: var(--main-color);
   background-color: var(--back-color);
+  border: .075em solid var(--main-color);
   border-radius: 2px;
   display: flex;
   align-items: center;
