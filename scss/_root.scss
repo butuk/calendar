@@ -1,6 +1,7 @@
 :root {
-  --back-color: white;
-  --main-color: black;
+  --extra-back-color: #FFFFFF;
+  --back-color: #F7F7F7;
+  --main-color: #262626;
   --additionl-color: #aaa;
   --accent-color: crimson;
   --invert-accent: red;
@@ -58,6 +59,7 @@ footer, header, hgroup, menu, nav, section {
   display: block;
 }
 body {
+  background: var(--back-color);
   line-height: 1;
   cursor: grab;
 }

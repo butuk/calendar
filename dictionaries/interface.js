@@ -2,11 +2,12 @@ export const interfaceElements = {
   languages: {
     bel_1: "бел",
     bel_2: "bel",
+    ukr: "ukr",
     pol: "pol",
     eng: "eng",
   },
 
-  countries: { poland: "PL", belarus: "BY" },
+  countries: { belarus: "BY", ukraine: "UA", poland: "PL" },
 
   links: [
     {
