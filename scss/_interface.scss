@@ -91,7 +91,7 @@ header {
     cursor: default;
   }
   @media screen and (max-width: $mobile-size) {
-    padding: 3rem 1rem;
+    padding: 3rem .25rem;
   }
 }
 

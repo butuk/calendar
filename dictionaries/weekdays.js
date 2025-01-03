@@ -18,6 +18,10 @@ export const weekdays = [
         long: "Niadzielia",
         short: "Nd.",
       },
+      ukr: {
+        long: "Неділя",
+        short: "Нд.",
+      },
     },
   },
   {
@@ -38,6 +42,10 @@ export const weekdays = [
       bel_2: {
         long: "Paniadzielak",
         short: "Pn.",
+      },
+      ukr: {
+        long: "Понеділок",
+        short: "Пн.",
       },
     },
   },
@@ -60,6 +68,10 @@ export const weekdays = [
         long: "Aŭtorak",
         short: "Aŭt.",
       },
+      ukr: {
+        long: "Вівторок",
+        short: "Вт.",
+      },
     },
   },
   {
@@ -80,6 +92,10 @@ export const weekdays = [
       bel_2: {
         long: "Sierada",
         short: "Sier.",
+      },
+      ukr: {
+        long: "Середа",
+        short: "Сер.",
       },
     },
   },
@@ -102,6 +118,10 @@ export const weekdays = [
         long: "Čacvier",
         short: "Čcv.",
       },
+      ukr: {
+        long: "Четвер",
+        short: "Чт.",
+      },
     },
   },
   {
@@ -123,6 +143,10 @@ export const weekdays = [
         long: "Piatnica",
         short: "Piat.",
       },
+      ukr: {
+        long: "П'ятниця",
+        short: "Пт.",
+      },
     },
   },
   {
@@ -143,6 +167,10 @@ export const weekdays = [
       bel_2: {
         long: "Subota",
         short: "Sub.",
+      },
+      ukr: {
+        long: "Субота",
+        short: "Сб.",
       },
     },
   },

@@ -23,4 +23,14 @@ export const floatingHolidaysDates = {
       2025: "6-19",
     },
   },
+  ukraine: {
+    easter: {
+      2024: "5-5",
+      2025: "4-20",
+    },
+    troitsa: {
+      2024: "5-19",
+      2025: "6-8",
+    },
+  },
 };

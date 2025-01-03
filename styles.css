@@ -181,7 +181,7 @@ header {
 }
 @media screen and (max-width: 640px) {
   .popup {
-    padding: 3rem 1rem;
+    padding: 3rem 0.25rem;
   }
 }
 
