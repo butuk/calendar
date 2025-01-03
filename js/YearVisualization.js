@@ -266,7 +266,7 @@ export class YearVisualization {
     hr.style.gridRow = "1";
     hr.style.gridColumn = `${columnNum}`;
     hr.textContent = `${columnNum - 1}`;
-    hr.style.top = `${this.delta * columnNum}%`;
+    hr.style.top = `${this.delta * columnNum + 50}%`;
     where.append(hr);
   }
 

@@ -12,21 +12,20 @@ export class InterfaceHeader {
     // Top right corner
     const tr = createElement("div", "top-right");
     if (version.country) {
-      this.countryBlock = createElement("div", "parameter");
+      this.countryBlock = createElement("sup", "parameter");
       this.countryBlock.classList.add("country");
       this.countryBlock.innerHTML =
         interfaceElements.countries[version.country];
-      tr.append(this.countryBlock);
+      headline.append(this.countryBlock);
     }
     if (version.language) {
-      this.languageBlock = createElement("div", "parameter");
+      this.languageBlock = createElement("sup", "parameter");
       this.languageBlock.classList.add("language");
       this.languageBlock.innerHTML =
         interfaceElements.languages[version.language];
-      tr.append(this.languageBlock);
+      headline.append(this.languageBlock);
     }
     const button = createElement("div", "button");
-    button.innerHTML = "⃞";
     tr.append(button);
     button.addEventListener("click", (event) => {
       new InterfacePopup(version, visualization);
