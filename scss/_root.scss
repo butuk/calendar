@@ -59,14 +59,8 @@ footer, header, hgroup, menu, nav, section {
   display: block;
 }
 
-html, body {
-  height: 100%;
-  margin: 0;
-}
 body {
-  background-image: linear-gradient(var(--extra-back-color), var(--back-color));
-  background-repeat: no-repeat;
-  background-size: cover;
+  background: var(--extra-back-color);
   line-height: 1;
   cursor: grab;
 }
