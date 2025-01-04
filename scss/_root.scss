@@ -58,8 +58,15 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
   display: block;
 }
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
 body {
-  background: var(--back-color);
+  background-image: linear-gradient(var(--extra-back-color), var(--back-color));
+  background-repeat: no-repeat;
+  background-size: cover;
   line-height: 1;
   cursor: grab;
 }

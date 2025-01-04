@@ -61,13 +61,13 @@ header {
   position: fixed;
   width: 100vw;
   height: 100vh;
-  background: rgba(247, 247, 247, .8) url('./icons/pattern.svg') repeat;
+  background: url('./icons/pattern.svg') repeat;
   background-size: auto;
   z-index: 10000;
   &:hover {
     cursor: pointer;
   }
-  animation: appear .2s ease-in-out;
+  animation: appear .1s ease-in-out;
   &_fade {
     @extend %opacity;
     opacity: 0;
@@ -79,9 +79,12 @@ header {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 1rem 2rem;
+  padding: min(3%, 3rem) 8% min(4%, 4rem);
+  @media screen and (max-width: $mobile-size) {
+    padding: 3rem .25rem;
+  }
   color: var(--main-color);
-  background-color: var(--back-color);
+  background-color: var(--extra-back-color);
   border-radius: 2px;
   display: flex;
   align-items: center;
@@ -89,9 +92,6 @@ header {
   justify-content: space-between;
   &:hover {
     cursor: default;
-  }
-  @media screen and (max-width: $mobile-size) {
-    padding: 3rem .25rem;
   }
 }
 
@@ -129,7 +129,6 @@ header {
   &_active {
     color: var(--accent-color);
     border: .1rem solid var(--accent-color);
-    background: var(--back-color);
 
     &:hover{
       cursor: default;

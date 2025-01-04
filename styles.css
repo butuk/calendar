@@ -58,8 +58,15 @@ footer, header, hgroup, menu, nav, section {
   display: block;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
 body {
-  background: var(--back-color);
+  background-image: linear-gradient(var(--extra-back-color), var(--back-color));
+  background-repeat: no-repeat;
+  background-size: cover;
   line-height: 1;
   cursor: grab;
 }
@@ -150,10 +157,10 @@ header {
   position: fixed;
   width: 100vw;
   height: 100vh;
-  background: rgba(247, 247, 247, 0.8) url("./icons/pattern.svg") repeat;
+  background: url("./icons/pattern.svg") repeat;
   background-size: auto;
   z-index: 10000;
-  animation: appear 0.2s ease-in-out;
+  animation: appear 0.1s ease-in-out;
 }
 .overlay:hover {
   cursor: pointer;
@@ -167,22 +174,22 @@ header {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 1rem 2rem;
+  padding: min(3%, 3rem) 8% min(4%, 4rem);
   color: var(--main-color);
-  background-color: var(--back-color);
+  background-color: var(--extra-back-color);
   border-radius: 2px;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: space-between;
 }
-.popup:hover {
-  cursor: default;
-}
 @media screen and (max-width: 640px) {
   .popup {
     padding: 3rem 0.25rem;
   }
+}
+.popup:hover {
+  cursor: default;
 }
 
 @keyframes appear {
@@ -218,7 +225,6 @@ header {
 .option_active {
   color: var(--accent-color);
   border: 0.1rem solid var(--accent-color);
-  background: var(--back-color);
 }
 .option_active:hover {
   cursor: default;
