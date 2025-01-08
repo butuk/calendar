@@ -1,9 +1,10 @@
 $mobile-size: 640px;
 $tablet-size: 800px;
+$headline-font: 2rem;
 
 %opacity {
   transition:
-    opacity .2s ease-in-out,
+    opacity .2s ease-in-out;
 }
 
 header {
@@ -17,7 +18,7 @@ header {
   padding-left: .5rem;
   color: var(--accent-color);
   @media screen and (max-width: $mobile-size) {
-    font-size: 2rem;
+    font-size: $headline-font;
   }
 }
 
@@ -49,6 +50,7 @@ header {
     margin: 1rem;
   }
   border-radius: 3px;
+  z-index: 999;
 
   font-size: clamp(1.2rem, 1.5vw, 2.5rem);
   &:hover {

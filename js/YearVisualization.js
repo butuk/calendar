@@ -10,23 +10,25 @@ export class YearVisualization {
     this.currentYear = today.getFullYear();
     this.delta = 3;
     this.isDragging = false;
+    this.yearMap = object.year.yearDatesMap;
+    this.yearNum = object.year.yearNum;
+
     this.handleMouseGrab = this.handleMouseGrab.bind(this);
     this.handleMouseTouchMove = this.handleMouseTouchMove.bind(this);
     this.handleTouchMove = this.handleTouchMove.bind(this);
     this.handleTouchEnd = this.handleTouchEnd.bind(this);
-    this.handleTouchGrab = this.handleTouchGrab.bind(this);
+    this.handleTouchGrabCalendar = this.handleTouchGrabCalendar.bind(this);
+    this.handleCalendarClick = this.handleCalendarClick.bind(this);
+    this.createCellSlider = this.createCellSlider.bind(this);
+    this.removeCalendarEventListeners =
+      this.removeCalendarEventListeners.bind(this);
+    this.addCalendarEventListeners = this.addCalendarEventListeners.bind(this);
+    this.zoomCalendarFromPoint = this.zoomCalendarFromPoint.bind(this);
+
     this.render(object, block); // Pass the block only while creating the object
     // Behaviour on scrolling
-    document.addEventListener("wheel", this.handleWheelEvent, {
-      passive: false,
-    });
-    // Grabbing the slides
-    document.addEventListener("mousedown", this.handleMouseGrab);
-    document.addEventListener("touchstart", this.handleTouchGrab);
-
-    // Days on hover
-    this.slides.addEventListener("mouseover", this.handleDayHover);
-    this.slides.addEventListener("mouseout", this.handleDayMouseOut);
+    this.addCalendarEventListeners();
+    return this;
   }
 
   render(object, block) {
@@ -34,7 +36,7 @@ export class YearVisualization {
     if (block) {
       this.block = block;
       this.content = document.querySelector(`.${this.block}`);
-      this.section = createElement("section", "slider");
+      this.slider = createElement("section", "slider");
       this.slides = createElement("div", "slides");
     }
     const oldVisualization = document.querySelectorAll(".slide");
@@ -63,12 +65,124 @@ export class YearVisualization {
       }
       this.slides.append(slide);
     }
-    this.section.append(this.slides);
-    this.content.append(this.section);
+    this.slider.append(this.slides);
+    this.content.append(this.slider);
     //Center the visualization
     this.centerVisualization(this.object.year.yearNum, block);
+    return this;
+  }
+
+  renderTheDay(day, where) {
+    const cell = createElement("div", "cell");
+    cell.style.gridRow = day.month + 2;
+    cell.style.gridColumn = day.date + 1;
+    cell.style.top = `${this.delta * day.date}%`;
+
+    let dayMark;
+    if (day.working) {
+      dayMark = createElement("div", "working-day");
+    } else {
+      dayMark = createElement("div", "special-day");
+    }
+
+    cell.dataset.month = day.month;
+    cell.dataset.date = day.date;
+
+    //cell.dataset.color = window.getComputedStyle(dayMark).color;
+    if (day.weekdayNameShort) {
+      cell.dataset.weekday = day.weekdayNameShort;
+    }
+    if (
+      day.month === this.currentMonth &&
+      day.date === this.currentDate &&
+      day.year === this.currentYear
+    ) {
+      dayMark.classList.add("current-date");
+    }
+    cell.append(dayMark);
+    where.append(cell);
+    return this;
+  }
+
+  renderColumnHR(columnNum, where) {
+    const hr = createElement("div", "hr");
+    hr.style.gridRow = "1";
+    hr.style.gridColumn = `${columnNum}`;
+    hr.textContent = `${columnNum - 1}`;
+    hr.style.top = `${this.delta * columnNum + 50}%`;
+    where.append(hr);
+    return this;
+  }
+
+  renderRowHR(rowNum, where) {
+    const monthName = createElement("div", "hr");
+    monthName.style.gridColumn = "1";
+    monthName.style.gridRow = `${rowNum + 3}`;
+    if (this.object.language) {
+      monthName.textContent = months[rowNum][this.object.language]
+        .charAt(0)
+        .toUpperCase();
+    } else {
+      monthName.textContent = intToRoman(rowNum + 1);
+    }
+    where.append(monthName);
+    return this;
+  }
+
+  centerVisualization(year, block) {
+    const chosenYear = year;
+    const centerX = document.documentElement.clientWidth / 2;
+    const currentDay = document.querySelectorAll(".current-date")[1];
+    const slidesX = this.slides.getBoundingClientRect().left;
+    const dayWidth = document
+      .querySelector(".working-day")
+      .parentElement.getBoundingClientRect().width;
+    if (block) {
+      if (currentDay) {
+        const dayX = currentDay.getBoundingClientRect().left;
+        const delta = centerX - dayX;
+        this.slides.style.left = slidesX + delta + "px";
+      } else {
+        this.slides.style.left =
+          chosenYear % 4 === 0
+            ? slidesX + dayWidth * 3 + "px"
+            : slidesX + dayWidth * 4 + "px";
+      }
+    }
+    return this;
+  }
+
+  addCalendarEventListeners() {
+    // Scrolling
+    document.addEventListener("wheel", this.handleWheelEvent, {
+      passive: false,
+    });
+
+    // Grabbing the slides
+    document.addEventListener("mousedown", this.handleMouseGrab);
+    document.addEventListener("touchstart", this.handleTouchGrabCalendar);
+
+    // Days on hover
+    if (window.innerWidth > this.mobileSize) {
+      this.slides.addEventListener("mouseover", this.handleDayHover);
+      this.slides.addEventListener("mouseout", this.handleDayMouseOut);
+    }
+
+    // Click on mobile
+    if (window.innerWidth < this.mobileSize) {
+      document.addEventListener("click", this.handleCalendarClick);
+    }
 
     return this;
+  }
+
+  removeCalendarEventListeners() {
+    document.removeEventListener("wheel", this.handleWheelEvent);
+    document.removeEventListener("mousedown", this.handleMouseGrab);
+    document.removeEventListener("touchstart", this.handleTouchGrabCalendar);
+    this.slides.removeEventListener("mouseover", this.handleDayHover);
+    this.slides.removeEventListener("mouseout", this.handleDayMouseOut);
+    document.removeEventListener("click", this.handleCalendarClick);
   }
 
   handleWheelEvent(event) {
@@ -102,7 +216,7 @@ export class YearVisualization {
     event.preventDefault();
   }
 
-  handleTouchGrab(event) {
+  handleTouchGrabCalendar(event) {
     const slides = document.querySelector(".slides");
     this.isDragging = true;
 
@@ -173,25 +287,16 @@ export class YearVisualization {
     document.body.style.cursor = "grab";
   }
 
-  centerVisualization(year, block) {
-    const chosenYear = year;
-    const centerX = document.documentElement.clientWidth / 2;
-    const currentDay = document.querySelectorAll(".current-date")[1];
-    const slidesX = this.slides.getBoundingClientRect().left;
-    const dayWidth = document
-      .querySelector(".day")
-      .parentElement.getBoundingClientRect().width;
-    if (block) {
-      if (currentDay) {
-        const dayX = currentDay.getBoundingClientRect().left;
-        const delta = centerX - dayX;
-        this.slides.style.left = slidesX + delta + "px";
-      } else {
-        this.slides.style.left =
-          chosenYear % 4 === 0
-            ? slidesX + dayWidth * 3 + "px"
-            : slidesX + dayWidth * 4 + "px";
-      }
+  handleDayMouseOut(event) {
+    const text = document.querySelector(".cell-text");
+    const parent = text && text.parentElement ? text.parentElement : null;
+    if (parent) {
+      parent.removeChild(text);
+    }
+    const target = event.target.closest(".cell");
+    const firstChild = target ? target.children[0] : null;
+    if (firstChild) {
+      firstChild.classList.remove("day_hover");
     }
   }
 
@@ -218,69 +323,110 @@ export class YearVisualization {
     }
   }
 
-  handleDayMouseOut(event) {
-    const text = document.querySelector(".cell-text");
-    const parent = text && text.parentElement ? text.parentElement : null;
-    if (parent) {
-      parent.removeChild(text);
-    }
-    const target = event.target.closest(".cell");
-    const firstChild = target ? target.children[0] : null;
-    if (firstChild) {
-      firstChild.classList.remove("day_hover");
+  handleCalendarClick(event) {
+    const clickedCell = event.target.closest(".cell");
+    if (clickedCell) {
+      const startPoint = this.zoomCalendarFromPoint(clickedCell);
+      this.slider.addEventListener("transitionend", () => {
+        this.slider.style.display = "none";
+        this.removeCalendarEventListeners();
+        this.createCellSlider(startPoint);
+      });
     }
   }
 
-  renderTheDay(day, where) {
-    const cell = createElement("div", "cell");
-    cell.style.gridRow = day.month + 2;
-    cell.style.gridColumn = day.date + 1;
-    cell.style.top = `${this.delta * day.date}%`;
-
-    let dayMark;
-    if (day.working) {
-      dayMark = createElement("div", "day");
-    } else {
-      dayMark = createElement("div", "special-day");
-    }
-
-    cell.dataset.month = day.month;
-    cell.dataset.date = day.date;
-    if (day.weekdayNameShort) {
-      cell.dataset.weekday = day.weekdayNameShort;
-    }
-    if (
-      day.month === this.currentMonth &&
-      day.date === this.currentDate &&
-      day.year === this.currentYear
-    ) {
-      dayMark.classList.add("current-date");
-    }
-
-    cell.append(dayMark);
-    where.append(cell);
+  zoomCalendarFromPoint(triggeredCell) {
+    const dayNeeded = triggeredCell.children[0];
+    const dayWidth = dayNeeded.getBoundingClientRect().width;
+    const dayHeight = dayNeeded.getBoundingClientRect().height;
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+    const scale = screenWidth / dayWidth;
+    const screenCenterX = screenWidth / 2;
+    const screenCenterY = screenHeight / 2;
+    const dayCenterX =
+      dayNeeded.getBoundingClientRect().left +
+      dayNeeded.getBoundingClientRect().width / 2;
+    const dayCenterY =
+      dayNeeded.getBoundingClientRect().top +
+      dayNeeded.getBoundingClientRect().height / 2;
+    const xNeeded =
+      (this.slider.getBoundingClientRect().left + screenCenterX - dayCenterX) *
+      scale;
+    const persentFromTop = (
+      (this.slider.getBoundingClientRect().top + dayHeight / 2) /
+      screenHeight /
+      2
+    ).toFixed(4);
+    console.log(persentFromTop);
+    const yNeeded =
+      (this.slider.getBoundingClientRect().top +
+        screenCenterY -
+        dayCenterY -
+        screenHeight * persentFromTop) *
+      scale;
+    this.slider.style.transform = `translate(${xNeeded}px, ${yNeeded}px) scale(${scale}) `;
+    this.slider.style.transition = "all .15s ease-in-out";
+    return triggeredCell.dataset;
   }
 
-  renderColumnHR(columnNum, where) {
-    const hr = createElement("div", "hr");
-    hr.style.gridRow = "1";
-    hr.style.gridColumn = `${columnNum}`;
-    hr.textContent = `${columnNum - 1}`;
-    hr.style.top = `${this.delta * columnNum + 50}%`;
-    where.append(hr);
+  createCellSlider(initialDay) {
+    let cellSlider = document.querySelector(".cell-slider");
+    let closeBut = document.querySelector(".close-cell-slider");
+    let dayInfo;
+    let cellSlides;
+
+    if (cellSlider) {
+      cellSlider.remove();
+    }
+    if (closeBut) {
+      closeBut.remove();
+    }
+
+    closeBut = createElement("div", "close-cell-slider");
+
+    dayInfo = this.yearMap.get(
+      `${this.yearNum}-${initialDay.month}-${initialDay.date}`,
+    );
+    cellSlider = createElement("section", "cell-slider");
+    cellSlides = createElement("div", "cell-slides");
+    for (let i = 0; i < 3; i++) {
+      const day = createElement("div", "day");
+      if (!dayInfo.working) {
+        day.style.background = "var(--accent-color)";
+      }
+      const weekday = createElement("div", "cell-text_small");
+      weekday.innerHTML = `${dayInfo.weekdayNameLong}`;
+      const date = createElement("div", "cell-text");
+      date.innerHTML = `${dayInfo.date}.${dayInfo.month}`;
+      day.append(weekday);
+      day.append(date);
+      cellSlides.append(day);
+    }
+    cellSlider.append(cellSlides);
+    document.body.append(closeBut);
+    document.body.append(cellSlider);
+
+    closeBut.addEventListener("click", (e) =>
+      this.removeCellSlider(e, cellSlider),
+    );
   }
 
-  renderRowHR(rowNum, where) {
-    const monthName = createElement("div", "hr");
-    monthName.style.gridColumn = "1";
-    monthName.style.gridRow = `${rowNum + 3}`;
-    if (this.object.language) {
-      monthName.textContent = months[rowNum][this.object.language]
-        .charAt(0)
-        .toUpperCase();
-    } else {
-      monthName.textContent = intToRoman(rowNum + 1);
-    }
-    where.append(monthName);
+  removeCellSlider(event, cellSlider) {
+    cellSlider.classList.add("cell-slider-closed");
+    cellSlider.addEventListener("transitionend", () => {
+      cellSlider.style.opacity = "";
+      cellSlider.style.scale = "";
+      cellSlider.style.transform = "";
+      cellSlider.removeEventListener("transitionend", () => {});
+      cellSlider.remove();
+      const closeBut = event.target;
+      closeBut.remove();
+      this.slider.style.transform = "";
+      this.slider.style.scale = "";
+      this.slider.style.display = "block";
+      this.slider.removeEventListener("transitionend", () => {});
+      this.addCalendarEventListeners();
+    });
   }
 }

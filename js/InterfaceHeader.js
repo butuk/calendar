@@ -27,9 +27,11 @@ export class InterfaceHeader {
     }
     const button = createElement("div", "button");
     tr.append(button);
-    button.addEventListener("click", (event) => {
-      new InterfacePopup(version, visualization);
-    });
+    if (version && visualization) {
+      button.addEventListener("click", (event) => {
+        new InterfacePopup(version, visualization);
+      });
+    }
     place.append(tr);
   }
 }
