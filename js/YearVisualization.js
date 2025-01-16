@@ -174,18 +174,18 @@ export class YearVisualization {
   }
 
   centerVisualization(year, block) {
-    const chosenYear = year;
-    const centerX = document.documentElement.clientWidth / 2;
-    const currentDay = document.querySelectorAll(".current-date")[1];
-    const slidesX = this.slides.getBoundingClientRect().left;
-    const dayWidth = document
-      .querySelector(".day")
-      .parentElement.getBoundingClientRect().width;
+    const chosenYear = year,
+      centerX = document.documentElement.clientWidth / 2,
+      currentDay = document.querySelectorAll(".current-date")[1],
+      slidesX = this.slides.getBoundingClientRect().left,
+      dayWidth = document
+        .querySelector(".day")
+        .parentElement.getBoundingClientRect().width;
     if (block) {
       if (currentDay) {
         const dayX = currentDay.getBoundingClientRect().left;
         const delta = centerX - dayX;
-        this.slides.style.left = slidesX + delta + "px";
+        this.slides.style.left = slidesX + delta + dayWidth / 2 + "px";
       } else {
         this.slides.style.left =
           chosenYear % 4 === 0
